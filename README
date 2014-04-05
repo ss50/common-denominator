@@ -1,10 +1,23 @@
-/*
-
-It's going down, let's copy Tinder
-Throw in a bit of Google Maps
-And don't forget it's also Facebook
-Web 2.0, that's where it's at
-
-*/
-
 Common Denominator 1.0
+
+
+Initial thoughts for SQL database layout:
+
+_usr-logs
+CHAR username PRIMARY KEY
+CHAR pw-enc ( hash[hash(pw) + username] )?
+---
+_usr-data
+CHAR uid : generate in some manner, six digit randomized and noncontiguous?
+CHAR username
+???? some sort of location information
+CHAR intr : parsable list of interests indicated by this user
+---
+_interest
+INT  int-id : numerical ID for the interest PRIMARY KEY
+CHAR name : display name for this interest
+?CHAR desc: a description for this interest
+---
+_int-memb
+INT int-id : numerical ID, foreign key with interest 
+CHAR uid : user marking this interest 
