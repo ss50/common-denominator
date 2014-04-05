@@ -3,21 +3,30 @@ Common Denominator 1.0
 
 Initial thoughts for SQL database layout:
 
-_usr-logs
+_usr-logs (used for login purposes)
 CHAR username PRIMARY KEY
 CHAR pw-enc ( hash[hash(pw) + username] )?
 ---
-_usr-data
-CHAR uid : generate in some manner, six digit randomized and noncontiguous?
+_users (information on users themselves)
+CHAR u-id : generate in some manner, six digit randomized and noncontiguous?
 CHAR username
 ???? some sort of location information
 CHAR intr : parsable list of interests indicated by this user
 ---
-_interest
+_interest: (information on interests themselves)
 INT  int-id : numerical ID for the interest PRIMARY KEY
 CHAR name : display name for this interest
 ?CHAR desc: a description for this interest
 ---
-_int-memb
+_int-memb: table of (interest-id, user-id) pairs
 INT int-id : numerical ID, foreign key with interest 
-CHAR uid : user marking this interest 
+CHAR u-id : user marking this interest 
+
+
+Notes for future database design:
+messages table:
+CHAR m-id: message id
+CHAR sender: u-id of sender
+CHAR receiver: u-id of receiver
+CHAR body: character limit on this
+?CHAR relevant: list of interests
