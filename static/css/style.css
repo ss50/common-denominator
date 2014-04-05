@@ -1,0 +1,42 @@
+
+* {
+	margin: 0; 
+    padding: 0;
+}
+
+body {
+	background-color: black;
+	color: #FFFFCC;
+}
+
+div {
+	margin: 20px;
+}
+
+#homeLink {
+	text-decoration: none;
+}
+
+h1 {
+	font-size: 80px;
+	color: #00CCFF;
+}
+
+a {
+	color: red;
+}
+
+a:hover {
+	color: orange;
+}
+
+.label {
+	width: 100px;
+	display: inline-block;
+}
+
+input[type=text] {
+	width: 300px;
+	display: inline-block;
+}
+
