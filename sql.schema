@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS users (
+	uid TEXT PRIMARY KEY, 
+	uname TEXT, 
+	loc TEXT, 
+	intr TEXT);
+	
+	
+CREATE TABLE IF NOT EXISTS interest (
+	intid INTEGER PRIMARY KEY AUTOINCREMENT,
+	name TEXT, 
+	desc TEXT);
+	
+CREATE TABLE IF NOT EXISTS intmemb (
+	intid INTEGER, 
+	uid TEXT);
