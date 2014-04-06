@@ -34,11 +34,19 @@ app.get('/interest/:iid', function(request, response){
 			console.log(row);
 			
 			response.writeHead(200, {'Content-Type': 'text/html'});
-			response.write('<h1>' + row.name + ": " + row.desc + '.</h1>');
-			//</h1><h2>Who likes it?</h2>');
+			response.write('<h1>' + row.name + ": " + row.desc //+ '.</h1>');
+			+ '.</h1><h2>Who likes it?</h2><ul>');
 			//once the autoincrement issue is fixed, dom will put in a way to show the names of folks who like this
+			var likes = '';
+			conn.query('SELECT uname FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1', [request.params.iid]).on('row', function(row) {
+				console.log(row);
+				//response.write('<li>' + row.uname + '</li>');
+				likes = likes + '<li>' + row.uname + '</li>';
 			
-			response.end();
+			}).on('end', function() {console.log('likes are: ' + likes)
+			response.write(likes);response.end('</ul>');});
+			
+			
 			});
 		});
 
