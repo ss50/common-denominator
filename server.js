@@ -26,13 +26,11 @@ app.use(connect.static(__dirname + '/static', { maxAge: 86400000 }));
 
 ////////////
 
-// this shit used to work:
+// this shit used to work: oh I know 
 //app.use(express.favicon("images/favicon.ico"));
 
 ////////////
 
-// var messagesDB = conn.query(	"CREATE TABLE messages (					\
-// 									id INTEGER PRIMARY KEY AUTOINCREMENT,	\
 // 									room TEXT,								\
 // 									name TEXT,								\
 // 									body TEXT,								\
@@ -55,7 +53,7 @@ app.get('/messages', function(request, response){
 });
 
 ////////////
-
+console.log("Server listening at port 8080");
 app.listen(8080);
 
 

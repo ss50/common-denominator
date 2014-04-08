@@ -1,5 +1,5 @@
 ﻿body {
-  font: 15px/20px Georgia;
+  font: 15px/20px Raleway;
   margin: 0;
 min-width: 900px;
 background: #F9E3CB;
@@ -8,6 +8,63 @@ background: #F9E3CB;
 a{
   text-decoration: none;
   color: inherit;
+}
+
+#main{
+  width: 70%;
+  margin:auto;
+}
+
+#login_header{
+   font-size: 28px;
+   height: 100px;
+   
+}
+
+#login_header h1{
+   text-align:center;
+   margin-top: 100px;
+}
+
+#login_form_wrapper{
+  text-align: center;
+  border:solid #8B4513 3px;
+  border-radius:25px;
+  font-size: 20px;
+  width: 350px;
+  height: 410px;
+  margin:auto;
+  display:block;
+  background-color: #FFA07A;
+}
+
+#login_form{
+  text-align:center;
+  display:inline-block;
+  width:70%;
+  margin:auto;
+  padding-top: 30px;
+}
+
+#login_submit{
+  padding:5px;
+  background-color: #dcdcdc;
+  border: 1px solid #666;
+  color:#000;
+  text-decoration:none;
+}
+
+#login_form input{
+  margin-top: 30px;
+  padding:5 5 5 5;
+}
+
+#sign_up_form{
+  text-align:center;
+  display:none;
+  width:70%;
+  margin:auto;
+  padding-top: 15px;
 }
 
 #nav_bar{
