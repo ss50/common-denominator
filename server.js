@@ -48,6 +48,10 @@ app.get('/',  function(request, response){
 	response.render('project.html', {});
 });
 
+app.get('/login',  function(request, response){
+	response.render('login.html', {});
+});
+
 app.get('/messages', function(request, response){
 	response.render('messages.html', {});
 });
