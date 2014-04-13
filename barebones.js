@@ -6,10 +6,33 @@ var anyDB = require('any-db');
 var conn = anyDB.createConnection('sqlite3://commondenominator.db');
 
 var app = express();
+app.use(express.bodyParser()); // definitely use this feature
 
-//Your server implementation goes here!
+var hbs = require('hbs');
+app.set('view engine', 'html');
+app.engine('html', hbs.__express);
+app.set('views', __dirname + '/templates'); // tell Express where to find templates
+
+var connect = require('connect');
+// possibly change '/' to '/static'
+app.use(connect.static(__dirname + '/', { maxAge: 86400000 }));
+
+///////////////////////////
+///////////////////////////
 
 app.get('/favicon.ico', function(request, response) { console.log('favicon thrown out'); });
+
+app.get('/',  function(request, response){
+	response.render('project.html', {});
+});
+
+app.get('/login',  function(request, response){
+	response.render('login.html', {});
+});
+
+app.get('/messages', function(request, response){
+	response.render('messages.html', {});
+});
 
 app.get('/user/:uid', function(request, response){
 	console.log(request.params.uid);
@@ -58,5 +81,13 @@ app.get('/*', function(request, response) {
 		response.end();
 		});
 
+///////////////////////////
+///////////////////////////
+
 //Visit localhost:8080
 app.listen(8080, function() { console.log(' - listening on port 8080');});
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> eef5107bea1251b2d5a234a6c72b79194183a122
