@@ -12,8 +12,8 @@
 			<h1>Common Denominator</h1>
 		</div>
 		<div id='login_form_wrapper'>
-			<div id='login_form'>
-				<form method='POST' action='/'>
+			<div>
+				<form method='POST' action='/' id='login_form'>
 					<input type='text' name='user_name' placeholder='Username'></input>
 					<input type='text' name='password' placeholder='Password'></input>
 					<input type='submit' value='Log In' class='login_form_buttons'></input>
@@ -25,8 +25,8 @@
 					<p>Forgot your password?</p>
 				</form>
 			</div>
-			<div id='sign_up_form'>
-				<form method='POST' action='/'>
+			<div>
+				<form method='POST' action='/' id='sign_up_form'>
 					<p>Sign up! Fill out the fields below</p>
 					<input name='first_name' placeholder='First Name'></input>
 					<input name='last_name' placeholder='Last Name'></input>
@@ -46,7 +46,7 @@
 				e.preventDefault();
 				document.getElementById('login_form').style.display = "none";
 				document.getElementById('signup_redirect').style.display='none';
-				document.getElementById('sign_up_form').style.display="inline-block";
+				document.getElementById('sign_up_form').style.display="block";
 			});
 		</script>
 	</body>

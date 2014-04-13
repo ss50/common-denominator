@@ -41,7 +41,7 @@ a{
 
 #login_form{
   text-align:center;
-  display:inline-block;
+  display:block;
   width:70%;
   margin:auto;
   padding-top: 30px;

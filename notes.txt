@@ -1,0 +1,11 @@
+Features: what has to be done
+
+User login:
+- Form validation: for both logging in
+  and signing up
+- Creating hash function for passwords
+- redirecting to private profile page
+- Or: using a 3rd party service to authenticate
+  usernames and passwords
+- Consider using passport module for node.js 
+
