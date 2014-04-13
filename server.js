@@ -22,7 +22,8 @@ app.engine('html', hbs.__express);
 app.set('views', __dirname + '/templates'); // tell Express where to find templates
 
 var connect = require('connect');
-app.use(connect.static(__dirname + '/static', { maxAge: 86400000 }));
+// possibly change '/' to '/static'
+app.use(connect.static(__dirname + '/', { maxAge: 86400000 }));
 
 ////////////
 
