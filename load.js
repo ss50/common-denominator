@@ -59,16 +59,20 @@ conn.query('CREATE TABLE IF NOT EXISTS usrlogs(username CHAR PRIMARY KEY, passwo
 /*
 Adding password to this table, instead of creating a separate table for users and passwords
 */
-conn.query('CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, uname TEXT, loc TEXT, intr TEXT);').on('end', 
+conn.query('CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, password TEXT, uname TEXT, loc TEXT, intr TEXT);').on('end', 
 		function() {
 			console.log('-Users table created');
 			
-			conn.query('INSERT INTO users (uid, pwd, uname, loc, intr) VALUES ("A8K1","Chad","2,8","1,2,5")');
-			conn.query('INSERT INTO users (uid, pwd, uname, loc, intr) VALUES ("G44H","Diane","2,7","2,3")');
-			conn.query('INSERT INTO users (uid, pwd, uname, loc, intr) VALUES ("Q2QV","Mark","3,5","2,3")');
-			conn.query('INSERT INTO users (uid, pwd, uname, loc, intr) VALUES ("MM7M","Sandra","6,1","2,5")');
-			conn.query('INSERT INTO users (uid, pwd, uname, loc, intr) VALUES ("CRLF","Dexter","7,5","1,4")');
-			conn.query('INSERT INTO users (uid, pwd, uname, loc, intr) VALUES ("83C5","Leo","3,4","3,4,5")')
+			conn.query('INSERT INTO users (uid, password, uname, loc, intr) VALUES ("A8K1","A8K1","Chad","2,8","1,2,5")');
+			conn.query('INSERT INTO users (uid, password, uname, loc, intr) VALUES ("G44H","G44H","Diane","2,7","2,3")');
+			conn.query('INSERT INTO users (uid, password, uname, loc, intr) VALUES ("Q2QV","Q2QV","Mark","3,5","2,3")');
+			conn.query('INSERT INTO users (uid, password, uname, loc, intr) VALUES ("MM7M","MM7M","Sandra","6,1","2,5")');
+			conn.query('INSERT INTO users (uid, password, uname, loc, intr) VALUES ("CRLF","CRLF","Dexter","7,5","1,4")');
+			conn.query('INSERT INTO users (uid, password, uname, loc, intr) VALUES ("83C5","83C5","Leo","3,4","3,4,5")').on('end',
+
+				function(){
+					console.log('-All users inserted');
+				});
 
 			});
 
