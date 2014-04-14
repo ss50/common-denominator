@@ -107,9 +107,9 @@ conn.query('CREATE TABLE IF NOT EXISTS interest (intid INTEGER PRIMARY KEY AUTOI
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Tanning","Soaking up rays")');
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Board Games","Roll the dice, draw a card")');
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Cars","Vroom vroom fast")')
-			conn.query('INSERT INTO interest (name, desc) VALUES ("Traveling","something about traveling")')
-			conn.query('INSERT INTO interest (name, desc) VALUES ("Chocolate","something about chocolate")')
-			conn.query('INSERT INTO interest (name, desc) VALUES ("Computers","something about computers")').on('end', function() { console.log('--All interests inserted');});
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Traveling","Explore the world")')
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Chocolate","The best guilty pleasure")')
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Computers","Beep boop binary")').on('end', function() { console.log('--All interests inserted');});
 			});
 
 
