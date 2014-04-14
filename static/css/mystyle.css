@@ -11,6 +11,11 @@ a{
   color: inherit;
 }
 
+.user_image{
+  width:100px;
+  height:100px;
+}
+
 #interest_main{
   width: 70%;
   margin:auto;
@@ -74,7 +79,7 @@ a{
 }
 
 #users_table td{
-  padding: 5 25 5 25;
+  padding: 5 5 5 5;
 }
 
 
