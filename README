@@ -10,6 +10,7 @@ CHAR pw-enc ( hash[hash(pw) + username] )?
 _users (information on users themselves)
 CHAR u-id : generate in some manner, six digit randomized and noncontiguous?
 CHAR username
+TEXT password 
 ???? some sort of location information
 CHAR intr : parsable list of interests indicated by this user
 ---

@@ -1,6 +1,6 @@
 var anyDB = require('any-db');
 var conn = anyDB.createConnection('sqlite3://commondenominator.db');
-
+var crypto = require('crypto');
 /*
 ============================================================
 ====================FOR TESTING PURPOSES====================
@@ -41,17 +41,42 @@ CRLF	Dexter			7,5			1,4
 
 
 */
+/*
+conn.query('CREATE TABLE IF NOT EXISTS usrlogs(username CHAR PRIMARY KEY, password CHAR);').on('end'
+	,function(){
+		console.log('-User logs table created');
+		conn.query('INSERT INTO usrlogs(username,password) VALUES("Chad","1K8A")');
+		conn.query('INSERT INTO usrlogs(username,password) VALUES("Diane","H44G")');
+		conn.query('INSERT INTO usrlogs(username,password) VALUES("Mark","VQ2Q")');
+		conn.query('INSERT INTO usrlogs(username,password) VALUES("Sandra","M7MM")');
+		conn.query('INSERT INTO usrlogs(username,password) VALUES("Dexter","FLRC")');
+		conn.query('INSERT INTO usrlogs(username,password) VALUES("Leo","5C38")').on('end',function(){
+			console.log('--All registered users inserted into usrlogs');
+		})
+	});
+*/
 
-conn.query('CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, uname TEXT, loc TEXT, intr TEXT);').on('end', 
+/*
+Adding password to this table, instead of creating a separate table for users and passwords
+*/
+
+function getHash(pwd){
+	return crypto.createHash('md5').update(pwd).digest('hex');
+}
+
+conn.query('CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, uname TEXT, password TEXT, loc TEXT, intr TEXT);').on('end', 
 		function() {
-			console.log('-Users table created');
 			
-			conn.query('INSERT INTO users (uid, uname, loc, intr) VALUES ("A8K1","Chad","2,8","1,2,5")');
-			conn.query('INSERT INTO users (uid, uname, loc, intr) VALUES ("G44H","Diane","2,7","2,3")');
-			conn.query('INSERT INTO users (uid, uname, loc, intr) VALUES ("Q2QV","Mark","3,5","2,3")');
-			conn.query('INSERT INTO users (uid, uname, loc, intr) VALUES ("MM7M","Sandra","6,1","2,5")');
-			conn.query('INSERT INTO users (uid, uname, loc, intr) VALUES ("CRLF","Dexter","7,5","1,4")');
-			conn.query('INSERT INTO users (uid, uname, loc, intr) VALUES ("83C5","Leo","3,4","3,4,5")').on('end', function() {console.log('--All users inserted');});
+			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("A8K1","Chad",$pwd,"2,8","1,2,5")', [getHash("Chad")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("G44H","Diane",$pwd,"2,7","2,3")', [getHash("Diane")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("Q2QV","Mark",$pwd,"3,5","2,3")', [getHash("Mark")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("MM7M","Sandra",$pwd,"6,1","2,5")', [getHash("Sandra")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("CRLF","Dexter",$pwd,"7,5","1,4")', [getHash("Dexter")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("83C5","Leo",$pwd,"3,4","3,4,5")', [getHash("Leo")]).on('end',
+
+				function(){
+					console.log('-All users inserted');
+				});
 
 			});
 
@@ -81,7 +106,10 @@ conn.query('CREATE TABLE IF NOT EXISTS interest (intid INTEGER PRIMARY KEY AUTOI
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Boating","Just like T-Pain")');
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Tanning","Soaking up rays")');
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Board Games","Roll the dice, draw a card")');
-			conn.query('INSERT INTO interest (name, desc) VALUES ("Cars","Vroom vroom fast")').on('end', function() { console.log('--All interests inserted');});
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Cars","Vroom vroom fast")')
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Traveling","something about traveling")')
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Chocolate","something about chocolate")')
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Computers","something about computers")').on('end', function() { console.log('--All interests inserted');});
 			});
 
 
