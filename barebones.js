@@ -86,8 +86,3 @@ app.get('/*', function(request, response) {
 
 //Visit localhost:8080
 app.listen(8080, function() { console.log(' - listening on port 8080');});
-<<<<<<< HEAD
-=======
-
-
->>>>>>> eef5107bea1251b2d5a234a6c72b79194183a122
