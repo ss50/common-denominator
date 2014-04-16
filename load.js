@@ -89,11 +89,19 @@ CHAR name : display name for this interest
 ?CHAR desc: a description for this interest
 
 intid	name			desc
-1		Chess			A game for geniuses
-2		Boating			Just like T-Pain
-3		Tanning			Soaking up rays
-4		Board Games		Roll the dice and draw a card
-5		Cars			Vroom vroom
+1		Indie Music		I haven't heard of it either
+2		Computers		Beep boop binary
+3		Modern Art		Creativity goes wild
+4		Surfing			Hang ten, fella
+5		Traveling		Explore the globe
+6		Concerts		Happily go deaf
+7		Hiking			Lace up your boots
+8		Chocolate		The best guilty pleasure
+9		Chess			A game for geniuses
+10		Boating			Just like T-Pain
+11		Tanning			Soaking up rays
+12		Board Games		Roll the dice and draw a card
+13		Cars			Vroom vroom
 
 */
 
@@ -102,14 +110,19 @@ conn.query('CREATE TABLE IF NOT EXISTS interest (intid INTEGER PRIMARY KEY AUTOI
 		function() { 
 			console.log('-Interests table created');
 			
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Indie Music","I haven\'t heard of it either")');
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Computers","Beep boop binary")');
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Modern Art","Creativity goes wild")');
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Surfing","Hang ten fella")');
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Traveling","Explore the globe")');
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Concerts","Go deaf happily")');
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Hiking","Lace up your boots")');
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Chocolate","The best guilty pleasure")');
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Chess","A game for geniuses")');
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Boating","Just like T-Pain")');
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Tanning","Soaking up rays")');
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Board Games","Roll the dice, draw a card")');
-			conn.query('INSERT INTO interest (name, desc) VALUES ("Cars","Vroom vroom fast")')
-			conn.query('INSERT INTO interest (name, desc) VALUES ("Traveling","Explore the world")')
-			conn.query('INSERT INTO interest (name, desc) VALUES ("Chocolate","The best guilty pleasure")')
-			conn.query('INSERT INTO interest (name, desc) VALUES ("Computers","Beep boop binary")').on('end', function() { console.log('--All interests inserted');});
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Cars","Vroom vroom fast")').on('end', function() { console.log('--All interests inserted');});
 			});
 
 
