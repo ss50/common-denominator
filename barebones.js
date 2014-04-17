@@ -63,10 +63,14 @@ app.get('/interest/:iid', function(request, response){
 				console.log(row);
 				likes = likes + '<li><a href="/user/' + row.uid + '">' + row.uname + '</a></li>';
 			
-			}).on('end', function() {console.log('likes are: ' + likes)
-			response.write(likes);
-			response.write('<p>see other interests: <a href="/interest/1">Chess</a> | <a href="/interest/2">Boating</a> | <a href="/interest/3">Tanning</a> | <a href="/interest/4">Board Games</a> | <a href="/interest/5">Cars</a></p>');
-			response.end('</ul>');});
+			}).on('end', function() {
+			
+			
+				console.log('likes are: ' + likes)
+				response.write(likes);
+				response.write('<p>see other interests: <a href="/interest/1">Indie Music</a> | <a href="/interest/2">Computers</a> | <a href="/interest/3">Modern Art</a> | <a href="/interest/4">Surfing</a> | <a href="/interest/5">Traveling</a> | <a href="/interest/6">Concerts</a> | <a href="/interest/6">Hiking</a> | <a href="/interest/8">Chocolate</a></p>');
+				response.end('</ul>');
+				});
 			
 			
 			});
