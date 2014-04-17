@@ -2,7 +2,6 @@
 
 var express = require('express');
 var anyDB = require('any-db');
-//Make sure zipcodes.db exists before you do this!
 var conn = anyDB.createConnection('sqlite3://commondenominator.db');
 
 var app = express();
@@ -59,11 +58,9 @@ app.get('/interest/:iid', function(request, response){
 			response.writeHead(200, {'Content-Type': 'text/html'});
 			response.write('<title>' + row.name + '</title><h1>' + row.name + ": " + row.desc //+ '.</h1>');
 			+ '.</h1><h2>Who likes it?</h2><ul>');
-			//once the autoincrement issue is fixed, dom will put in a way to show the names of folks who like this
 			var likes = '';
 			conn.query('SELECT uname, users.uid FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1', [request.params.iid]).on('row', function(row) {
 				console.log(row);
-				//response.write('<li>' + row.uname + '</li>');
 				likes = likes + '<li><a href="/user/' + row.uid + '">' + row.uname + '</a></li>';
 			
 			}).on('end', function() {console.log('likes are: ' + likes)
@@ -80,9 +77,6 @@ app.get('/*', function(request, response) {
 		response.write('<h1>Whoa there!</h1><p>Page not found. Check the URL maybe?</p>');
 		response.end();
 		});
-
-///////////////////////////
-///////////////////////////
 
 //Visit localhost:8080
 app.listen(8080, function() { console.log(' - listening on port 8080');});
