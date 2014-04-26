@@ -17,22 +17,21 @@ _users (information on users themselves)
 CHAR u-id : generate in some manner, six digit randomized and noncontiguous?
 CHAR username
 CHAR some sort of location information: 'LAT,LONG'
-CHAR intr : parsable list of interests indicated by this user
 
 
-uid		username		loc			intr
-A8K1	Chad			2,8			1,2,5
-G44H	Diane			2,7			2,3
-Q2QV	Mark			3,5			2,3
-MM7M	Sandra			6,1			2,5
-CRLF	Dexter			7,5			1,4
-83C5	Leo				3,4			3,4,5
-BHQT	James			2,2			3,4
-LC9H	Nestor			3,1			1,5
-K5DD	Harris			7,5			2,4
-6EVJ	Bertha			6,6			4,8
-NML0	Francine		3,5			3,6
-VI4S	Tim				1,4			7,8
+uid		username		loc (lat,long)				
+A8K1	Chad			41.8193,-71.3922			
+G44H	Diane			41.8193,-71.3947			
+Q2QV	Mark			41.8218,-71.3997			
+MM7M	Sandra			41.8293,-71.4097			
+CRLF	Dexter			41.8318,-71.3997			
+83C5	Leo				41.8218,-71.4022			
+BHQT	James			41.8193,-71.4072			
+LC9H	Nestor			41.8218,-71.4097			
+K5DD	Harris			41.8268,-71.3947			
+6EVJ	Bertha			41.8293,-71.3972			
+NML0	Francine		41.8268,-71.4047			
+VI4S	Tim				41.8168,-71.4022			
 
 
 
@@ -74,21 +73,21 @@ function getHash(pwd){
 	return crypto.createHash('md5').update(pwd).digest('hex');
 }
 
-conn.query('CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, uname TEXT, password TEXT, loc TEXT, intr TEXT);').on('end', 
+conn.query('CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, uname TEXT, password TEXT, loc TEXT);').on('end', 
 		function() {
 			
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("A8K1","Chad",$pwd,"2,8","1,2,5")', [getHash("Chad")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("G44H","Diane",$pwd,"2,7","2,3")', [getHash("Diane")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("Q2QV","Mark",$pwd,"3,5","2,3")', [getHash("Mark")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("MM7M","Sandra",$pwd,"6,1","2,5")', [getHash("Sandra")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("CRLF","Dexter",$pwd,"7,5","1,4")', [getHash("Dexter")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("83C5","Leo",$pwd,"3,4","3,4,5")', [getHash("Leo")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("BHQT","James",$pwd,"2,2","3,4")', [getHash("James")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("LC9H","Nestor",$pwd,"3,1","1,5")', [getHash("Nestor")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("K5DD","Harris",$pwd,"7,5","2,4")', [getHash("Harris")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("6EVJ","Bertha",$pwd,"6,6","4,8")', [getHash("Bertha")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("NML0","Francine",$pwd,"3,5","3,6")', [getHash("Francine")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("VI4S","Tim",$pwd,"1,4","7,8")', [getHash("Tim")]).on('end',
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("A8K1","Chad",$pwd,"41.8193,-71.3922")', [getHash("Chad")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("G44H","Diane",$pwd,"41.8193,-71.3947")', [getHash("Diane")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("Q2QV","Mark",$pwd,"41.8218,-71.3997")', [getHash("Mark")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("MM7M","Sandra",$pwd,"41.8293,-71.4097")', [getHash("Sandra")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("CRLF","Dexter",$pwd,"41.8318,-71.3997")', [getHash("Dexter")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("83C5","Leo",$pwd,"41.8218,-71.4022")', [getHash("Leo")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("BHQT","James",$pwd,"41.8193,-71.4072")', [getHash("James")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("LC9H","Nestor",$pwd,"41.8218,-71.4097")', [getHash("Nestor")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("K5DD","Harris",$pwd,"41.8268,-71.3947")', [getHash("Harris")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("6EVJ","Bertha",$pwd,"41.8293,-71.3972")', [getHash("Bertha")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("NML0","Francine",$pwd,"41.8268,-71.4047")', [getHash("Francine")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("VI4S","Tim",$pwd,"41.8168,-71.4022")', [getHash("Tim")]).on('end',
 
 				function(){
 					console.log('-All users inserted');
@@ -144,72 +143,74 @@ conn.query('CREATE TABLE IF NOT EXISTS interest (intid INTEGER PRIMARY KEY AUTOI
 /*
 _int-memb: table of (interest-id, user-id) pairs
 INT intid : numerical ID, foreign key with interest 
-CHAR uid : user marking this interest 
+CHAR uid  : user marking this interest 
+INT level : how much you're interested
 
-intid	uid
-1		A8K1
-1		CRLF
-1		LC9H
-2		A8K1
-2		G44H
-2		Q2QV
-2		MM7M
-2		K5DD
-3		G44H
-3		Q2QV
-3		83C5
-3		BHQT
-3		NML0
-4		CRLF
-4		83C5
-4		BHQT
-4		K5DD
-4		6EVJ
-5		A8K1
-5		MM7M
-5		83C5
-5		LC9H
-6		NML0
-7		VI4S
-8		6EVJ
-8		VI4S
+intid	uid		level
+1		A8K1	4
+1		CRLF	2	
+1		LC9H	3	
+2		A8K1	4
+2		G44H	1
+2		Q2QV	5
+2		MM7M	3
+2		K5DD	2
+3		G44H	4
+3		Q2QV	5
+3		83C5	1
+3		BHQT	2
+3		NML0	3
+4		CRLF	5
+4		83C5	5
+4		BHQT	2
+4		K5DD	4
+4		6EVJ	1
+5		A8K1	4
+5		MM7M	5
+5		83C5	2
+5		LC9H	1
+6		NML0	3
+7		VI4S	5
+8		6EVJ	1
+8		VI4S	3
 
 
 
 note: there's gotta be a better way of doing this.
 */
 
-conn.query('CREATE TABLE IF NOT EXISTS intmemb (intid INTEGER, uid TEXT);').on('end', 
+conn.query('CREATE TABLE IF NOT EXISTS intmemb (intid INTEGER, uid TEXT, level INTEGER);').on('end', 
 		function() { 
 			console.log('-Membership table created');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (1,"A8K1")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (1,"CRLF")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (1,"LC9H")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (2,"A8K1")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (2,"G44H")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (2,"Q2QV")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (2,"MM7M")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (2,"K5DD")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (3,"G44H")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (3,"Q2QV")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (3,"83C5")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (3,"BHQT")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (3,"NML0")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (4,"CRLF")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (4,"83C5")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (4,"BHQT")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (4,"K5DD")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (4,"6EVJ")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (5,"A8K1")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (5,"MM7M")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (5,"83C5")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (5,"LC9H")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (6,"NML0")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (7,"VI4S")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (8,"6EVJ")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (8,"VI4S")').on('end', function() { console.log('--All membership entries inserted');});
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (1,"A8K1",4)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (1,"CRLF",2)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (1,"LC9H",3)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (2,"A8K1",4)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (2,"G44H",1)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (2,"Q2QV",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (2,"MM7M",3)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (2,"K5DD",2)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (3,"G44H",4)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (3,"Q2QV",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (3,"83C5",1)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (3,"BHQT",2)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (3,"NML0",3)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (4,"CRLF",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (4,"83C5",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (4,"BHQT",2)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (4,"K5DD",4)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (4,"6EVJ",1)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (5,"A8K1",4)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (5,"MM7M",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (5,"83C5",2)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (5,"LC9H",1)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (6,"NML0",3)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (7,"VI4S",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (8,"6EVJ",1)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (8,"VI4S",3)').on('end', function() { console.log('--All membership entries inserted');});
 			});
 
+<<<<<<< HEAD
 /*
 spellfix virtual db
 */
@@ -233,3 +234,22 @@ function makeSpellFix() {
 
 
 
+=======
+
+/*
+
+level: descriptions of how interested a user is in an interest.
+
+
+			
+conn.query('CREATE TABLE IF NOT EXISTS levels (level INTEGER PRIMARY KEY, description TEXT);').on('end',
+		function() {
+			console.log('-Levels descriptions created');
+			conn.query('INSERT INTO levels (level, description) VALUES (1, "I\'m a dabbler...")');
+			conn.query('INSERT INTO levels (level, description) VALUES (2, "I think it\'s neat.")');
+			conn.query('INSERT INTO levels (level, description) VALUES (3, "I sure do like it.")');
+			conn.query('INSERT INTO levels (level, description) VALUES (4, "I\'m super into it!")');
+			conn.query('INSERT INTO levels (level, description) VALUES (5, "I\'m all about this life!!!")');
+			
+		});*/
+>>>>>>> 0ebf8ec2a4c7bd2147a1399d28b4c555c061014f
