@@ -94,7 +94,7 @@ app.get('/messages', function(request, response){
 app.get('/user/:uid', function(request, response){
 	console.log(request.params.uid);
 	var intin;
-	conn.query('SELECT uname, loc, intr FROM users WHERE uid = $1', [request.params.uid]).on('row', 
+	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', 
 		function(row) {
 			console.log(row);
 			
@@ -102,22 +102,18 @@ app.get('/user/:uid', function(request, response){
 			response.write('<title>Details for ' + row.uname + '</title>'
 			+ '<h2>Where is ' + row.uname + '?</h2><p>' + row.uname + ' is at ' + row.loc 
 			+ '.</p>'+'<h2>What is ' + row.uname + ' interested in?</h2><p>'); 
-			var intarr = row.intr.split(",");
+			//var intarr = row.intr.split(",");
 			intin = "";
-			//response.write('<ul>');
-			for(var i = 0; i < intarr.length; i++)
-			{
-				var intrnum = intarr[i];
-				conn.query('SELECT intid, name FROM interest WHERE intid = $1', 
-							[intrnum]).on('row', function(row) 
-											{
-												console.log(row.name);
-												intin = '<li><a href="/interest/'+ row.intid + '">' + row.name + '</a></li>';
-												console.log(intin);
-												response.write(intin);
-												
-											});
-			}
+			
+			conn.query('SELECT name, intmemb.intid AS iid FROM interest, intmemb WHERE interest.intid = intmemb.intid AND intmemb.uid = $1', [request.params.uid]).on('row',
+				
+				function(row){console.log(row);response.write('<li><a href="/interest/'+ row.iid + '">' + row.name + '</a></li>');}
+			).on('end', 
+				function()
+				{
+					//view nearby users?
+					response.end();
+				});
 			
 				});
 	
@@ -139,11 +135,18 @@ app.get('/interest/addinterest', function(request, response){
 });
 
 app.post('/interest/addinterest', function(request, response){
-	var name = request.body.intname;
-	var desc = request.body.desc;
+	response.render('addinterest.html', {});
+	console.log('it\'s happening');
+	
+	var info = request.body;
+	var name = info.intname;
+	var desc = info.desc;
+	
 	console.log(name);
 	conn.query('INSERT INTO interest (name, desc) VALUES ($1, $2)', [name, desc]).on('end', function() {console.log(name + ' added to interests table');});
 });		
+
+
 
 app.get('/interest/:iid', function(request, response){
 	console.log(request.params.iid);
@@ -164,8 +167,14 @@ app.get('/interest/:iid', function(request, response){
 			
 				console.log('These folks do: ' + likes)
 				response.write(likes);
-				response.write('<p>see other interests: <a href="/interest/1">Indie Music</a> | <a href="/interest/2">Computers</a> | <a href="/interest/3">Modern Art</a> | <a href="/interest/4">Surfing</a> | <a href="/interest/5">Traveling</a> | <a href="/interest/6">Concerts</a> | <a href="/interest/6">Hiking</a> | <a href="/interest/8">Chocolate</a></p>');
-				response.end('</ul>');
+				response.write('<p>see other interests: ');
+				
+				conn.query('SELECT * FROM interest ORDER BY RANDOM() LIMIT 6').on('row', function(row) {
+				
+				response.write('| <span title="' + row.desc + '"><a href="/interest/' + row.intid + '">' + row.name + '</a></span> ');
+					
+				}).on('end', function(){response.end(' |</p>');});
+				
 				});
 			
 			

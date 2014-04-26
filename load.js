@@ -17,22 +17,21 @@ _users (information on users themselves)
 CHAR u-id : generate in some manner, six digit randomized and noncontiguous?
 CHAR username
 CHAR some sort of location information: 'LAT,LONG'
-CHAR intr : parsable list of interests indicated by this user
 
 
-uid		username		loc			intr
-A8K1	Chad			2,8			1,2,5
-G44H	Diane			2,7			2,3
-Q2QV	Mark			3,5			2,3
-MM7M	Sandra			6,1			2,5
-CRLF	Dexter			7,5			1,4
-83C5	Leo				3,4			3,4,5
-BHQT	James			2,2			3,4
-LC9H	Nestor			3,1			1,5
-K5DD	Harris			7,5			2,4
-6EVJ	Bertha			6,6			4,8
-NML0	Francine		3,5			3,6
-VI4S	Tim				1,4			7,8
+uid		username		loc	
+A8K1	Chad			2,8			
+G44H	Diane			2,7			
+Q2QV	Mark			3,5			
+MM7M	Sandra			6,1			
+CRLF	Dexter			7,5			
+83C5	Leo				3,4			
+BHQT	James			2,2			
+LC9H	Nestor			3,1			
+K5DD	Harris			7,5			
+6EVJ	Bertha			6,6			
+NML0	Francine		3,5			
+VI4S	Tim				1,4			
 
 
 
@@ -74,21 +73,21 @@ function getHash(pwd){
 	return crypto.createHash('md5').update(pwd).digest('hex');
 }
 
-conn.query('CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, uname TEXT, password TEXT, loc TEXT, intr TEXT);').on('end', 
+conn.query('CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, uname TEXT, password TEXT, loc TEXT);').on('end', 
 		function() {
 			
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("A8K1","Chad",$pwd,"2,8","1,2,5")', [getHash("Chad")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("G44H","Diane",$pwd,"2,7","2,3")', [getHash("Diane")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("Q2QV","Mark",$pwd,"3,5","2,3")', [getHash("Mark")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("MM7M","Sandra",$pwd,"6,1","2,5")', [getHash("Sandra")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("CRLF","Dexter",$pwd,"7,5","1,4")', [getHash("Dexter")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("83C5","Leo",$pwd,"3,4","3,4,5")', [getHash("Leo")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("BHQT","James",$pwd,"2,2","3,4")', [getHash("James")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("LC9H","Nestor",$pwd,"3,1","1,5")', [getHash("Nestor")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("K5DD","Harris",$pwd,"7,5","2,4")', [getHash("Harris")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("6EVJ","Bertha",$pwd,"6,6","4,8")', [getHash("Bertha")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("NML0","Francine",$pwd,"3,5","3,6")', [getHash("Francine")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc, intr) VALUES ("VI4S","Tim",$pwd,"1,4","7,8")', [getHash("Tim")]).on('end',
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("A8K1","Chad",$pwd,"2,8")', [getHash("Chad")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("G44H","Diane",$pwd,"2,7")', [getHash("Diane")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("Q2QV","Mark",$pwd,"3,5")', [getHash("Mark")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("MM7M","Sandra",$pwd,"6,1")', [getHash("Sandra")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("CRLF","Dexter",$pwd,"7,5")', [getHash("Dexter")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("83C5","Leo",$pwd,"3,4")', [getHash("Leo")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("BHQT","James",$pwd,"2,2")', [getHash("James")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("LC9H","Nestor",$pwd,"3,1")', [getHash("Nestor")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("K5DD","Harris",$pwd,"7,5")', [getHash("Harris")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("6EVJ","Bertha",$pwd,"6,6")', [getHash("Bertha")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("NML0","Francine",$pwd,"3,5")', [getHash("Francine")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc	) VALUES ("VI4S","Tim",$pwd,"1,4")', [getHash("Tim")]).on('end',
 
 				function(){
 					console.log('-All users inserted');

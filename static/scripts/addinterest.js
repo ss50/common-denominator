@@ -7,6 +7,7 @@ var _fObj = document.getElementById('add');
 		
 _fObj.addEventListener('submit', function(e) {
 			e.preventDefault();
+			console.log('click');
 			var name = this.intname.value;
 			var desc = this.desc.value;
 			alert(name);
