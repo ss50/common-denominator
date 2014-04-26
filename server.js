@@ -91,17 +91,56 @@ app.get('/messages', function(request, response){
 	response.render('messages.html', {});
 });
 
+app.get('/user/:uid/near', function(request, response) {
+	
+	response.writeHead(200, {'Content-Type': 'text/html'});
+	var userDist = "", udArr, lat, lon;
+	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', function(row) {userDist = row.loc; udArr = userDist.split(",");
+	lat = parseFloat(udArr[0]);
+	lon = parseFloat(udArr[1]);
+	console.log(lat);
+	response.write('<h2>These users are near ' + row.uname + ':</h2><ul>');});
+	
+	
+	
+	conn.query('SELECT uname, loc, uid FROM users WHERE uid != $1', [request.params.uid]).on('row',
+		function(row)
+		{
+			var oArr = row.loc.split(",");
+			var oLat = parseFloat(oArr[0]);
+			var oLon = parseFloat(oArr[1]);
+			
+			var xS = Math.pow((lat - oLat), 2);
+			var yS = Math.pow((lon - oLon), 2);
+			
+			var dist = Math.sqrt(xS + yS);
+			console.log(dist);
+			
+			if(dist < 3) //tweakable
+				response.write('<li><a href="/user/'+row.uid+'">'+row.uname+'</a></li>');
+			
+			//calculate distance!
+		
+		}).on('end', function() {response.end('</ul>');});
+	
+	
+	
+	
+	
+	
+});
+
 app.get('/user/:uid', function(request, response){
 	console.log(request.params.uid);
 	var intin;
 	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', 
 		function(row) {
 			console.log(row);
-			
+			var usrnm = row.uname;
 			response.writeHead(200, {'Content-Type': 'text/html'});
-			response.write('<title>Details for ' + row.uname + '</title>'
-			+ '<h2>Where is ' + row.uname + '?</h2><p>' + row.uname + ' is at ' + row.loc 
-			+ '.</p>'+'<h2>What is ' + row.uname + ' interested in?</h2><p>'); 
+			response.write('<title>Details for ' + usrnm + '</title>'
+			+ '<h2>Where is ' + usrnm + '?</h2><p>' + usrnm + ' is at ' + row.loc 
+			+ '.</p>'+'<h2>What is ' + usrnm + ' interested in?</h2><p>'); 
 			//var intarr = row.intr.split(",");
 			intin = "";
 			
@@ -112,6 +151,7 @@ app.get('/user/:uid', function(request, response){
 				function()
 				{
 					//view nearby users?
+					response.write('<br><a href="/user/' + request.params.uid + '/near">Who is near ' + usrnm + '?</a>');
 					response.end();
 				});
 			
@@ -145,7 +185,7 @@ app.get('/interest/all', function(request, response){
 	
 		response.write('<li><a href="/interest/' + row.intid + '">' + row.name + '</a>: ' + row.desc + '</li>');
 	
-	}).on('end', function(){response.end('</ul>');});
+	}).on('end', function(){response.end('</ul><a href="/interest/addinterest">Add an interest</a>');});
 		
 });
 
@@ -174,7 +214,7 @@ app.get('/interest/:iid', function(request, response){
 				
 				response.write('| <span title="' + row.desc + '"><a href="/interest/' + row.intid + '">' + row.name + '</a></span> ');
 					
-				}).on('end', function(){response.end(' |</p><br><a href="/interest/all">View all interests</a>');});
+				}).on('end', function(){response.end(' |</p><br><a href="/interest/all">View all interests</a><br><a href="/interest/addinterest">Add an interest</a>');});
 				
 				});
 			
