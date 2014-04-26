@@ -199,7 +199,7 @@ app.get('/interest/:iid', function(request, response){
 			response.write('<title>' + row.name + '</title><h1>' + row.name + ": " + row.desc //+ '.</h1>');
 			+ '.</h1><h2>Who likes it?</h2><ul>');
 			var likes = '';
-			conn.query('SELECT uname, level, users.uid FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1', [request.params.iid]).on('row', function(row) {
+			conn.query('SELECT uname, level, users.uid FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1 ORDER BY level DESC', [request.params.iid]).on('row', function(row) {
 				console.log(row);
 				likes = likes + '<li><a href="/user/' + row.uid + '">' + row.uname + '</a> (Interest level: '+row.level+')</li>';
 			
