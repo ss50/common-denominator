@@ -136,6 +136,13 @@ app.get('/interest/add/:intname/:intdesc', function(request, response) {
 app.get('/interest/addinterest', function(request, response){
 	response.render('addinterest.html', {});
 	
+});
+
+app.post('/interest/addinterest', function(request, response){
+	var name = request.body.intname;
+	var desc = request.body.desc;
+	console.log(name);
+	conn.query('INSERT INTO interest (name, desc) VALUES ($1, $2)', [name, desc]).on('end', function() {console.log(name + ' added to interests table');});
 });		
 
 app.get('/interest/:iid', function(request, response){
