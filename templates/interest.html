@@ -8,16 +8,20 @@
 		<script type="text/javascript" src="../static/scripts/client.js"></script>
     	<title>Interest:{{Name of Interest}}</title>
 	</head>
-	<body onload='getUsers(10)'>
+	<body onload='getUsers(100)'>
 		<div></div>
 		<div id='interest_main'>
+			<div id="h1_behind">
 			<h1>People who like: {{insert interest here}}</h1>
+			</div>
 			<h2>Search</h2>
-			<span>By Name: </span>
-			<input name='user_by_name'></input>
+			<div id="name"><span>By Name: </span>
+			<input name='user_by_name'></input></div>
 			<br>
+			<div id="location">
 			<span> By Location: </span>
 			<input name='user_by_loc'></input>
+			</div>
 			<table id='users_table'>
 			</table>
 		</div>
