@@ -33,6 +33,10 @@ app.get('/messages', function(request, response){
 	response.render('messages.html', {});
 });
 
+app.get('/select', function(request, response){
+	response.render('interestSelection.html', {});
+});
+
 app.get('/user/:uid', function(request, response){
 	console.log(request.params.uid);
 	conn.query('SELECT uname, loc, intr FROM users WHERE uid = $1', [request.params.uid]).on('row', 
@@ -75,6 +79,10 @@ app.get('/interest/:iid', function(request, response){
 			
 			});
 		});
+
+app.get('/LEDInterests', function(request, response){
+	response.json(['abc', 'def', 'ghi']);
+});
 		
 app.get('/*', function(request, response) {
 		response.writeHead(200, {'Content-Type': 'text/html'});

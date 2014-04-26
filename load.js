@@ -136,8 +136,11 @@ conn.query('CREATE TABLE IF NOT EXISTS interest (intid INTEGER PRIMARY KEY AUTOI
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Boating","Just like T-Pain")');
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Tanning","Soaking up rays")');
 			conn.query('INSERT INTO interest (name, desc) VALUES ("Board Games","Roll the dice, draw a card")');
-			conn.query('INSERT INTO interest (name, desc) VALUES ("Cars","Vroom vroom fast")').on('end', function() { console.log('--All interests inserted');});
+			conn.query('INSERT INTO interest (name, desc) VALUES ("Cars","Vroom vroom fast")').on('end', function() { 
+				console.log('--All interests inserted');
+				makeSpellFix();
 			});
+		});
 /*
 _int-memb: table of (interest-id, user-id) pairs
 INT intid : numerical ID, foreign key with interest 
@@ -206,4 +209,27 @@ conn.query('CREATE TABLE IF NOT EXISTS intmemb (intid INTEGER, uid TEXT);').on('
 			conn.query('INSERT INTO intmemb (intid, uid) VALUES (8,"6EVJ")');
 			conn.query('INSERT INTO intmemb (intid, uid) VALUES (8,"VI4S")').on('end', function() { console.log('--All membership entries inserted');});
 			});
+
+/*
+spellfix virtual db
+*/
+
+function makeSpellFix() {
+	conn.loadExtension('spellfix');
+	// var makeSpellFix = conn.query('CREATE VIRTUAL TABLE IF NOT EXISTS spellfix USING spellfix1;');
+	// makeSpellFix.on('error', function(err) {
+	// 	console.log('-Error creating spellfix');
+	// });
+	// makeSpellFix.on('end', 
+	// 	function() { 
+	// 		console.log('-Spellfix table created');
+	// 		conn.query('INSERT INTO spellfix(word) SELECT name FROM interest;').on('end', function() { 
+	// 			console.log('--All interests inserted into spellfix');
+	// 		});
+	// 	}
+	// );
+}
+
+
+
 
