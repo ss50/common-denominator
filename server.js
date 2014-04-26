@@ -96,8 +96,8 @@ app.get('/user/:uid/near', function(request, response) {
 	response.writeHead(200, {'Content-Type': 'text/html'});
 	var userDist = "", udArr, lat, lon;
 	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', function(row) {userDist = row.loc; udArr = userDist.split(",");
-	lat = parseFloat(udArr[0]);
-	lon = parseFloat(udArr[1]);
+	lat = parseFloat(udArr[0]) * 1000;
+	lon = parseFloat(udArr[1]) * 1000;
 	console.log(lat);
 	response.write('<h2>These users are near ' + row.uname + ':</h2><ul>');});
 	
@@ -107,8 +107,8 @@ app.get('/user/:uid/near', function(request, response) {
 		function(row)
 		{
 			var oArr = row.loc.split(",");
-			var oLat = parseFloat(oArr[0]);
-			var oLon = parseFloat(oArr[1]);
+			var oLat = parseFloat(oArr[0]) * 1000;
+			var oLon = parseFloat(oArr[1]) * 1000;
 			
 			var xS = Math.pow((lat - oLat), 2);
 			var yS = Math.pow((lon - oLon), 2);
@@ -116,7 +116,7 @@ app.get('/user/:uid/near', function(request, response) {
 			var dist = Math.sqrt(xS + yS);
 			console.log(dist);
 			
-			if(dist < 3) //tweakable
+			if(dist < 12) //tweakable
 				response.write('<li><a href="/user/'+row.uid+'">'+row.uname+'</a></li>');
 			
 			//calculate distance!

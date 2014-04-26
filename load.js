@@ -19,19 +19,19 @@ CHAR username
 CHAR some sort of location information: 'LAT,LONG'
 
 
-uid		username		loc	
-A8K1	Chad			2,8			
-G44H	Diane			2,7			
-Q2QV	Mark			3,5			
-MM7M	Sandra			6,1			
-CRLF	Dexter			7,5			
-83C5	Leo				3,4			
-BHQT	James			2,2			
-LC9H	Nestor			3,1			
-K5DD	Harris			7,5			
-6EVJ	Bertha			6,6			
-NML0	Francine		3,5			
-VI4S	Tim				1,4			
+uid		username		loc (lat,long)				
+A8K1	Chad			41.8193,-71.3922			
+G44H	Diane			41.8193,-71.3947			
+Q2QV	Mark			41.8218,-71.3997			
+MM7M	Sandra			41.8293,-71.4097			
+CRLF	Dexter			41.8318,-71.3997			
+83C5	Leo				41.8218,-71.4022			
+BHQT	James			41.8193,-71.4072			
+LC9H	Nestor			41.8218,-71.4097			
+K5DD	Harris			41.8268,-71.3947			
+6EVJ	Bertha			41.8293,-71.3972			
+NML0	Francine		41.8268,-71.4047			
+VI4S	Tim				41.8168,-71.4022			
 
 
 
@@ -76,18 +76,18 @@ function getHash(pwd){
 conn.query('CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, uname TEXT, password TEXT, loc TEXT);').on('end', 
 		function() {
 			
-			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("A8K1","Chad",$pwd,"2,8")', [getHash("Chad")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("G44H","Diane",$pwd,"2,7")', [getHash("Diane")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("Q2QV","Mark",$pwd,"3,5")', [getHash("Mark")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("MM7M","Sandra",$pwd,"6,1")', [getHash("Sandra")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("CRLF","Dexter",$pwd,"7,5")', [getHash("Dexter")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("83C5","Leo",$pwd,"3,4")', [getHash("Leo")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("BHQT","James",$pwd,"2,2")', [getHash("James")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("LC9H","Nestor",$pwd,"3,1")', [getHash("Nestor")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("K5DD","Harris",$pwd,"7,5")', [getHash("Harris")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("6EVJ","Bertha",$pwd,"6,6")', [getHash("Bertha")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("NML0","Francine",$pwd,"3,5")', [getHash("Francine")]);
-			conn.query('INSERT INTO users (uid, uname, password, loc	) VALUES ("VI4S","Tim",$pwd,"1,4")', [getHash("Tim")]).on('end',
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("A8K1","Chad",$pwd,"41.8193,-71.3922")', [getHash("Chad")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("G44H","Diane",$pwd,"41.8193,-71.3947")', [getHash("Diane")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("Q2QV","Mark",$pwd,"41.8218,-71.3997")', [getHash("Mark")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("MM7M","Sandra",$pwd,"41.8293,-71.4097")', [getHash("Sandra")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("CRLF","Dexter",$pwd,"41.8318,-71.3997")', [getHash("Dexter")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("83C5","Leo",$pwd,"41.8218,-71.4022")', [getHash("Leo")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("BHQT","James",$pwd,"41.8193,-71.4072")', [getHash("James")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("LC9H","Nestor",$pwd,"41.8218,-71.4097")', [getHash("Nestor")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("K5DD","Harris",$pwd,"41.8268,-71.3947")', [getHash("Harris")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("6EVJ","Bertha",$pwd,"41.8293,-71.3972")', [getHash("Bertha")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("NML0","Francine",$pwd,"41.8268,-71.4047")', [getHash("Francine")]);
+			conn.query('INSERT INTO users (uid, uname, password, loc) VALUES ("VI4S","Tim",$pwd,"41.8168,-71.4022")', [getHash("Tim")]).on('end',
 
 				function(){
 					console.log('-All users inserted');
