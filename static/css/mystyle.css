@@ -1,4 +1,4 @@
-﻿body {
+body {
   font: 15px/20px Raleway;
   margin: 0;
 min-width: 900px;
@@ -14,11 +14,18 @@ a{
 .user_image{
   width:100px;
   height:100px;
+  padding:0px;
+}
+
+.user_image:hover{
+    box-shadow:  5px 5px 5px rgba(0, 0, 0, .5);  
+    width:130px;
+    height:130px;
+
 }
 
 #interest_main{
-  width: 70%;
-  margin:auto;
+
 }
 
 #login_header{
@@ -30,6 +37,50 @@ a{
 #login_header h1{
    text-align:center;
    margin-top: 100px;
+}
+
+#h1_behind{
+  position: fixed;
+  top:-10px;
+  background-color: #88382D;
+  height:100px;
+  width:100%;
+  z-index: 1000;
+}
+#interest_main{
+  position:relative;
+  top:90px;
+}
+
+#interest_main h1{
+  text-align:center;
+  letter-spacing: -4px;
+  font-size:50px;
+  z-index: 100;
+  color:rgb(245, 213, 188);
+
+}
+#interest_main h2{
+  position:relative;
+  text-align:center;
+  letter-spacing: -4px;
+  font-size:30px;
+}
+#interest_main span{
+  letter-spacing: -2px;
+  font-size:25px;
+}
+#name{
+    width: 320px;
+        margin-left:auto;
+    margin-right:auto;
+}
+#location{
+        width: 340px;
+position:relative;
+top:-15px;
+    margin-left:auto;
+    margin-right:auto;
 }
 
 #login_form_wrapper{
@@ -74,12 +125,10 @@ a{
 }
 
 #users_table{
-  margin:auto;
-  margin-top: 30px;
 }
 
-#users_table td{
-  padding: 5 5 5 5;
+#users_table td:hover{
+  position:absolute;
 }
 
 
@@ -94,6 +143,7 @@ a{
   top: 100px;
   display:block;
   margin: auto;
+  top:100px;
 }
 
 #bar{
@@ -110,7 +160,7 @@ a{
 #nav_bar{
   width:100%;
   height:500px;
-  position: absolute;
+  position: fixed;
   background-color:#88382D;
 }
 
@@ -126,17 +176,16 @@ a{
 }
 
 #nav_text{
-  position: fixed;
+  position: relative;
   font-size: 70px;
   font-family: 'Raleway', sans-serif;
-  letter-spacing: -2px;
+  letter-spacing: -4px;
   font-weight: bold;
   padding-top: 50px;
   height:100px;
   text-align:center;
   color:#F5D5BC;
   z-index:1000;
-  left:22%;
 }
 
 
@@ -163,7 +212,10 @@ a{
 
 }
 
-
+#profile{
+  position:relative;
+  top:20px;
+}
 
 .container{
  position:relative;
