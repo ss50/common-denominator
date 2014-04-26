@@ -119,16 +119,6 @@ app.get('/user/:uid', function(request, response){
 	
 });
 
-/*app.post('/interest/add', function(request, response) {
-		console.log(request.params);
-});*/
-
-app.get('/interest/add/:intname/:intdesc', function(request, response) {
-
-	//hacky way of adding interests
-	addInterest(request.params.intname, request.params.intdesc);
-});
-
 app.get('/interest/addinterest', function(request, response){
 	response.render('addinterest.html', {});
 	
@@ -146,7 +136,18 @@ app.post('/interest/addinterest', function(request, response){
 	conn.query('INSERT INTO interest (name, desc) VALUES ($1, $2)', [name, desc]).on('end', function() {console.log(name + ' added to interests table');});
 });		
 
-
+app.get('/interest/all', function(request, response){
+	response.writeHead(200, {'Content-Type': 'text/html'});
+	response.write('<h1>Browse all the interests. Go ahead.</h1><ul>');
+	conn.query('SELECT * FROM interest').on('row', 
+	function(row) 
+	{
+	
+		response.write('<li><a href="/interest/' + row.intid + '">' + row.name + '</a>: ' + row.desc + '</li>');
+	
+	}).on('end', function(){response.end('</ul>');});
+		
+});
 
 app.get('/interest/:iid', function(request, response){
 	console.log(request.params.iid);
@@ -173,7 +174,7 @@ app.get('/interest/:iid', function(request, response){
 				
 				response.write('| <span title="' + row.desc + '"><a href="/interest/' + row.intid + '">' + row.name + '</a></span> ');
 					
-				}).on('end', function(){response.end(' |</p>');});
+				}).on('end', function(){response.end(' |</p><br><a href="/interest/all">View all interests</a>');});
 				
 				});
 			
@@ -189,14 +190,6 @@ app.get('/*', function(request, response) {
 		response.write('<h1>Whoa there!</h1><p>Page not found. Check the URL maybe?</p>');
 		response.end();
 		});
-
-function addInterest(name, desc){
-	
-	//TODO: duplicate checking
-	conn.query('INSERT INTO interest (name, desc) VALUES ($1, $2)', [name, desc]).on('end', function() {console.log(name + ' added to interests table');});
-	
-}
-
 
 		
 //Visit localhost:8080
