@@ -35,20 +35,68 @@ app.get('/messages', function(request, response){
 
 app.get('/user/:uid', function(request, response){
 	console.log(request.params.uid);
+	var intin;
 	conn.query('SELECT uname, loc, intr FROM users WHERE uid = $1', [request.params.uid]).on('row', 
 		function(row) {
 			console.log(row);
 			
 			response.writeHead(200, {'Content-Type': 'text/html'});
-			response.write('<title>Details for ' + row.uname + '</title><h2>What is ' + row.uname + ' interested in?</h2><p>' 
-			+ row.uname + ' likes interests numbers ' + row.intr + '.</p>'
+			response.write('<title>Details for ' + row.uname + '</title>'
 			+ '<h2>Where is ' + row.uname + '?</h2><p>' + row.uname + ' is at ' + row.loc 
-			+ '.</p>'); 
-			response.end();
-				}); //how to access the results?
+			+ '.</p>'+'<h2>What is ' + row.uname + ' interested in?</h2><p>'); 
+			var intarr = row.intr.split(",");
+			intin = "";
+			//response.write('<ul>');
+			for(var i = 0; i < intarr.length; i++)
+			{
+				var intrnum = intarr[i];
+				conn.query('SELECT intid, name FROM interest WHERE intid = $1', 
+							[intrnum]).on('row', function(row) 
+											{
+												console.log(row.name);
+												intin = '<li><a href="/interest/'+ row.intid + '">' + row.name + '</a></li>';
+												console.log(intin);
+												response.write(intin);
+												
+											});/*.on('end', function() {
+															console.log('---');
+															console.log(i);
+															console.log(intarr.length);
+															console.log('---');
+															if(i == intarr.length)
+															response.end('</ul>');
+																	});*/
+			}
+			
+				});
+	
 });
 
-//note: autoincrement seems to put the first record's value at 2? how odd
+/*app.post('/interest/add', function(request, response) {
+		console.log(request.params);
+});*/
+
+app.get('/interest/add/:intname/:intdesc', function(request, response) {
+
+	//hacky way of adding interests
+	addInterest(request.params.intname, request.params.intdesc);
+});
+
+app.get('/interest/add', function(request, response){
+
+	response.writeHead(200, {'Content-Type': 'text/html'});
+	
+	//fields to add stuff
+	response.write('<form id="demo-form">' + 
+					'<label for="interest">Interest Name</label><br><input type="text" id="intname" name="intname"><br>' + 
+					'<label for="description">Interest Description</label><br><input type="text" id="intdesc" name="intdesc">' + 
+					'<input type="submit" value="Submit"></form>'+
+					'<script></script>');
+					//wait how do i actually add these
+
+	response.end();
+});		
+
 app.get('/interest/:iid', function(request, response){
 	console.log(request.params.iid);
 	conn.query('SELECT name, desc FROM interest WHERE intid = $1', [request.params.iid]).on('row', 
@@ -66,7 +114,7 @@ app.get('/interest/:iid', function(request, response){
 			}).on('end', function() {
 			
 			
-				console.log('likes are: ' + likes)
+				console.log('These folks do: ' + likes)
 				response.write(likes);
 				response.write('<p>see other interests: <a href="/interest/1">Indie Music</a> | <a href="/interest/2">Computers</a> | <a href="/interest/3">Modern Art</a> | <a href="/interest/4">Surfing</a> | <a href="/interest/5">Traveling</a> | <a href="/interest/6">Concerts</a> | <a href="/interest/6">Hiking</a> | <a href="/interest/8">Chocolate</a></p>');
 				response.end('</ul>');
@@ -76,11 +124,23 @@ app.get('/interest/:iid', function(request, response){
 			});
 		});
 		
+
+
+		
 app.get('/*', function(request, response) {
 		response.writeHead(200, {'Content-Type': 'text/html'});
 		response.write('<h1>Whoa there!</h1><p>Page not found. Check the URL maybe?</p>');
 		response.end();
 		});
 
+function addInterest(name, desc){
+	
+	//TODO: duplicate checking
+	conn.query('INSERT INTO interest (name, desc) VALUES ($1, $2)', [name, desc]).on('end', function() {console.log(name + ' added to interests table');});
+	
+}
+
+
+		
 //Visit localhost:8080
 app.listen(8080, function() { console.log(' - listening on port 8080');});
