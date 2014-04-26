@@ -16,9 +16,10 @@ the html page
 function getUsers(numusers){
 	var table = document.getElementById('users_table');
 	$(table).css("width","100%");
-	var width=$("#interest_main").width();
+	var width = document.body.clientWidth;
 	console.log(width);
-	var users_per_row = width/100;
+	var users_per_row = Math.floor(width/100);
+	console.log(users_per_row);
 	var row;
 	var cell;
 
