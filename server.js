@@ -116,14 +116,7 @@ app.get('/user/:uid', function(request, response){
 												console.log(intin);
 												response.write(intin);
 												
-											});/*.on('end', function() {
-															console.log('---');
-															console.log(i);
-															console.log(intarr.length);
-															console.log('---');
-															if(i == intarr.length)
-															response.end('</ul>');
-																	});*/
+											});
 			}
 			
 				});
@@ -140,19 +133,9 @@ app.get('/interest/add/:intname/:intdesc', function(request, response) {
 	addInterest(request.params.intname, request.params.intdesc);
 });
 
-app.get('/interest/add', function(request, response){
-
-	response.writeHead(200, {'Content-Type': 'text/html'});
+app.get('/interest/addinterest', function(request, response){
+	response.render('addinterest.html', {});
 	
-	//fields to add stuff
-	response.write('<form id="demo-form">' + 
-					'<label for="interest">Interest Name</label><br><input type="text" id="intname" name="intname"><br>' + 
-					'<label for="description">Interest Description</label><br><input type="text" id="intdesc" name="intdesc">' + 
-					'<input type="submit" value="Submit"></form>'+
-					'<script></script>');
-					//wait how do i actually add these
-
-	response.end();
 });		
 
 app.get('/interest/:iid', function(request, response){
