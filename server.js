@@ -105,9 +105,9 @@ app.get('/user/:uid', function(request, response){
 			//var intarr = row.intr.split(",");
 			intin = "";
 			
-			conn.query('SELECT name, intmemb.intid AS iid FROM interest, intmemb WHERE interest.intid = intmemb.intid AND intmemb.uid = $1', [request.params.uid]).on('row',
+			conn.query('SELECT name, intmemb.intid AS iid, level  FROM interest, intmemb WHERE interest.intid = intmemb.intid AND intmemb.uid = $1', [request.params.uid]).on('row',
 				
-				function(row){console.log(row);response.write('<li><a href="/interest/'+ row.iid + '">' + row.name + '</a></li>');}
+				function(row){console.log(row);response.write('<li><a href="/interest/'+ row.iid + '">' + row.name + '</a> (Interest level: '+row.level+')</li>');}
 			).on('end', 
 				function()
 				{
@@ -158,9 +158,9 @@ app.get('/interest/:iid', function(request, response){
 			response.write('<title>' + row.name + '</title><h1>' + row.name + ": " + row.desc //+ '.</h1>');
 			+ '.</h1><h2>Who likes it?</h2><ul>');
 			var likes = '';
-			conn.query('SELECT uname, users.uid FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1', [request.params.iid]).on('row', function(row) {
+			conn.query('SELECT uname, level, users.uid FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1', [request.params.iid]).on('row', function(row) {
 				console.log(row);
-				likes = likes + '<li><a href="/user/' + row.uid + '">' + row.uname + '</a></li>';
+				likes = likes + '<li><a href="/user/' + row.uid + '">' + row.uname + '</a> (Interest level: '+row.level+')</li>';
 			
 			}).on('end', function() {
 			

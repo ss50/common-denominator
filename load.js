@@ -140,69 +140,87 @@ conn.query('CREATE TABLE IF NOT EXISTS interest (intid INTEGER PRIMARY KEY AUTOI
 /*
 _int-memb: table of (interest-id, user-id) pairs
 INT intid : numerical ID, foreign key with interest 
-CHAR uid : user marking this interest 
+CHAR uid  : user marking this interest 
+INT level : how much you're interested
 
-intid	uid
-1		A8K1
-1		CRLF
-1		LC9H
-2		A8K1
-2		G44H
-2		Q2QV
-2		MM7M
-2		K5DD
-3		G44H
-3		Q2QV
-3		83C5
-3		BHQT
-3		NML0
-4		CRLF
-4		83C5
-4		BHQT
-4		K5DD
-4		6EVJ
-5		A8K1
-5		MM7M
-5		83C5
-5		LC9H
-6		NML0
-7		VI4S
-8		6EVJ
-8		VI4S
+intid	uid		level
+1		A8K1	4
+1		CRLF	2	
+1		LC9H	3	
+2		A8K1	4
+2		G44H	1
+2		Q2QV	5
+2		MM7M	3
+2		K5DD	2
+3		G44H	4
+3		Q2QV	5
+3		83C5	1
+3		BHQT	2
+3		NML0	3
+4		CRLF	5
+4		83C5	5
+4		BHQT	2
+4		K5DD	4
+4		6EVJ	1
+5		A8K1	4
+5		MM7M	5
+5		83C5	2
+5		LC9H	1
+6		NML0	3
+7		VI4S	5
+8		6EVJ	1
+8		VI4S	3
 
 
 
 note: there's gotta be a better way of doing this.
 */
 
-conn.query('CREATE TABLE IF NOT EXISTS intmemb (intid INTEGER, uid TEXT);').on('end', 
+conn.query('CREATE TABLE IF NOT EXISTS intmemb (intid INTEGER, uid TEXT, level INTEGER);').on('end', 
 		function() { 
 			console.log('-Membership table created');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (1,"A8K1")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (1,"CRLF")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (1,"LC9H")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (2,"A8K1")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (2,"G44H")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (2,"Q2QV")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (2,"MM7M")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (2,"K5DD")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (3,"G44H")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (3,"Q2QV")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (3,"83C5")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (3,"BHQT")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (3,"NML0")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (4,"CRLF")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (4,"83C5")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (4,"BHQT")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (4,"K5DD")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (4,"6EVJ")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (5,"A8K1")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (5,"MM7M")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (5,"83C5")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (5,"LC9H")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (6,"NML0")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (7,"VI4S")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (8,"6EVJ")');
-			conn.query('INSERT INTO intmemb (intid, uid) VALUES (8,"VI4S")').on('end', function() { console.log('--All membership entries inserted');});
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (1,"A8K1",4)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (1,"CRLF",2)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (1,"LC9H",3)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (2,"A8K1",4)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (2,"G44H",1)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (2,"Q2QV",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (2,"MM7M",3)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (2,"K5DD",2)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (3,"G44H",4)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (3,"Q2QV",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (3,"83C5",1)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (3,"BHQT",2)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (3,"NML0",3)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (4,"CRLF",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (4,"83C5",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (4,"BHQT",2)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (4,"K5DD",4)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (4,"6EVJ",1)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (5,"A8K1",4)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (5,"MM7M",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (5,"83C5",2)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (5,"LC9H",1)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (6,"NML0",3)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (7,"VI4S",5)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (8,"6EVJ",1)');
+			conn.query('INSERT INTO intmemb (intid, uid, level) VALUES (8,"VI4S",3)').on('end', function() { console.log('--All membership entries inserted');});
 			});
 
+
+/*
+
+level: descriptions of how interested a user is in an interest.
+
+
+			
+conn.query('CREATE TABLE IF NOT EXISTS levels (level INTEGER PRIMARY KEY, description TEXT);').on('end',
+		function() {
+			console.log('-Levels descriptions created');
+			conn.query('INSERT INTO levels (level, description) VALUES (1, "I\'m a dabbler...")');
+			conn.query('INSERT INTO levels (level, description) VALUES (2, "I think it\'s neat.")');
+			conn.query('INSERT INTO levels (level, description) VALUES (3, "I sure do like it.")');
+			conn.query('INSERT INTO levels (level, description) VALUES (4, "I\'m super into it!")');
+			conn.query('INSERT INTO levels (level, description) VALUES (5, "I\'m all about this life!!!")');
+			
+		});*/
