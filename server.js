@@ -27,6 +27,10 @@ app.configure('development', function(){
 	app.use(express.errorHandler());
 });
 
+// we may want to ignore anydb and just use this:
+var sqlite3 = require("sqlite3").verbose();
+var db = new sqlite3.Database("commondenominator.db");
+
 ///////////////////////////
 ///////////////////////////
 
@@ -238,11 +242,37 @@ app.get('/interest/:iid', function(request, response){
 			});
 		});
 
-app.get('/LEDInterests', function(request, response){
-	response.json(['abc', 'def', 'ghi']);
-});
+// virtual tables can't be stored
+db.loadExtension('spellfix', function(error) {
+	if (error) {
+		console.log("-error loading spellfix extension");
+	} else {
+		console.log("-loaded spellfix extension");
 		
+		db.all("SELECT word FROM spellfix WHERE top=1;", function(err, rows) {
+			if (!rows) {
+				db.serialize(function() {
+					db.run('CREATE VIRTUAL TABLE IF NOT EXISTS spellfix USING spellfix1;');
+					console.log('-spellfix table created');
 
+					db.run('INSERT INTO spellfix(word) SELECT name FROM interest;');
+					console.log('--All interests inserted into spellfix');
+				});
+			}
+	    });
+	}
+});
+
+app.get('/LEDInterests/:interest', function(request, response){
+	var interest = request.params.interest;
+	db.all("SELECT word FROM spellfix WHERE word MATCH '"+interest+"' AND top=5;", function(err, rows) {
+		var words = [];
+        rows.forEach(function (row) {
+            words.push(row.word);
+        });
+		response.json(words);
+    });
+});
 
 		
 app.get('/*', function(request, response) {
