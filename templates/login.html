@@ -16,7 +16,9 @@
 			<div>
 				<form id='login_form' method='POST' action='/login'>
 					<input type='text' name='user_name' placeholder='Username'></input>
+					<span class="error" id='user_name'></span>
 					<input type='password' name='password' placeholder='Password'></input>
+					<span class="error" id='password'></span>
 					<input type='submit' value='Log In' class='login_form_buttons'></input>
 				</form>
 			</div>
@@ -41,5 +43,15 @@
 			</div>
 			
 		</div>
+
+		<script>
+    		var i = 0;
+    		var error_list = document.getElementsByClassName('error');
+    		{{#errors}}
+    			var error_msg = "{{msg}}";
+				error_list[i].innerHTML = error_msg;
+				i++;
+			{{/errors}}
+    	</script>
 	</body>
 </html>
