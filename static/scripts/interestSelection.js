@@ -24,15 +24,20 @@ function inputChanged(e) {
 }
 
 function getSuggestions(e) {
-	var req = new XMLHttpRequest();
-	req.onload = function(e) {
-		var suggestions = JSON.parse(req.response);
-		// hey gadi, display these:
-		c(suggestions);
+	if (input.value) {
+		var req = new XMLHttpRequest();
+		req.onload = function(e) {
+			var suggestions = JSON.parse(req.response);
+			// hey gadi, display these:
+			c(suggestions);
+		}
+		req.open("get", "/LEDInterests/"+input.value, true);
+		req.send();
 	}
-	req.open("get", "/LEDInterests", true);
-	req.send();
 }
+
+
+
 
 
 

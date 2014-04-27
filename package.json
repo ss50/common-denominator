@@ -7,6 +7,7 @@
 		"any-db": "0.3.x",
 		"consolidate": "0.7.x",
 		"sqlite3": "2.1.x",
-		"connect": "2.14.2"
+		"connect": "2.14.2",
+		"express-validator": "0.4.1"
 	}
 }
