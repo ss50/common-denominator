@@ -24,6 +24,11 @@ a{
 
 }
 
+.error{
+  margin-bottom:0;
+  color:red;
+}
+
 #interest_main{
 
 }

@@ -15,10 +15,10 @@
 		<div id='login_form_wrapper'>
 			<div>
 				<form id='login_form' method='POST' action='/login'>
-					<input type='text' name='user_name' placeholder='Username'></input>
 					<span class="error" id='user_name'></span>
-					<input type='password' name='password' placeholder='Password'></input>
+					<input type='text' name='user_name' id='usr' placeholder='Username'></input>
 					<span class="error" id='password'></span>
+					<input type='password' name='password' placeholder='Password'></input>
 					<input type='submit' value='Log In' class='login_form_buttons'></input>
 				</form>
 			</div>
@@ -47,6 +47,8 @@
 		<script>
     		var i = 0;
     		var error_list = document.getElementsByClassName('error');
+    		var username = "{{username}}";
+    		document.getElementById('usr').value = username;
     		{{#errors}}
     			var error_msg = "{{msg}}";
 				error_list[i].innerHTML = error_msg;

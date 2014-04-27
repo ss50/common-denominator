@@ -70,7 +70,7 @@ app.post('/login', function(request,response){
 
 	var errors = request.validationErrors();
 
-	console.log(errors);
+	//console.log(errors);
 	console.log('in login post');
 
 	query.on('row',function(row){
@@ -81,24 +81,24 @@ app.post('/login', function(request,response){
 	});
 	query.on('end',function(end){
 		 // if there was a match with the username and password
-		console.log(login_info);
 		if (login_info.length != 0){
-			console.log("passed");
 			request.session.user_id = user_id;
 			console.log(request.session.user_id);
-			console.log("Username: " + username + " password: " + password + " user_id: " + user_id);
 			response.redirect("/");
 		}
 		else{
 			// redirect back to login form and display errors
-			console.log(errors);
+			username = request.body.user_name; // retain value of username after form has been submitted
+			// if username and password don't match
 			if (errors == null){
-				errors = [{msg: "Invalid username and password"}]; // if username and password don't match
+				errors = [{msg: "Invalid username and password"}]; 
 			}
+			// otherwise the fields were empty
 			response.render('login', {
 				title: '',
 				message: '',
-				errors: errors
+				errors: errors,
+				username: username
 			});
 		}
 		
@@ -246,6 +246,7 @@ app.get('/interest/:iid', function(request, response){
 db.loadExtension('spellfix', function(error) {
 	if (error) {
 		console.log("-error loading spellfix extension");
+		console.log(error);
 	} else {
 		console.log("-loaded spellfix extension");
 		
