@@ -7,6 +7,7 @@ var expressValidator = require('express-validator');
 var connect = require('connect');
 var app = express();
 app.use(express.bodyParser()); // definitely use this feature
+app.use(expressValidator());
 
 var hbs = require('hbs');
 var crypto = require('crypto');
@@ -20,15 +21,11 @@ app.use(express.cookieParser());
 app.use(express.methodOverride());
 app.use(express.session({secret:"Secret session"}));
 app.use(app.router);
-app.use(expressValidator);
+
 
 app.configure('development', function(){
 	app.use(express.errorHandler());
 });
-
-// we may want to ignore anydb and just use this:
-var sqlite3 = require("sqlite3").verbose();
-var db = new sqlite3.Database("commondenominator.db");
 
 ///////////////////////////
 ///////////////////////////
@@ -64,6 +61,12 @@ app.post('/login', function(request,response){
 	var sql = 'SELECT uname, password,uid FROM users WHERE uname = $1 AND password = $2';
 	var query = conn.query(sql,[info.user_name,getHash(info.password)]);
 	var login_info = [];
+	request.assert('user_name',"Username is required").notEmpty();
+	request.assert('password', "Password is required").notEmpty();
+
+	var errors = request.validationErrors();
+
+	console.log(errors);
 	console.log('in login post');
 
 	query.on('row',function(row){
@@ -84,7 +87,15 @@ app.post('/login', function(request,response){
 		}
 		else{
 			// redirect back to login form and display errors
-			response.render('login.html');
+			console.log(errors);
+			if (errors == null){
+				errors = [{msg: "Invalid username and password"}]; // if username and password don't match
+			}
+			response.render('login', {
+				title: '',
+				message: '',
+				errors: errors
+			});
 		}
 		
 	});
@@ -93,6 +104,12 @@ app.post('/login', function(request,response){
 
 app.get('/messages', function(request, response){
 	response.render('messages.html', {});
+});
+
+
+app.get('/select', function(request, response){
+	response.render('interestSelection.html', {});
+
 });
 
 app.get('/user/:uid/near', function(request, response) {
@@ -126,6 +143,7 @@ app.get('/user/:uid/near', function(request, response) {
 			//calculate distance!
 		
 		}).on('end', function() {response.end('</ul>');});
+
 });
 
 app.get('/user/:uid', function(request, response){
@@ -220,41 +238,12 @@ app.get('/interest/:iid', function(request, response){
 			});
 		});
 
-app.get('/select', function(request, response){
-	response.render('interestSelection.html', {});
+app.get('/LEDInterests', function(request, response){
+	response.json(['abc', 'def', 'ghi']);
 });
-
-// virtual tables can't be stored
-db.loadExtension('spellfix', function(error) {
-	if (error) {
-		console.log("-error loading spellfix extension");
-	} else {
-		console.log("-loaded spellfix extension");
 		
-		db.all("SELECT word FROM spellfix WHERE top=1;", function(err, rows) {
-			if (!rows) {
-				db.serialize(function() {
-					db.run('CREATE VIRTUAL TABLE IF NOT EXISTS spellfix USING spellfix1;');
-					console.log('-spellfix table created');
 
-					db.run('INSERT INTO spellfix(word) SELECT name FROM interest;');
-					console.log('--All interests inserted into spellfix');
-				});
-			}
-	    });
-	}
-});
 
-app.get('/LEDInterests/:interest', function(request, response){
-	var interest = request.params.interest;
-	db.all("SELECT word FROM spellfix WHERE word MATCH '"+interest+"' AND top=5;", function(err, rows) {
-		var words = [];
-        rows.forEach(function (row) {
-            words.push(row.word);
-        });
-		response.json(words);
-    });
-});
 		
 app.get('/*', function(request, response) {
 		response.writeHead(200, {'Content-Type': 'text/html'});
