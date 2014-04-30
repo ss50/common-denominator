@@ -59,6 +59,14 @@ app.get('/',  checkAuthorization, function(request, response){
 	response.render('project.html', {});
 });
 
+app.post('/signup_redirect', function(request,response){
+	response.redirect('/signup');
+});
+
+app.get('/signup', function(request,response){
+	response.render('signup.html', {});
+});
+
 app.get('/login',  function(request, response){
 	response.render('login.html', {});
 });
