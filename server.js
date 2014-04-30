@@ -1,13 +1,16 @@
 //See README.md
 
 var express = require('express');
+var RedisStore = require('connect-redis')(express);
+var redis = require("redis");
+var client = redis.createClient();
 var anyDB = require('any-db');
 var conn = anyDB.createConnection('sqlite3://commondenominator.db');
 var expressValidator = require('express-validator');
 var connect = require('connect');
 var app = express();
-app.use(express.bodyParser()); // definitely use this feature
 app.use(expressValidator());
+
 
 var hbs = require('hbs');
 var crypto = require('crypto');
@@ -16,10 +19,13 @@ app.engine('html', hbs.__express);
 app.set('views', __dirname + '/templates'); // tell Express where to find templates
 
 // possibly change '/' to '/static'
+app.use(express.bodyParser()); // definitely use this feature
+app.use(express.methodOverride());
 app.use(connect.static(__dirname + '/', { maxAge: 86400000 }));
 app.use(express.cookieParser());
-app.use(express.methodOverride());
-app.use(express.session({secret:"Secret session"}));
+app.use(express.session({secret: "secret session", store: new RedisStore(
+	{host: '127.0.0.1', port: 6379, client: client}
+	)}));
 app.use(app.router);
 
 
@@ -70,9 +76,6 @@ app.post('/login', function(request,response){
 
 	var errors = request.validationErrors();
 
-	//console.log(errors);
-	console.log('in login post');
-
 	query.on('row',function(row){
 		login_info.push(row);
 		username = row.uname;
@@ -101,9 +104,7 @@ app.post('/login', function(request,response){
 				username: username
 			});
 		}
-		
-	});
-	
+	});	
 });
 
 app.get('/messages', function(request, response){
