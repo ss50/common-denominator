@@ -284,7 +284,11 @@ app.get('/LEDInterests/:interest', function(request, response){
     });
 });
 
-		
+app.get('/geo', function(request, response){
+	response.render('geo.html', {});
+	});
+
+//style the error page better		
 app.get('/*', function(request, response) {
 		response.writeHead(200, {'Content-Type': 'text/html'});
 		response.write('<h1>Whoa there!</h1><p>Page not found. Check the URL maybe?</p>');
