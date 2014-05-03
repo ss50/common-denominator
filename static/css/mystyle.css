@@ -15,7 +15,6 @@ a{
   width:100px;
   height:100px;
   padding:0px;
-<<<<<<< Updated upstream
 }
 
 .user_image:hover{
@@ -28,7 +27,6 @@ a{
 .error{
   margin-bottom:0;
   color:red;
-=======
    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
 filter: gray; /* IE6-9 */
 -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
@@ -38,7 +36,6 @@ filter: gray; /* IE6-9 */
    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
 -webkit-filter: grayscale(0%);
   cursor: pointer;
->>>>>>> Stashed changes
 }
 
 #interest_main{
@@ -63,9 +60,6 @@ filter: gray; /* IE6-9 */
   height:100px;
   width:100%;
   z-index: 1000;
-<<<<<<< Updated upstream
-}
-=======
   text-align: center;
 }
 #logo_int{
@@ -78,7 +72,7 @@ top:20px;
 left:30px;
 }
 
->>>>>>> Stashed changes
+
 #interest_main{
   position:relative;
   top:90px;
@@ -90,16 +84,12 @@ left:30px;
   font-size:50px;
   z-index: 100;
   color:rgb(245, 213, 188);
-<<<<<<< Updated upstream
-
-}
-=======
   display:inline-block;
   position:relative;
   top:10px;
 }
 
->>>>>>> Stashed changes
+
 #interest_main h2{
   position:relative;
   text-align:center;
@@ -123,7 +113,7 @@ top:-15px;
     margin-right:auto;
 }
 
-#login_form_wrapper{
+#form_wrapper{
   text-align: center;
   border:solid #8B4513 3px;
   border-radius:25px;
@@ -161,18 +151,23 @@ top:-15px;
   display:block;
   width:70%;
   margin:auto;
-  padding-top: 15px;
+  margin-bottom:10px;
+  
 }
 
-<<<<<<< Updated upstream
+#sign_up_form input{
+  margin-top: 30px;
+  padding:5 5 5 5;
+}
+
+
 #users_table{
 }
 
 #users_table td:hover{
   position:absolute;
 }
-=======
->>>>>>> Stashed changes
+
 
 
 #profile-picture{
@@ -211,7 +206,7 @@ top:-15px;
 #nav_bar{
   width:100%;
   height:500px;
-  position: fixed;
+  position: absolute;
   background-color:#88382D;
   text-align: center;
 }
