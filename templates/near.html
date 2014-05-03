@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="../static/css/mystyle.css">
+	<!-- <script type="text/javascript" src="../static/scripts/userpage.js"></script> just in case -->
+	
+	</head>
+<body>
+	<title>Proximity Details for {{usrnm}}</title>
+	<h2>These users are near {{usrnm}}:</h2>
+	<ul id='users'>
+	</ul>
+	<a href="/user/{{uid}}">Back to {{usrnm}}'s user page</a>
+	<script>
+		var unr = '{{prox}}'.split('&');
+		var ul = document.getElementById('users');
+		for(var i = 0; i < unr.length; i++)
+		{
+			var li = document.createElement('li');
+			//console.log(unr[i]);
+			var indiv = unr[i].split('+'); 
+			var unm = indiv[0];
+			//console.log(unm);
+			if(unm.indexOf('amp;') != -1) {unm = unm.substring(4, unm.length);}
+			li.innerHTML = '<a href="/user/' + indiv[1] + '">' + unm + '</a>';
+			ul.appendChild(li);
+		}
+	</script>
+</body>
+</html>
+
+<!--
+app.get('/user/:uid/near', function(request, response) {
+	
+	response.writeHead(200, {'Content-Type': 'text/html'});
+	var userDist = "", udArr, lat, lon;
+	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', function(row) {userDist = row.loc; udArr = userDist.split(",");
+	lat = parseFloat(udArr[0]) * 1000;
+	lon = parseFloat(udArr[1]) * 1000;
+	//console.log(lat);
+	response.write('<h2>These users are near ' + row.uname + ':</h2><ul>');});
+	
+	
+	
+	conn.query('SELECT uname, loc, uid FROM users WHERE uid != $1', [request.params.uid]).on('row',
+		function(row)
+		{	
+			var oArr = row.loc.split(",");
+			var oLat = parseFloat(oArr[0]) * 1000;
+			var oLon = parseFloat(oArr[1]) * 1000;
+			var dist = getDist(lat, lon, oLat, oLon);
+			//console.log(dist);
+			
+			if(dist < 12) //tweakable
+				response.write('<li><a href="/user/'+row.uid+'">'+row.uname+'</a></li>');
+			
+			//calculate distance!
+		
+		}).on('end', function() {response.end('</ul>');});
+
+});
+-->

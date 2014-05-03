@@ -3,7 +3,9 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-	<!-- <script type="text/javascript" src="../static/scripts/userpage.js"></script> just in case -->
+	<!-- <script type="text/javascript" src="../static/scripts/userpage.js"></script> -->
+	<link rel="stylesheet" type="text/css" href="../static/css/mystyle.css">
+	</head>
 <body>
 	<title>Details for {{usrnm}}</title>
 	<h2>Where is {{usrnm}}?</h2>
@@ -13,13 +15,17 @@
 	<br>
 	<a href="/user/{{uid}}/near">Who is near {{usrnm}}?</a>
 	<script>
-		var uintr = '{{uints}}'.replace('amp;','').split('&');
+		var uintr = "{{uints}}".split('&');
 		var ul = document.getElementById('interests');
 		for(var i = 0; i < uintr.length; i++)
 		{
+			//console.log(i);
 			var li = document.createElement('li');
 			var indiv = uintr[i].split('+'); 
-			li.innerHTML = '<a href="/interest/' + indiv[1] + '">' + indiv[0] + '</a> (Interest level: '+indiv[2]+')';
+			//console.log(indiv[0] + ', ' + indiv[1] + ', ' + indiv[2]);
+			var nm = indiv[0];
+			if(nm.indexOf('amp;') != -1) {nm = nm.substring(4, nm.length);}
+			li.innerHTML = '<a href="/interest/' + indiv[1] + '">' + nm + '</a> (Interest level: '+indiv[2]+')';
 			ul.appendChild(li);
 		}
 	</script>
