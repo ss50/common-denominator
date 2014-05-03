@@ -95,7 +95,7 @@ app.post('/login', function(request,response){
 		if (login_info.length != 0){
 			request.session.user_id = user_id;
 			console.log(request.session.user_id);
-			response.redirect("/");
+			response.redirect("/"); //maybe change this to /home? 
 		}
 		else{
 			// redirect back to login form and display errors
@@ -132,23 +132,19 @@ app.get('/user/:uid/near', function(request, response) {
 	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', function(row) {userDist = row.loc; udArr = userDist.split(",");
 	lat = parseFloat(udArr[0]) * 1000;
 	lon = parseFloat(udArr[1]) * 1000;
-	console.log(lat);
+	//console.log(lat);
 	response.write('<h2>These users are near ' + row.uname + ':</h2><ul>');});
 	
 	
 	
 	conn.query('SELECT uname, loc, uid FROM users WHERE uid != $1', [request.params.uid]).on('row',
 		function(row)
-		{
+		{	
 			var oArr = row.loc.split(",");
 			var oLat = parseFloat(oArr[0]) * 1000;
 			var oLon = parseFloat(oArr[1]) * 1000;
-			
-			var xS = Math.pow((lat - oLat), 2);
-			var yS = Math.pow((lon - oLon), 2);
-			
-			var dist = Math.sqrt(xS + yS);
-			console.log(dist);
+			var dist = getDist(lat, lon, oLat, oLon);
+			//console.log(dist);
 			
 			if(dist < 12) //tweakable
 				response.write('<li><a href="/user/'+row.uid+'">'+row.uname+'</a></li>');
@@ -159,32 +155,50 @@ app.get('/user/:uid/near', function(request, response) {
 
 });
 
+function getDist(lat, lon, oLat, oLon) {
+
+	var xS = Math.pow((lat - oLat), 2);
+	var yS = Math.pow((lon - oLon), 2);
+	
+	var dist = Math.sqrt(xS + yS);
+	return dist;
+}
+
 app.get('/user/:uid', function(request, response){
-	console.log(request.params.uid);
+	//console.log(request.params.uid);
+	//usrnm: username; uloc: location; uid: from request.params.uid
+	//long string of iname+iid+level
+	
 	var intin;
 	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', 
 		function(row) {
-			console.log(row);
-			var usrnm = row.uname;
-			response.writeHead(200, {'Content-Type': 'text/html'});
-			response.write('<title>Details for ' + usrnm + '</title>'
-			+ '<h2>Where is ' + usrnm + '?</h2><p>' + usrnm + ' is at ' + row.loc 
-			+ '.</p>'+'<h2>What is ' + usrnm + ' interested in?</h2><p>'); 
+			//console.log(row);
+			var unm = row.uname;
+			var ul = row.loc;
+			
 			//var intarr = row.intr.split(",");
 			intin = "";
 			
 			conn.query('SELECT name, intmemb.intid AS iid, level  FROM interest, intmemb WHERE interest.intid = intmemb.intid AND intmemb.uid = $1', [request.params.uid]).on('row',
 				
-				function(row){console.log(row);response.write('<li><a href="/interest/'+ row.iid + '">' + row.name + '</a> (Interest level: '+row.level+')</li>');}
+				function(row){
+				//console.log(row);
+				//response.write('<li><a href="/interest/'+ row.iid + '">' + row.name + '</a> (Interest level: '+row.level+')</li>');
+				intin += row.name +'+'+ row.iid +'+'+ row.level + '&';
+				}
 			).on('end', 
 				function()
 				{
 					//view nearby users?
-					response.write('<br><a href="/user/' + request.params.uid + '/near">Who is near ' + usrnm + '?</a>');
-					response.end();
+					//response.write('<br><a href="/user/' + request.params.uid + '/near">Who is near ' + usrnm + '?</a>');
+					response.render('userpage.html', {uid: request.params.uid, usrnm: unm, uloc: ul, uints: intin.substring(0, intin.length-1)});
 				});
 			
 				});
+	
+	
+	
+	
 	
 });
 
@@ -195,18 +209,30 @@ app.get('/interest/addinterest', function(request, response){
 
 app.post('/interest/addinterest', function(request, response){
 	response.render('addinterest.html', {});
-	console.log('it\'s happening');
+	//console.log('it\'s happening');
 	
 	var info = request.body;
 	var name = info.intname;
 	var desc = info.desc;
 	
-	console.log(name);
+	//console.log(name);
 	conn.query('INSERT INTO interest (name, desc) VALUES ($1, $2)', [name, desc]).on('end', function() {console.log(name + ' added to interests table');});
 });		
 
 app.get('/interest/all', function(request, response){
-	response.writeHead(200, {'Content-Type': 'text/html'});
+	var allInt = "";
+	conn.query('SELECT * FROM INTEREST').on('row', function(row) {
+												allInt += row.intid + "+" + row.name + "+" + row.desc + "&";
+															}).on('end', function() {
+																			response.render('allinterests.html', 
+																							{intList: allInt.substring(0, allInt.length-1)});
+																					}); 
+	
+	/*response.writeHead(200, {'Content-Type': 'text/html'});
+	//add in a css file to style this better later
+	
+
+	
 	response.write('<h1>Browse all the interests. Go ahead.</h1><ul>');
 	conn.query('SELECT * FROM interest').on('row', 
 	function(row) 
@@ -214,36 +240,39 @@ app.get('/interest/all', function(request, response){
 	
 		response.write('<li><a href="/interest/' + row.intid + '">' + row.name + '</a>: ' + row.desc + '</li>');
 	
-	}).on('end', function(){response.end('</ul><a href="/interest/addinterest">Add an interest</a>');});
+	}).on('end', function(){response.end('</ul><a href="/interest/addinterest">Add an interest</a>');});*/
 		
 });
 
 app.get('/interest/:iid', function(request, response){
-	console.log(request.params.iid);
+	//console.log(request.params.iid);
+	
+	var uList = "";
+	var randInt = "";
+	
+	
 	conn.query('SELECT name, desc FROM interest WHERE intid = $1', [request.params.iid]).on('row', 
 		function(row) {
-			console.log(row);
-			
-			response.writeHead(200, {'Content-Type': 'text/html'});
-			response.write('<title>' + row.name + '</title><h1>' + row.name + ": " + row.desc //+ '.</h1>');
-			+ '.</h1><h2>Who likes it?</h2><ul>');
+			//console.log(row);
+			var iname = row.name;
+			var idesc = row.desc;
+			//+ '.</h1><h2>Who likes it?</h2><ul>');
 			var likes = '';
 			conn.query('SELECT uname, level, users.uid FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1 ORDER BY level DESC', [request.params.iid]).on('row', function(row) {
-				console.log(row);
-				likes = likes + '<li><a href="/user/' + row.uid + '">' + row.uname + '</a> (Interest level: '+row.level+')</li>';
+				//console.log(row);
+				//likes = likes + '<li><a href="/user/' + row.uid + '">' + row.uname + '</a> (Interest level: '+row.level+')</li>';
+				uList += row.uid + "+" + row.uname + "+" + row.level + "&";
 			
 			}).on('end', function() {
-			
-			
-				console.log('These folks do: ' + likes)
-				response.write(likes);
-				response.write('<p>see other interests: ');
+				//console.log('These folks do: ' + likes)
 				
 				conn.query('SELECT * FROM interest ORDER BY RANDOM() LIMIT 6').on('row', function(row) {
 				
-				response.write('| <span title="' + row.desc + '"><a href="/interest/' + row.intid + '">' + row.name + '</a></span> ');
+				randInt += row.desc + "+" + row.intid + "+" + row.name + "&";
 					
-				}).on('end', function(){response.end(' |</p><br><a href="/interest/all">View all interests</a><br><a href="/interest/addinterest">Add an interest</a>');});
+				}).on('end', function(){
+							response.render('intpage.html', {intName: iname, intDesc: idesc, userList: uList.substring(0, uList.length-1), randoms: randInt.substring(0, randInt.length-1)});
+									});
 				
 				});
 			
