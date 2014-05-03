@@ -67,6 +67,44 @@ app.get('/signup', function(request,response){
 	response.render('signup.html', {});
 });
 
+app.post('/signup', function(request,response){
+	var username = request.body.user_name;
+	var password = request.body.signup_passwd;
+	var reentered_pwd = request.body.reenter_passwd;
+	request.assert('user_name',"Username is required").notEmpty();
+	request.assert('signup_passwd',"Password is required").notEmpty();
+	request.assert('reenter_passwd', "Password do not match").equals(password);
+
+	var errors = request.validationErrors();
+	// errors in input
+	if (errors){
+		response.render('signup', {
+			title: '',
+			message: '',
+			errors: errors,
+			username: username
+		});
+	}
+	else{
+		var sql = 'SELECT * FROM users WHERE uname = $1';
+		db.get(sql,[username],function(err,row){
+			if (row === undefined){// account doesn't exist so create new one
+				// set session user_id
+				//otherwise insert into database and redirect to profile
+			}
+			else{
+				errors = [{param: 'account_exists', msg: "An account already exists with this username"}];
+				response.render('signup', {
+					title: '',
+					message: '',
+					errors: errors,
+					username: username
+				});
+			}
+		});	
+	}
+});
+
 app.get('/login',  function(request, response){
 	response.render('login.html', {});
 });
@@ -113,6 +151,11 @@ app.post('/login', function(request,response){
 			});
 		}
 	});	
+});
+
+app.post('/location', function(request,response){
+	console.log(request.body.latitude);
+	console.log(request.body.longitude);
 });
 
 app.get('/messages', function(request, response){

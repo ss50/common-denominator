@@ -12,22 +12,29 @@
 		<div id='login_header'>
 			<h1>Common Denominator</h1>
 		</div>
-		<div id='login_form_wrapper'>
+		<div id='form_wrapper'>
 			<div>
 				<form id='sign_up_form' method='POST' action='/signup'>
 					<p>Sign up! Fill out the fields below</p>
-					<input name='first_name' placeholder='First Name'></input>
-					<input name='last_name' placeholder='Last Name'></input>
-					<input name='user_name' placeholder='User Name'></input>
+					<span id='account_exists', class='error'></span>
+					<input name='user_name' placeholder='User Name' id='usr_field'></input>
+					<span id='user_name' class='error'></span>
 					<input type='password' name='signup_passwd' placeholder='Password'></input>
+					<span id='signup_passwd' class='error'></span>
 					<input type='password' name='reenter_passwd' placeholder='Re-enter Password'></input>
-					<p>Add Interests</p>
-					<textarea rows='4' cols='30'></textarea>
+					<span id='reenter_passwd' class='error'></span>
 					<input type='submit' value='Get Started'></input>
 				</form>
 			</div>
 			
 		</div>
-
+		<script>
+		document.getElementById('usr_field').value = "{{username}}";
+		{{#errors}}
+			var msg = "{{msg}}";
+			var param = "{{param}}";
+			document.getElementById(param).innerHTML = msg;
+		{{/errors}}
+		</script>
 	</body>
 </html>
