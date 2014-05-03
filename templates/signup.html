@@ -6,7 +6,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Raleway:900italic,400' rel='stylesheet' type='text/css'>
 		<script type="text/javascript" src="../static/scripts/client.js"></script>
 		<script type="text/javascript" src="../static/scripts/login.js"></script>
-    	<title>CD:Login</title>
+    	<title>CD:Signup</title>
 	</head>
 	<body>
 		<div id='login_header'>
@@ -17,6 +17,10 @@
 				<form id='sign_up_form' method='POST' action='/signup'>
 					<p>Sign up! Fill out the fields below</p>
 					<span id='account_exists', class='error'></span>
+					<input name='first_name' placeholder='First Name' id='fname_field'></input>
+					<span id='first_name' class='error'></span>
+					<input name='last_name' placeholder='Last Name' id='lname_field'></input>
+					<span id='last_name' class='error'></span>
 					<input name='user_name' placeholder='User Name' id='usr_field'></input>
 					<span id='user_name' class='error'></span>
 					<input type='password' name='signup_passwd' placeholder='Password'></input>
@@ -29,6 +33,8 @@
 			
 		</div>
 		<script>
+		document.getElementById('fname_field').value = "{{firstname}}";
+		document.getElementById('lname_field').value = "{{lastname}}";
 		document.getElementById('usr_field').value = "{{username}}";
 		{{#errors}}
 			var msg = "{{msg}}";

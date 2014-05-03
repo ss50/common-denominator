@@ -25,6 +25,7 @@ a{
 }
 
 .error{
+  font-size: 18px;
   margin-bottom:0;
   color:red;
 }
@@ -116,7 +117,7 @@ top:-15px;
   border-radius:25px;
   font-size: 20px;
   width: 350px;
-  height: 410px;
+  height: 440px;
   margin:auto;
   display:block;
   background-color: #FFA07A;
@@ -127,7 +128,7 @@ top:-15px;
   display:block;
   width:70%;
   margin:auto;
-  padding-top: 30px;
+  padding-top: 60px;
 }
 
 #login_submit{
@@ -152,8 +153,9 @@ top:-15px;
   
 }
 
+
 #sign_up_form input{
-  margin-top: 30px;
+  margin-top: 10px;
   padding:5 5 5 5;
 }
 

@@ -68,12 +68,16 @@ app.get('/signup', function(request,response){
 });
 
 app.post('/signup', function(request,response){
+	var firstname = request.body.first_name;
+	var lastname = request.body.last_name;
 	var username = request.body.user_name;
 	var password = request.body.signup_passwd;
 	var reentered_pwd = request.body.reenter_passwd;
+	request.assert('first_name', "First name is required").notEmpty();
+	request.assert('last_name', "Last name is required").notEmpty();
 	request.assert('user_name',"Username is required").notEmpty();
 	request.assert('signup_passwd',"Password is required").notEmpty();
-	request.assert('reenter_passwd', "Password do not match").equals(password);
+	request.assert('reenter_passwd', "Passwords do not match").equals(password);
 
 	var errors = request.validationErrors();
 	// errors in input
@@ -82,12 +86,14 @@ app.post('/signup', function(request,response){
 			title: '',
 			message: '',
 			errors: errors,
-			username: username
+			firstname: firstname,
+			lastname: lastname,
+			username: username 
 		});
 	}
 	else{
-		var sql = 'SELECT * FROM users WHERE uname = $1';
-		db.get(sql,[username],function(err,row){
+		var sql = 'SELECT * FROM users WHERE firstname = $1 AND lastname = $2 AND uname = $3';
+		db.get(sql,[firstname, lastname, username],function(err,row){
 			if (row === undefined){// account doesn't exist so create new one
 				// set session user_id
 				//otherwise insert into database and redirect to profile
@@ -98,6 +104,8 @@ app.post('/signup', function(request,response){
 					title: '',
 					message: '',
 					errors: errors,
+					firstname: firstname,
+					lastname: lastname,
 					username: username
 				});
 			}
