@@ -5,6 +5,7 @@ var RedisStore = require('connect-redis')(express);
 var redis = require("redis");
 var client = redis.createClient();
 var anyDB = require('any-db');
+var shortId = require('shortid');
 var conn = anyDB.createConnection('sqlite3://commondenominator.db');
 var expressValidator = require('express-validator');
 var connect = require('connect');
@@ -53,6 +54,30 @@ function getHash(pwd){
 	return crypto.createHash('md5').update(pwd).digest('hex');
 }
 
+// generates a user id 
+function generateId(){
+	var id = shortId.generate();
+	var sql = 'SELECT * FROM users WHERE uid = $1'; // query to check if id has been used.
+	var results = getRows(sql,id);
+
+	while(results.length != 0){
+		id = shortId.generate();
+		results = getRows(sql,id);
+	}
+
+	return id;
+}
+
+function getRows(sql, id){
+	var results = [];
+	db.all(sql,[id],function(err, rows){
+		rows.forEach(function(row){
+			results.push(row);
+		})
+	});
+	return results;
+}
+
 app.get('/favicon.ico', function(request, response) { console.log('favicon thrown out'); });
 
 app.get('/',  checkAuthorization, function(request, response){
@@ -97,6 +122,13 @@ app.post('/signup', function(request,response){
 			if (row === undefined){// account doesn't exist so create new one
 				// set session user_id
 				//otherwise insert into database and redirect to profile
+				var user_id = generateId();
+				request.session.user_id = user_id;
+				db.run('INSERT INTO users (uid, firstname, lastname, uname, password, loc) VALUES ($1,$2,$3,$4,$5, "0.0000, 0.0000")', 
+					[user_id, firstname, lastname, username, getHash(password)] );
+				console.log("Added new account to database");
+				response.redirect('/');
+				
 			}
 			else{
 				errors = [{param: 'account_exists', msg: "An account already exists with this username"}];
@@ -361,9 +393,9 @@ app.get('/geo', function(request, response){
 
 //style the error page better		
 app.get('/*', function(request, response) {
-		console.log('error');
+		//console.log('error');
 		response.render('error.html', {});
-		});
+	});
 
 		
 //Visit localhost:8080

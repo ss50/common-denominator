@@ -13,14 +13,3 @@ function gotten(position) {
 	s.innerHTML = "You are at " + dispStr;
 
 }
-
-window.addEventListener('load', function(){
-	var fd = new FormData();
-	var signup_form = document.getElementById('sign_up_form');
-	fd.append('latitude', latitude);
-	fd.append('longitude', longitude);
-	var request = new XMLHttpRequest();
-	request.open('POST','/location');
-	request.send(fd);
-
-});
