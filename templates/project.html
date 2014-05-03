@@ -11,8 +11,10 @@
 <link href='http://fonts.googleapis.com/css?family=Raleway:400,700,900' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Alfa+Slab+One' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Averia+Libre:400,700' rel='stylesheet' type='text/css'>
-<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-<script src="https://raw.github.com/davatron5000/Lettering.js/master/jquery.lettering.js"></script>
+<script src="assets/js/jquery.knob.js"></script>
+ <script src="../assets/js/jquery.ui.widget.js"></script>
+ <script src="../assets/js/jquery.iframe-transport.js"></script>
+ <script src="../assets/js/jquery.fileupload.js"></script>
 
 
 
@@ -20,6 +22,8 @@
 <title>Common Denominator</title>
 </head>
 <body>
+
+	
 	<div id="container">
 			
 
@@ -35,6 +39,8 @@
 		</div>
 		</div>
 
+
+
 		<div id="body">			
 							
 
@@ -48,7 +54,14 @@
 
 				<div class="sectionHead" id="numeratorHead"> Numerator </div>
 				<svg id="bar" width="100%" height="25"><rect width="100%" height="50"/>
-					<div></div>
+								<div>
+								<form id="upload" method="post" action="upload.php" enctype="multipart/form-data">
+			  <input type="file" name="uploadctl" multiple />
+			  <ul id="fileList">
+			    <!-- The file list will be shown here -->
+			  </ul>
+			</form>
+</div>
 				</svg>
 				<div class="sectionHead" id="denominatorHead"> Denominator </div>
 
@@ -70,13 +83,17 @@
 					<img class="interest2" src="http://www.airpano.com/files/Eiffel-Tower-Paris-France/image6a.jpg">
 					<img class="interest2" src="http://knightnews.com/wp-content/uploads/2013/01/spring.jpg">
 					<img class="interest2" src="https://lh6.googleusercontent.com/-oEc7XFuTVyY/UytHgg8014I/AAAAAAAAA3M/RTIQlj2kHE8/s640/blogger-image--1175115903.jpg">
-					<img class="interest2" id="empty" src="https://snarfed.org/chocolate.png">
+					<div class="interest2" id="empty">
 				</span>
 				</section>
 
 		</div>
 
 </div>	
+
+
+
+
 		<div id="footer-wrapper">
 			<div id="footer">
 				<div id="functions">
@@ -96,8 +113,72 @@
 		</div>
 
 
+
 </body>
 
 
+	<script>
+$('#upload').fileupload({
+
+  // This function is called when a file is added to the queue
+  add: function (e, data) {
+    //This area will contain file list and progress information.
+    var tpl = $('<li class="working">'+
+                '<input type="text" value="0" data-width="48" data-height="48" data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" />'+
+                '<p></p><span></span></li>' );
+
+    // Append the file name and file size
+    tpl.find('p').text(data.files[0].name)
+                 .append('<i>' + formatFileSize(data.files[0].size) + '</i>');
+
+    // Add the HTML to the UL element
+    data.context = tpl.appendTo(ul);
+
+    // Initialize the knob plugin. This part can be ignored, if you are showing progress in some other way.
+    tpl.find('input').knob();
+
+    // Listen for clicks on the cancel icon
+    tpl.find('span').click(function(){
+      if(tpl.hasClass('working')){
+              jqXHR.abort();
+      }
+      tpl.fadeOut(function(){
+              tpl.remove();
+      });
+    });
+
+    // Automatically upload the file once it is added to the queue
+    var jqXHR = data.submit();
+  },
+  progress: function(e, data){
+
+        // Calculate the completion percentage of the upload
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+
+        // Update the hidden input field and trigger a change
+        // so that the jQuery knob plugin knows to update the dial
+        data.context.find('input').val(progress).change();
+
+        if(progress == 100){
+            data.context.removeClass('working');
+        }
+    }
+});
+//Helper function for calculation of progress
+function formatFileSize(bytes) {
+    if (typeof bytes !== 'number') {
+        return '';
+    }
+
+    if (bytes >= 1000000000) {
+        return (bytes / 1000000000).toFixed(2) + ' GB';
+    }
+
+    if (bytes >= 1000000) {
+        return (bytes / 1000000).toFixed(2) + ' MB';
+    }
+    return (bytes / 1000).toFixed(2) + ' KB';
+}
+</script>
 
 </html>
