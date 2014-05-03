@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!-- Not functional due to issues with sqlite and asynchronicity. -->
+<html>
+<head>
+    <meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="../static/css/mystyle.css">
+	<!-- <script type="text/javascript" src="../static/scripts/allinterests.js"></script> --> <!-- not currently needed -->
+</head>
+<body>
+
+	<h1>Browse all the interests. Go ahead.</h1>
+	<ul id="ints">
+	</ul>
+	<br>
+	<a href="/interest/addinterest">Add an interest</a>
+		<script>
+			var ilcontents = "{{intList}}";
+			var ul = document.getElementById('ints');
+
+			var iArr = ilcontents.split("&");
+			for(var i = 0; i < iArr.length; i++)
+			{
+				var indiv = iArr[i].split('+');
+				console.log(indiv);
+				var iid = indiv[0];
+				if(iid.indexOf('amp;') != -1)
+				{iid = iid.substring(4, iid.length);}
+				var li = document.createElement('li');
+				li.innerHTML = '<a href="/interest/' + iid + '">' + indiv[1] + '</a>: ' + indiv[2];
+				ul.appendChild(li);
+			}
+		</script>
+</body>
+</html>

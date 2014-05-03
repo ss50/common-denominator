@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+	<script type="text/javascript" src="../static/scripts/intpage.js"></script>
+	<link rel="stylesheet" type="text/css" href="../static/css/mystyle.css">
+</head>
+<body>
+	<title>Interest Details for {{intName}}</title>
+	<h1>{{intName}}: {{intDesc}}.</h1>
+	<h2>Who likes it?</h2>
+	<ul id="users">
+	</ul>
+	<p>See other interests: <span id="otherInt"></span></p><br />
+	<a href="/interest/all">View all interests</a><br />
+	<a href="/interest/addinterest">Add an interest</a>
+	
+	<script>
+	window.onload = function() {
+		var userList = '{{userList}}';
+		var randoms = '{{randoms}}';
+		
+		var ul = document.getElementById('users');
+		//alert(ul);
+		if(userList == "")
+		{
+			var li = document.createElement('li');
+			li.innerHTML = 'Nobody... at least, not yet!';
+			ul.appendChild(li);
+		}
+		else
+		{
+			var uArr = userList.split('&');
+		
+			for(var i = 0; i < uArr.length; i++)
+			{
+				var li = document.createElement('li');
+				//if(uArr[i] == "") break;
+				var indiv = uArr[i].split('+'); //id, name, level
+				//console.log(uArr[i]);
+				var uid = indiv[0];
+				if(uid.indexOf('amp;') != -1)
+				{uid = uid.substring(4, uid.length);}
+				li.innerHTML = '<a href="/user/' + uid + '">' + indiv[1] + '</a> (Interest level: '+indiv[2]+')';
+				ul.appendChild(li);
+			}
+		}
+		
+		var oth = document.getElementById("otherInt");
+		var iArr = randoms.split("&");
+		var rStr = "";
+		
+		for(var i = 0; i < iArr.length; i++)
+		{
+			var indiv = iArr[i].split("+");
+			rStr += '| <span title="' + indiv[0] + '"><a href="/interest/' + indiv[1] + '">' + indiv[2] + '</a></span> ';
+		}
+		oth.innerHTML = rStr + "|";
+	
+	}
+	</script>
+</body>
+</html>
+
+
+<!--
+conn.query('SELECT name, desc FROM interest WHERE intid = $1', [request.params.iid]).on('row', 
+		function(row) {
+			console.log(row);
+			
+			response.writeHead(200, {'Content-Type': 'text/html'});
+			response.write('<title>' + row.name + '</title><h1>' + row.name + ": " + row.desc //+ '.</h1>');
+			+ '.</h1><h2>Who likes it?</h2><ul>');
+			var likes = '';
+			conn.query('SELECT uname, level, users.uid FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1 ORDER BY level DESC', [request.params.iid]).on('row', function(row) {
+				console.log(row);
+				likes = likes + '<li><a href="/user/' + row.uid + '">' + row.uname + '</a> (Interest level: '+row.level+')</li>';
+			
+			}).on('end', function() {
+			
+			
+				console.log('These folks do: ' + likes)
+				response.write(likes);
+				response.write('<p>see other interests: ');
+				
+				conn.query('SELECT * FROM interest ORDER BY RANDOM() LIMIT 6').on('row', function(row) {
+				
+				response.write('| <span title="' + row.desc + '"><a href="/interest/' + row.intid + '">' + row.name + '</a></span> ');
+					
+				}).on('end', function(){response.end(' |</p><br><a href="/interest/all">View all interests</a><br><a href="/interest/addinterest">Add an interest</a>');});
+				
+				});
+			
+			
+			});
+
+
+
+-->
