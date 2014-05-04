@@ -359,7 +359,8 @@ var plat = process.platform;
 if (plat == "win32") { 		// works for 64 too
 	db.loadExtension('spellfixWin', spellfixLoaded);
 } else if (plat == "linux") {
-
+	console.log("In linux spellfix");
+	db.loadExtension('spellfixLin', spellfixLoaded);
 } else {
 	db.loadExtension('spellfixMac', spellfixLoaded);
 }
