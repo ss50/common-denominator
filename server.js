@@ -247,7 +247,9 @@ app.get('/user/:uid/near', function(request, response) {
 					
 					}).on('end', function() {
 							//render results
-							response.render('near.html', {usrnm: uname, uid: request.params.uid, prox: nearby.substring(0, nearby.length-1)});
+							response.render('near.html', {usrnm: uname, uid: 
+															request.params.uid, 
+															prox: nearby.substring(0, nearby.length-1)});
 					});
 
 });
@@ -262,12 +264,12 @@ function getDist(lat, lon, oLat, oLon) {
 	return dist;
 }
 
+//view a user's page
 app.get('/user/:uid', function(request, response){
 	
 	var intin;
 	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', 
 		function(row) {
-			//console.log(row);
 			//get information for this user
 			var unm = row.uname;
 			var ul = row.loc;
@@ -282,8 +284,11 @@ app.get('/user/:uid', function(request, response){
 			).on('end', 
 				function()
 				{
-					//view nearby users
-					response.render('userpage.html', {uid: request.params.uid, usrnm: unm, uloc: ul, uints: intin.substring(0, intin.length-1)});
+					
+					response.render('userpage.html', {uid: request.params.uid, 
+														usrnm: unm, 
+														uloc: ul, 
+														uints: intin.substring(0, intin.length-1)});
 				});
 			
 				});
@@ -328,16 +333,28 @@ app.get('/interest/:iid/remove', function(request, response)
 {
 	console.log('interest removal');
 	var inm = "";
-	conn.query('SELECT name FROM interest WHERE intid = $1', [request.params.iid]).on('row', function(row) {inm = row.name;}).on('end', function(){response.render('remove.html', {intname: inm});});
+	conn.query('SELECT name FROM interest WHERE intid = $1', 
+			   [request.params.iid]).on('row', 
+										function(row) 
+										{
+											inm = row.name; //should only be one result for this given unique interest ids
+										}).on('end', 
+											  function()
+											  {
+												//render the removal page
+												  response.render('remove.html', {intname: inm});
+											  });
 	
 });
 
+//thank goodness post requests can help us run these sql queries
 app.post('/interest/:iid/remove', function(request, response)
 {
 	console.log('going through with the removal');
 	conn.query('DELETE FROM intmemb WHERE intid = $1 AND uid = "TEST"', [request.params.iid]).on('end',
 					function()
 					{
+						//upon removing the membership entry, redirect the user to the interest page
 						response.redirect('/interest/' + request.params.iid);
 					});
 
@@ -375,6 +392,8 @@ app.get('/interest/:iid', function(request, response){
 	var randInt = "";
 	var has = "";
 	var present = 0;
+	
+	//uid TEST is obviously for testing purposes to simulate the presence of a logged-in user
 	conn.query('SELECT * FROM intmemb WHERE uid = "TEST" and intid = $1', [request.params.iid]).on('row',
 					function(row){console.log('hey');present += 1;}).on('end', 
 						function()
@@ -410,12 +429,18 @@ app.get('/interest/:iid', function(request, response){
 			}).on('end', function() {
 				
 				//show six other randomized interests
-				conn.query('SELECT * FROM interest ORDER BY RANDOM() LIMIT 6').on('row', function(row) {
+				conn.query('SELECT * FROM interest WHERE intid != $1 ORDER BY RANDOM() LIMIT 6', [request.params.iid]).on('row', function(row) {
 				
 				randInt += row.desc + "+" + row.intid + "+" + row.name + "&";
 					
 				}).on('end', function(){
-							response.render('intpage.html', {intName: iname, intid: request.params.iid, intDesc: idesc, userList: uList.substring(0, uList.length-1), randoms: randInt.substring(0, randInt.length-1), img: iurl, existent: has});
+							response.render('intpage.html', {intName: iname, 
+															intid: request.params.iid, 
+															intDesc: idesc, 
+															userList: uList.substring(0, uList.length-1), 
+															randoms: randInt.substring(0, randInt.length-1), 
+															img: iurl, 
+															existent: has});
 									});
 				
 				});

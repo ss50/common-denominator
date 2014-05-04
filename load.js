@@ -193,7 +193,7 @@ db.serialize(function() {
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Traveling","Explore the globe","http://www.airpano.com/files/Eiffel-Tower-Paris-France/image6a.jpg")');
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Concerts","Go deaf happily","http://knightnews.com/wp-content/uploads/2013/01/spring.jpg")');
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Hiking","Lace up your boots","https://lh6.googleusercontent.com/-oEc7XFuTVyY/UytHgg8014I/AAAAAAAAA3M/RTIQlj2kHE8/s640/blogger-image--1175115903.jpg")');
-		db.run('INSERT INTO interest (name, desc, url) VALUES ("Chocolate","The best guilty pleasure","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Chocolate","The best guilty pleasure","http://i.imgur.com/syRSWzF.png")');
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Chess","A game for geniuses","")');
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Boating","Just like T-Pain","")');
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Tanning","Soaking up rays","")');
