@@ -12,6 +12,7 @@
 	<div id="thumb"></div>
 	<title>Interest Details for {{intName}}</title>
 	<h1>{{intName}}: {{intDesc}}.</h1>
+	<button onclick="add()">Add to My Interests!</button>
 	<h2>Who likes it?</h2>
 	<ul id="users">
 	</ul>
@@ -28,7 +29,7 @@
 		var imgdiv = document.getElementById("thumb");
 		
 		if(imgurl=="")
-		{imgdiv.innerHTML='<img id="tnail" src="../static/images/CDlogo.png">';}
+		{imgdiv.innerHTML='<img id="tnail" src="../static/images/CDlogosq.png">';}
 		else
 		{imgdiv.innerHTML='<img id="tnail" src="' + imgurl + '">';}
 		
@@ -59,16 +60,25 @@
 		}
 		
 		var oth = document.getElementById("otherInt");
-		var iArr = randoms.split("&");
+		randoms = randoms.replace('&#x27;', "'");	
+		var iArr = randoms.split("&amp;");
+		console.log(iArr);
 		var rStr = "";
 		
 		for(var i = 0; i < iArr.length; i++)
 		{
 			var indiv = iArr[i].split("+");
+			var dsc = indiv[0];
+			//if(dsc.indexOf('amp;' != -1)) {dsc = dsc.substring(4, dsc.length);}
 			rStr += '| <span title="' + indiv[0] + '"><a href="/interest/' + indiv[1] + '">' + indiv[2] + '</a></span> ';
 		}
 		oth.innerHTML = rStr + "|";
 	
+	}
+	
+	function add()
+	{
+		window.location = '/interest/{{intid}}/add';
 	}
 	</script>
 </body>

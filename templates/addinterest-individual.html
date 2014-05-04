@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+	<script type="text/javascript" src="../../static/scripts/addinterest.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../static/css/mystyle.css">
+</head>
+<body>
+	<h1>You like {{intname}}, don't you, Squidward? How much?</h1>
+	<h2>Interest level:</h2>
+	<select name="level" form="intform">
+	  <option value="1">1: I'm a dabbler...</option>
+	  <option value="2">2: It's cool, I guess.</option>
+	  <option value="3">3: Yeah, I like it.</option>
+	  <option value="4">4: I'm so into it!</option>
+	  <option value="5">5: This is my life!</option>
+	</select> 
+    <form id="intform" method="POST">
+        <input type="submit" value="Submit">
+    </form>
+    <a href="/interest/all">View all interests</a>
+</body>
+</html>

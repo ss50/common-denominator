@@ -322,6 +322,24 @@ app.get('/interest/all', function(request, response){
 	}); 
 });
 
+//page allowing user to confirm adding an interest to their list of interests, indicating interest level
+app.get('/interest/:iid/add', function(request, response)
+{
+	console.log('i am here');
+	conn.query('SELECT name FROM interest WHERE intid = $1', [request.params.iid]).on('row', function(row) {
+	response.render('addinterest-individual.html', {intname: row.name});});
+});
+
+app.post('/interest/:iid/add', function(request, response) 
+{
+	//intid, uid, level
+	var info = request.body;
+	var id = request.params.iid;
+	var level = info.level;
+	
+	conn.query('INSERT INTO intmemb (intid, uid, level) VALUES ($1, "TEST", $2)', [id, level]).on('end', function() {console.log('adding new entry to intmemb table with level ' + level);});
+});
+
 //detail page for a single interest
 app.get('/interest/:iid', function(request, response){
 
