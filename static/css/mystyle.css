@@ -191,12 +191,54 @@ top:-15px;
 
 #bar{
   background-color: #A84A5C;
+  background-image: url('../images/gradient.jpg');
+  background-repeat: repeat-x;
   width:100%;
-  height:100px;
+  height:70px;
   position:relative;
   display:block;
   margin:auto;
-  top:130px;
+  top:140px;
+}
+
+#main_nav{
+    list-style:none;
+    margin:0;
+    padding:0;
+    text-align:center;
+}
+
+#main_nav ul{
+  width:70%;
+  text-align:center;
+  float:left;
+  clear:right;
+  text-align: center;
+}
+
+#main_nav li{
+  letter-spacing: -1px;
+  display:inline;
+}
+
+#main_nav a:hover{
+  background-position: 0px -69px !important;
+  font-weight:bold;
+  color:white;
+}
+
+#main_nav a{
+  height:45px;
+  width:100px;
+   background-image: url('../images/gradient2.jpg');
+  display:inline-block;  
+  padding-left:50px;
+    padding-right:50px;
+padding-top:25px;
+  text-decoration: none;
+  z-index:1000;
+    color:#F9E3CB;
+
 }
 
 #logo1{
@@ -286,12 +328,13 @@ top:-15px;
 
 .container{
  position:relative;
-  top:110px;
+  top:140px;
   width:800px;
   left:50px;
   position:relative;
     display:block;
    margin: 0 auto;
+   z-index:20;
  }
 
 #container{
