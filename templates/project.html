@@ -207,7 +207,9 @@
 		function showDialog() {
 			$( "#dialog" ).css("visibility", "visible");
 			$( "#dialog" ).dialog({
-
+				close: function( event, ui ) {
+					$( "#dialog" ).css("visibility", "hidden");
+				}
 			});
 		}
 
