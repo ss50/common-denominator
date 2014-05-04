@@ -24,16 +24,19 @@ app.use(express.bodyParser()); // definitely use this feature
 app.use(express.methodOverride());
 app.use(connect.static(__dirname + '/', { maxAge: 86400000 }));
 app.use(express.cookieParser());
-app.use(express.session({secret: "secret session", store: new RedisStore(
-	{host: '127.0.0.1', port: 6379, client: client}
-	)}));
-app.use(app.router);
-
 
 app.configure('development', function(){
 	app.use(express.errorHandler());
+	app.use(express.session({secret: "secret session", store: new RedisStore(
+	{host: '127.0.0.1', port: 6379, client: client}
+	)}));
 });
 
+app.configure('production', function(){
+
+});
+
+app.use(app.router);
 // we may want to ignore anydb and just use this:
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database("commondenominator.db");
@@ -312,11 +315,11 @@ app.post('/interest/addinterest', function(request, response){
 app.get('/interest/all', function(request, response){
 	var allInt = "";
 	conn.query('SELECT * FROM INTEREST').on('row', function(row) {
-												allInt += row.intid + "+" + row.name + "+" + row.desc + "&";
-															}).on('end', function() {
-																			response.render('allinterests.html', 
-																							{intList: allInt.substring(0, allInt.length-1)});
-																					}); 
+		allInt += row.intid + "+" + row.name + "+" + row.desc + "&";
+		}).on('end', function() {
+		response.render('allinterests.html', 
+			{intList: allInt.substring(0, allInt.length-1)});
+	}); 
 });
 
 //detail page for a single interest
