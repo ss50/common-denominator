@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="../static/scripts/client.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="../static/css/mystyle.css">
-<link href='http://fonts.googleapis.com/css?family=Alegreya:900italic,400' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Bevan' rel='stylesheet' type='text/css'>
-<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Alegreya+SC:regular:latin'>
-<link href='http://fonts.googleapis.com/css?family=Raleway:400,700,900' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Alfa+Slab+One' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Averia+Libre:400,700' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="../static/scripts/jquery-ui-1.10.4.min.js"></script>
+	<script type="text/javascript" src="../static/scripts/client.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<link rel="stylesheet" type="text/css" href="../static/css/mystyle.css">
+	<link href='http://fonts.googleapis.com/css?family=Alegreya:900italic,400' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Bevan' rel='stylesheet' type='text/css'>
+	<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Alegreya+SC:regular:latin'>
+	<link href='http://fonts.googleapis.com/css?family=Raleway:400,700,900' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Alfa+Slab+One' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Averia+Libre:400,700' rel='stylesheet' type='text/css'>
+	<link href='../static/css/ui-lightness/jquery-ui-1.10.4.css' rel='stylesheet' type='text/css'>
 <!-- <script src="assets/js/jquery.knob.js"></script>
  <script src="../assets/js/jquery.ui.widget.js"></script>
  <script src="../assets/js/jquery.iframe-transport.js"></script>
  <script src="../assets/js/jquery.fileupload.js"></script> -->
-<title>Common Denominator</title>
+ <title>Common Denominator</title>
 </head>
 <body>
-<!-- Page body-->
+	<!-- Page body-->
 
-<div id="container">
+	<div id="container">
 
-	<!-- Header -->
-	<div id="header">
-		<div id = "nav_bar">
-			<div id = "nav_text_cover"></div>	
-			<div id="nav_bar_2">	
-				<div id = "nav_text">
-				CommonDenominator
+		<!-- Header -->
+		<div id="header">
+			<div id = "nav_bar">
+				<div id = "nav_text_cover"></div>	
+				<div id="nav_bar_2">	
+					<div id = "nav_text">
+						CommonDenominator
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
 	<!-- Part of body containing profile picture and links for users to change their profile pic,
 	logout, update their location and contact info -->
@@ -48,12 +50,16 @@
 		<!--<div class="sectionHead" id="numeratorHead"> Numerator </div> -->
 		<div id="bar">
 			<!--<rect width="100%" height="150"/> -->
-				<table id='main_nav'>
-					<tr>
-						<td><p>Contact</p></td>
+			<table id='main_nav'>
+				<tr>
+					<button onclick="showDialog();">
+						Edit Contact Info
+					</button>
+					
+						<!-- <td><p>Contact</p></td>
 						<td><p>Add Profile Pic</p></td>
 						<td><p>Add Location</p></td>
-						<td><p>Logout</p></td>
+						<td><p>Logout</p></td> -->
 					</tr>
 				</table> 
 			<!--<div>
@@ -73,108 +79,126 @@
 				<div class="interest1">	
 					<img src="http://8tracks.imgix.net/i/000/963/601/44043.original-228.gif?q=65&sharp=15&vib=10&fm=jpg&fit=crop&w=521&h=521"></img>
 				</div>
-			<div class="interest1"> 
-				<img src="http://wwwdelivery.superstock.com/WI/223/1491/PreviewComp/SuperStock_1491R-1040175.jpg"></img>
-			</div>
-			<div class="interest1"> 			
-				<img src="http://www.art-is-fun.com/image-files/abstract-painting-squares.jpg"></img>
-			</div>
-			<div class="interest1"> 			
+				<div class="interest1"> 
+					<img src="http://wwwdelivery.superstock.com/WI/223/1491/PreviewComp/SuperStock_1491R-1040175.jpg"></img>
+				</div>
+				<div class="interest1"> 			
+					<img src="http://www.art-is-fun.com/image-files/abstract-painting-squares.jpg"></img>
+				</div>
+				<div class="interest1"> 			
 					<img src="http://www.glamour.com/images/health-fitness/2013/06/ashley-greene-surfing-square-w352.jpg"></img>
-			</div></span>
-			<span class="container" id="c2">
-			<img class="interest2" src="http://www.airpano.com/files/Eiffel-Tower-Paris-France/image6a.jpg">
-			<img class="interest2" src="http://knightnews.com/wp-content/uploads/2013/01/spring.jpg">
-			<img class="interest2" src="https://lh6.googleusercontent.com/-oEc7XFuTVyY/UytHgg8014I/AAAAAAAAA3M/RTIQlj2kHE8/s640/blogger-image--1175115903.jpg">
-			<div class="interest2" id="empty">
-			</span>
-		</section>
-	</div>
-</div>	
+				</div></span>
+				<span class="container" id="c2">
+					<img class="interest2" src="http://www.airpano.com/files/Eiffel-Tower-Paris-France/image6a.jpg">
+					<img class="interest2" src="http://knightnews.com/wp-content/uploads/2013/01/spring.jpg">
+					<img class="interest2" src="https://lh6.googleusercontent.com/-oEc7XFuTVyY/UytHgg8014I/AAAAAAAAA3M/RTIQlj2kHE8/s640/blogger-image--1175115903.jpg">
+					<div class="interest2" id="empty">
+					</span>
+				</section>
+			</div>
+		</div>	
 
-<!-- Footer Div -->
+		<!-- Footer Div -->
 
-<div id="footer-wrapper">
-	<div id="footer">
-		<div id="functions">
-			<div id="search">
+		<div id="footer-wrapper">
+			<div id="footer">
+				<div id="functions">
+					<div id="search">
+					</div>
+				</div>
+				<ul id="footer-list">
+					<li id="contact-li"><a href="mailto:gadi_cohen@brown.edu?Subject=Hello%20again" target="_top">Contact the designers</a></li>
+				</ul>
+				<img id="logo1" src="../static/images/CDlogo.png">
+
+				<p id="footer-p">
+					The Common Denominator is the final project designed and implemented by a group of students taking CS132 at Brown University. We are <span id="developers">Gadi Cohen, Shreya Srinivas, Alexander Varga and Dominic Errazo</span>. The website was commissioned by Alexandra Joukowsky. 
+				</p>
+
 			</div>
 		</div>
-		<ul id="footer-list">
-			<li id="contact-li"><a href="mailto:gadi_cohen@brown.edu?Subject=Hello%20again" target="_top">Contact the designers</a></li>
-			</ul>
-			<img id="logo1" src="../static/images/CDlogo.png">
+		
+		<div id="dialog" title="Basic dialog" style="visibility: hidden;">
+			<form>
+				<fieldset>
+					<label for="email">Email</label>
+					<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
+					<label for="phoneNumber">Phone Number</label>
+					<input type="text" name="phoneNumber" id="phoneNumber" value="" class="text ui-widget-content ui-corner-all">
+				</fieldset>
+			</form>
+		</div>
 
-		<p id="footer-p">
-			The Common Denominator is the final project designed and implemented by a group of students taking CS132 at Brown University. We are <span id="developers">Gadi Cohen, Shreya Srinivas, Alexander Varga and Dominic Errazo</span>. The website was commissioned by Alexandra Joukowsky. 
-		</p>
-
-	</div>
-</div>
-
-</body>
+	</body>
 	<script>
-	$('#upload').fileupload({
+		$('#upload').fileupload({
 
-	// This function is called when a file is added to the queue
-	add: function (e, data) {
-	//This area will contain file list and progress information.
-	var tpl = $('<li class="working">'+
-	            '<input type="text" value="0" data-width="48" data-height="48" data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" />'+
-	            '<p></p><span></span></li>' );
+		// This function is called when a file is added to the queue
+		add: function (e, data) {
+		//This area will contain file list and progress information.
+		var tpl = $('<li class="working">'+
+			'<input type="text" value="0" data-width="48" data-height="48" data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" />'+
+			'<p></p><span></span></li>' );
 
-	// Append the file name and file size
-	tpl.find('p').text(data.files[0].name)
-	             .append('<i>' + formatFileSize(data.files[0].size) + '</i>');
+		// Append the file name and file size
+		tpl.find('p').text(data.files[0].name)
+		.append('<i>' + formatFileSize(data.files[0].size) + '</i>');
 
-	// Add the HTML to the UL element
-	data.context = tpl.appendTo(ul);
+		// Add the HTML to the UL element
+		data.context = tpl.appendTo(ul);
 
-	// Initialize the knob plugin. This part can be ignored, if you are showing progress in some other way.
-	tpl.find('input').knob();
+		// Initialize the knob plugin. This part can be ignored, if you are showing progress in some other way.
+		tpl.find('input').knob();
 
-	// Listen for clicks on the cancel icon
-	tpl.find('span').click(function(){
-	  if(tpl.hasClass('working')){
-	          jqXHR.abort();
-	  }
-	  tpl.fadeOut(function(){
-	          tpl.remove();
-	  });
-	});
+		// Listen for clicks on the cancel icon
+		tpl.find('span').click(function(){
+			if(tpl.hasClass('working')){
+				jqXHR.abort();
+			}
+			tpl.fadeOut(function(){
+				tpl.remove();
+			});
+		});
 
-	// Automatically upload the file once it is added to the queue
-	var jqXHR = data.submit();
+		// Automatically upload the file once it is added to the queue
+		var jqXHR = data.submit();
 	},
 	progress: function(e, data){
 
-	    // Calculate the completion percentage of the upload
-	    var progress = parseInt(data.loaded / data.total * 100, 10);
+		    // Calculate the completion percentage of the upload
+		    var progress = parseInt(data.loaded / data.total * 100, 10);
 
-	    // Update the hidden input field and trigger a change
-	    // so that the jQuery knob plugin knows to update the dial
-	    data.context.find('input').val(progress).change();
+		    // Update the hidden input field and trigger a change
+		    // so that the jQuery knob plugin knows to update the dial
+		    data.context.find('input').val(progress).change();
 
-	    if(progress == 100){
-	        data.context.removeClass('working');
-	    }
-	}
+		    if(progress == 100){
+		    	data.context.removeClass('working');
+		    }
+		}
 	});
-	//Helper function for calculation of progress
-	function formatFileSize(bytes) {
-	if (typeof bytes !== 'number') {
-	    return '';
-	}
+		//Helper function for calculation of progress
+		function formatFileSize(bytes) {
+			if (typeof bytes !== 'number') {
+				return '';
+			}
 
-	if (bytes >= 1000000000) {
-	    return (bytes / 1000000000).toFixed(2) + ' GB';
-	}
+			if (bytes >= 1000000000) {
+				return (bytes / 1000000000).toFixed(2) + ' GB';
+			}
 
-	if (bytes >= 1000000) {
-	    return (bytes / 1000000).toFixed(2) + ' MB';
-	}
-	return (bytes / 1000).toFixed(2) + ' KB';
-	}
-</script>
+			if (bytes >= 1000000) {
+				return (bytes / 1000000).toFixed(2) + ' MB';
+			}
+			return (bytes / 1000).toFixed(2) + ' KB';
+		}
 
-</html>
+		function showDialog() {
+			$( "#dialog" ).css("visibility", "visible");
+			$( "#dialog" ).dialog({
+
+			});
+		}
+	</script>
+
+	</html>
