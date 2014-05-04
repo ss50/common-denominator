@@ -191,7 +191,7 @@ top:-15px;
 
 #bar{
   background-color: #A84A5C;
-  background-image: url('../images/gradient.jpg');
+  background-image: url('../images/gradient1.jpg');
   background-repeat: repeat-x;
   width:100%;
   height:70px;
@@ -228,6 +228,7 @@ top:-15px;
 }
 
 #main_nav a{
+  font-size:15px;
   height:45px;
   width:100px;
    background-image: url('../images/gradient2.jpg');
@@ -328,7 +329,7 @@ padding-top:25px;
 
 .container{
  position:relative;
-  top:130px;
+  top:120px;
   width:800px;
   left:50px;
   position:relative;
