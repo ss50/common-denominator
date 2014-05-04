@@ -355,9 +355,11 @@ app.get('/interest/:iid', function(request, response){
 			});
 		});
 
-var isWin = /^win/.test(process.platform);
-if (isWin) {
+var plat = process.platform;
+if (plat == "win32") { 		// works for 64 too
 	db.loadExtension('spellfixWin', spellfixLoaded);
+} else if (plat == "linux") {
+
 } else {
 	db.loadExtension('spellfixMac', spellfixLoaded);
 }
