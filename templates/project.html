@@ -106,12 +106,13 @@
 		</div>
 		
 		<div id="dialog" title="Basic dialog" style="visibility: hidden;">
-			<form>
+			<form id='contact_form' method='POST' action='/contact'>
 				<fieldset>
 					<label for="email">Email</label>
 					<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all">
 					<label for="phoneNumber">Phone Number</label>
 					<input type="text" name="phoneNumber" id="phoneNumber" value="" class="text ui-widget-content ui-corner-all">
+					<input type='submit' value='Edit'></input>
 				</fieldset>
 			</form>
 		</div>
