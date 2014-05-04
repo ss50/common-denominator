@@ -12,7 +12,7 @@
 	<div id="thumb"></div>
 	<title>Interest Details for {{intName}}</title>
 	<h1>{{intName}}: {{intDesc}}.</h1>
-	<button onclick="add()">Add to My Interests!</button>
+	<div id="interact"></div>
 	<h2>Who likes it?</h2>
 	<ul id="users">
 	</ul>
@@ -73,13 +73,36 @@
 			rStr += '| <span title="' + indiv[0] + '"><a href="/interest/' + indiv[1] + '">' + indiv[2] + '</a></span> ';
 		}
 		oth.innerHTML = rStr + "|";
+		
+		var interact = document.getElementById("interact");
+		
+		if("{{existent}}" == "no")
+		{
+			interact.innerHTML = '<button onclick="interact(\'add\')">Add to My Interests!</button>';
+		}
+		else 
+		{
+			interact.innerHTML = '<button onclick="interact(\'remove\')">Remove from My Interests!</button>';
+		}
 	
+	}
+	
+	function interact(str)
+	{
+		if(str=='add') add();
+		else if(str=='remove') remove();
 	}
 	
 	function add()
 	{
 		window.location = '/interest/{{intid}}/add';
 	}
+	
+	function remove()
+	{
+		window.location = '/interest/{{intid}}/remove';
+	}
+	
 	</script>
 </body>
 </html>

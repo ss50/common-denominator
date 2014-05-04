@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="../../static/css/mystyle.css">
+	</head>
+<body>
+	<title>You don't like {{intname}} anymore?</title>
+	<h1>Are you sure?</h1>
+	<p>Remove {{intname}} from your interests?</p>
+	<form id="remove" method="POST">
+        <input type="submit" value="{{intname}} fascinates me no longer! Away!">
+    </form>
+	<button onclick="back()">Nah. Just take me back.</button>
+	
+	<script>
+		function back()
+		{
+			window.history.back();
+		}
+	</script>
+</body>
+</html>
+	

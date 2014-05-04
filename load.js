@@ -186,13 +186,13 @@ db.serialize(function() {
 	
 		console.log('-Interests table created');
 
-		db.run('INSERT INTO interest (name, desc, url) VALUES ("Indie Music","I haven\'t heard of it either","")');
-		db.run('INSERT INTO interest (name, desc, url) VALUES ("Computers","Beep boop binary","")');
-		db.run('INSERT INTO interest (name, desc, url) VALUES ("Modern Art","Creativity goes wild","")');
-		db.run('INSERT INTO interest (name, desc, url) VALUES ("Surfing","Hang ten fella","")');
-		db.run('INSERT INTO interest (name, desc, url) VALUES ("Traveling","Explore the globe","")');
-		db.run('INSERT INTO interest (name, desc, url) VALUES ("Concerts","Go deaf happily","")');
-		db.run('INSERT INTO interest (name, desc, url) VALUES ("Hiking","Lace up your boots","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Indie Music","I haven\'t heard of it either","http://8tracks.imgix.net/i/000/963/601/44043.original-228.gif?q=65&sharp=15&vib=10&fm=jpg&fit=crop&w=521&h=521")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Computers","Beep boop binary","http://wwwdelivery.superstock.com/WI/223/1491/PreviewComp/SuperStock_1491R-1040175.jpg")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Modern Art","Creativity goes wild","http://www.art-is-fun.com/image-files/abstract-painting-squares.jpg")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Surfing","Hang ten fella","http://www.glamour.com/images/health-fitness/2013/06/ashley-greene-surfing-square-w352.jpg")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Traveling","Explore the globe","http://www.airpano.com/files/Eiffel-Tower-Paris-France/image6a.jpg")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Concerts","Go deaf happily","http://knightnews.com/wp-content/uploads/2013/01/spring.jpg")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Hiking","Lace up your boots","https://lh6.googleusercontent.com/-oEc7XFuTVyY/UytHgg8014I/AAAAAAAAA3M/RTIQlj2kHE8/s640/blogger-image--1175115903.jpg")');
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Chocolate","The best guilty pleasure","")');
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Chess","A game for geniuses","")');
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Boating","Just like T-Pain","")');

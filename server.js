@@ -322,10 +322,30 @@ app.get('/interest/all', function(request, response){
 	}); 
 });
 
+
+//aww, this user isn't into this interest anymore
+app.get('/interest/:iid/remove', function(request, response)
+{
+	console.log('interest removal');
+	var inm = "";
+	conn.query('SELECT name FROM interest WHERE intid = $1', [request.params.iid]).on('row', function(row) {inm = row.name;}).on('end', function(){response.render('remove.html', {intname: inm});});
+	
+});
+
+app.post('/interest/:iid/remove', function(request, response)
+{
+	console.log('going through with the removal');
+	conn.query('DELETE FROM intmemb WHERE intid = $1 AND uid = "TEST"', [request.params.iid]).on('end',
+					function()
+					{
+						response.redirect('/interest/' + request.params.iid);
+					});
+
+});
+
 //page allowing user to confirm adding an interest to their list of interests, indicating interest level
 app.get('/interest/:iid/add', function(request, response)
 {
-	console.log('i am here');
 	conn.query('SELECT name FROM interest WHERE intid = $1', [request.params.iid]).on('row', function(row) {
 	response.render('addinterest-individual.html', {intname: row.name});});
 });
@@ -337,14 +357,42 @@ app.post('/interest/:iid/add', function(request, response)
 	var id = request.params.iid;
 	var level = info.level;
 	
-	conn.query('INSERT INTO intmemb (intid, uid, level) VALUES ($1, "TEST", $2)', [id, level]).on('end', function() {console.log('adding new entry to intmemb table with level ' + level);});
+	//insert into membership table
+	conn.query('INSERT INTO intmemb (intid, uid, level) VALUES ($1, "TEST", $2)', [id, level]).on('end', 
+		function() 
+		{
+			console.log('adding new entry to intmemb table with level ' + level);
+			//take user back to the main page for the interest
+			response.redirect('/interest/' + request.params.iid);
+		});
 });
+
 
 //detail page for a single interest
 app.get('/interest/:iid', function(request, response){
 
 	var uList = "";
 	var randInt = "";
+	var has = "";
+	var present = 0;
+	conn.query('SELECT * FROM intmemb WHERE uid = "TEST" and intid = $1', [request.params.iid]).on('row',
+					function(row){console.log('hey');present += 1;}).on('end', 
+						function()
+						{
+							if(present == 0) //user does not have this interest on their list
+							{
+								console.log('nope');
+								has = "no";
+							}
+							else //interest present
+							{
+								console.log('right here');
+								has = "yes";
+							}
+						});
+	
+	
+	
 	
 	//get info for this interest
 	conn.query('SELECT name, desc, url FROM interest WHERE intid = $1', [request.params.iid]).on('row', 
@@ -367,7 +415,7 @@ app.get('/interest/:iid', function(request, response){
 				randInt += row.desc + "+" + row.intid + "+" + row.name + "&";
 					
 				}).on('end', function(){
-							response.render('intpage.html', {intName: iname, intDesc: idesc, userList: uList.substring(0, uList.length-1), randoms: randInt.substring(0, randInt.length-1), img: iurl});
+							response.render('intpage.html', {intName: iname, intid: request.params.iid, intDesc: idesc, userList: uList.substring(0, uList.length-1), randoms: randInt.substring(0, randInt.length-1), img: iurl, existent: has});
 									});
 				
 				});
