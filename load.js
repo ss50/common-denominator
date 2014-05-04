@@ -110,21 +110,21 @@ function getHash(pwd){
 
 db.serialize(function() {
 	if(!exists) {
-		db.run("CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, firstname TEXT, lastname TEXT, uname TEXT, password TEXT, loc TEXT);");
+		db.run("CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, firstname TEXT, lastname TEXT, uname TEXT, password TEXT, email TEXT, phone TEXT, loc TEXT);");
 		console.log('-users table created');
 
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, loc) VALUES ("A8K1","Chad","Miller", "Chad", $pwd,"41.8193,-71.3922")', [getHash("Chad")]);
-		db.run('INSERT INTO users (uid, firstname, lastname,uname, password, loc) VALUES ("G44H","Diane", "Chang", "Diane", $pwd,"41.8193,-71.3947")', [getHash("Diane")]);
-		db.run('INSERT INTO users (uid, firstname, lastname,uname, password, loc) VALUES ("Q2QV","Mark", "McConnell", "Mark", $pwd,"41.8218,-71.3997")', [getHash("Mark")]);
-		db.run('INSERT INTO users (uid, firstname, lastname,uname, password, loc) VALUES ("MM7M","Sandra", "Day OConnor", "Sandra", $pwd,"41.8293,-71.4097")', [getHash("Sandra")]);
-		db.run('INSERT INTO users (uid, firstname, lastname,uname, password, loc) VALUES ("CRLF","Dexter", "Barnes", "Dexter",$pwd,"41.8318,-71.3997")', [getHash("Dexter")]);
-		db.run('INSERT INTO users (uid, firstname, lastname,uname, password, loc) VALUES ("83C5","Leo", "DiCaprio", "Leo", $pwd,"41.8218,-71.4022")', [getHash("Leo")]);
-		db.run('INSERT INTO users (uid, firstname, lastname,uname, password, loc) VALUES ("BHQT","James", "Brolin", "James", $pwd,"41.8193,-71.4072")', [getHash("James")]);
-		db.run('INSERT INTO users (uid, firstname, lastname,uname, password, loc) VALUES ("LC9H","Nestor", "Smith", "Nestor", $pwd,"41.8218,-71.4097")', [getHash("Nestor")]);
-		db.run('INSERT INTO users (uid, firstname, lastname,uname, password, loc) VALUES ("K5DD","Harris", "Fisher", "Harris", $pwd,"41.8268,-71.3947")', [getHash("Harris")]);
-		db.run('INSERT INTO users (uid, firstname, lastname,uname, password, loc) VALUES ("6EVJ","Bertha", "Seinfeld", "Bertha", $pwd,"41.8293,-71.3972")', [getHash("Bertha")]);
-		db.run('INSERT INTO users (uid, firstname, lastname,uname, password, loc) VALUES ("NML0","Francine", "Frensky", "Francine", $pwd,"41.8268,-71.4047")', [getHash("Francine")]);
-		db.run('INSERT INTO users (uid, firstname, lastname,uname, password, loc) VALUES ("VI4S","Tim","Turner","Tim",$pwd,"41.8168,-71.4022")', [getHash("Tim")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("A8K1","Chad","Miller", "Chad", $pwd, "chad@brown.edu","555-555-5555","41.8193,-71.3922")', [getHash("Chad")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("G44H","Diane", "Chang", "Diane", $pwd, "diane@brown.edu","555-555-5555","41.8193,-71.3947")', [getHash("Diane")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("Q2QV","Mark", "McConnell", "Mark", $pwd,"mark@brown.edu","555-555-5555","41.8218,-71.3997")', [getHash("Mark")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("MM7M","Sandra", "Day OConnor", "Sandra", $pwd,"sandra@brown.edu","555-555-5555","41.8293,-71.4097")', [getHash("Sandra")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("CRLF","Dexter", "Barnes", "Dexter",$pwd,"dexter@brown.edu","555-555-5555","41.8318,-71.3997")', [getHash("Dexter")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("83C5","Leo", "DiCaprio", "Leo", $pwd,"leo@brown.edu","555-555-5555","41.8218,-71.4022")', [getHash("Leo")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("BHQT","James", "Brolin", "James", $pwd,"james@brown.edu","555-555-5555","41.8193,-71.4072")', [getHash("James")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("LC9H","Nestor", "Smith", "Nestor", $pwd,"nestor@brown.edu","555-555-5555","41.8218,-71.4097")', [getHash("Nestor")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("K5DD","Harris", "Fisher", "Harris", $pwd,"harris@brown.edu","555-555-5555","41.8268,-71.3947")', [getHash("Harris")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("6EVJ","Bertha", "Seinfeld", "Bertha", $pwd,"bertha@brown.edu","555-555-5555","41.8293,-71.3972")', [getHash("Bertha")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("NML0","Francine", "Frensky", "Francine", $pwd,"francine@brown.edu","555-555-5555","41.8268,-71.4047")', [getHash("Francine")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("VI4S","Tim","Turner","Tim",$pwd,"tim@brown.edu","555-555-5555","41.8168,-71.4022")', [getHash("Tim")]);
 	
 		console.log('--All users inserted');
 	}
