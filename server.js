@@ -1,9 +1,9 @@
 //See README.md
 
 var express = require('express');
-var RedisStore = require('connect-redis')(express);
-var redis = require("redis");
-var client = redis.createClient();
+//var RedisStore = require('connect-redis')(express);
+//var redis = require("redis");
+//var client = redis.createClient();
 var anyDB = require('any-db');
 var shortId = require('shortid');
 var conn = anyDB.createConnection('sqlite3://commondenominator.db');
@@ -24,9 +24,10 @@ app.use(express.bodyParser()); // definitely use this feature
 app.use(express.methodOverride());
 app.use(connect.static(__dirname + '/', { maxAge: 86400000 }));
 app.use(express.cookieParser());
-app.use(express.session({secret: "secret session", store: new RedisStore(
-	{host: '127.0.0.1', port: 6379, client: client}
-	)}));
+app.use(express.session({secret: "secret session"}));
+// , store: new RedisStore(
+// 	{host: '127.0.0.1', port: 6379, client: client}
+// 	)
 app.use(app.router);
 
 
