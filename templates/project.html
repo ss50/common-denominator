@@ -26,40 +26,48 @@
 	<div id="header">
 		<div id = "nav_bar">
 			<div id = "nav_text_cover"></div>	
-				<div id="nav_bar_2">	
-					<div id = "nav_text">
-					CommonDenominator
-					</div>
+			<div id="nav_bar_2">	
+				<div id = "nav_text">
+				CommonDenominator
 				</div>
+			</div>
 		</div>
 	</div>
 
 	<!-- Part of body containing profile picture and links for users to change their profile pic,
 	logout, update their location and contact info -->
 	<div id="body">										
-		<section id="numerator" data-type="background" data-speed="10">
+		<div id="numerator" data-type="background" data-speed="10">
 			<div id="profile">
 				<div id="profpicDiv">
 					<img src="http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg" id="profile-picture">
 				</div>
 			</div>
-		</section>
+		</div>
 
-		<div class="sectionHead" id="numeratorHead"> Numerator </div>
-		<svg id="bar" width="100%" height="25">
-		<rect width="100%" height="150"/>
-			<div>
+		<!--<div class="sectionHead" id="numeratorHead"> Numerator </div> -->
+		<div id="bar">
+			<!--<rect width="100%" height="150"/> -->
+				<table id='main_nav'>
+					<tr>
+						<td><p>Contact</p></td>
+						<td><p>Add Profile Pic</p></td>
+						<td><p>Add Location</p></td>
+						<td><p>Logout</p></td>
+					</tr>
+				</table> 
+			<!--<div>
 				<form id="upload" method="post" action="/upload" enctype="multipart/form-data">
 		  		<input type="file" name="uploadctl" multiple />
 		  		<ul id="fileList">
-		    <!-- The file list will be shown here -->
+
 		  		</ul>
 				</form>
-			</div>
-		</svg>
+			</div> -->
+		</div>
 
 		<!-- Area where users add interests-->
-		<div class="sectionHead" id="denominatorHead"> Denominator </div>
+		<!--<div class="sectionHead" id="denominatorHead"> Denominator </div> -->
 		<section id="denominator" data-type="background" data-speed="10">
 			<span class="container" id="c1">
 				<div class="interest1">	
