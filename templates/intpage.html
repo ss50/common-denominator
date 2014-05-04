@@ -26,16 +26,18 @@
 		var randoms = '{{randoms}}';
 		var imgurl = '{{img}}';
 		
+		//insert the thumbnail image provided to represent this interest
 		var imgdiv = document.getElementById("thumb");
 		
 		if(imgurl=="")
-		{imgdiv.innerHTML='<img id="tnail" src="../static/images/CDlogosq.png">';}
+		{imgdiv.innerHTML='<img id="tnail" src="../static/images/CDlogosq.png">';} //no image url given? use generic common denominator logo as placeholder
 		else
 		{imgdiv.innerHTML='<img id="tnail" src="' + imgurl + '">';}
 		
+		//populate the list of users who have this interest in their set of interests
 		var ul = document.getElementById('users');
 		//alert(ul);
-		if(userList == "")
+		if(userList == "") //nobody likes it? placeholder text!
 		{
 			var li = document.createElement('li');
 			li.innerHTML = 'Nobody... at least, not yet!';
@@ -43,31 +45,33 @@
 		}
 		else
 		{
-			var uArr = userList.split('&');
+			var uArr = userList.split('&'); //array-ify each individual user
 		
 			for(var i = 0; i < uArr.length; i++)
 			{
 				var li = document.createElement('li');
 				//if(uArr[i] == "") break;
-				var indiv = uArr[i].split('+'); //id, name, level
+				var indiv = uArr[i].split('+'); //split each user's info into id, username, level
 				//console.log(uArr[i]);
 				var uid = indiv[0];
-				if(uid.indexOf('amp;') != -1)
+				if(uid.indexOf('amp;') != -1) //ugh encoding
 				{uid = uid.substring(4, uid.length);}
 				li.innerHTML = '<a href="/user/' + uid + '">' + indiv[1] + '</a> (Interest level: '+indiv[2]+')';
-				ul.appendChild(li);
+				ul.appendChild(li); //appendChild because user list was returned in descending order of interest level
 			}
 		}
 		
+		
+		//populate the randomized set of other interests
 		var oth = document.getElementById("otherInt");
-		randoms = randoms.replace('&#x27;', "'");	
-		var iArr = randoms.split("&amp;");
+		randoms = randoms.replace('&#x27;', "'"); //ew encoding
+		var iArr = randoms.split("&amp;"); //split the string apart to separate each interest
 		console.log(iArr);
 		var rStr = "";
 		
 		for(var i = 0; i < iArr.length; i++)
 		{
-			var indiv = iArr[i].split("+");
+			var indiv = iArr[i].split("+"); //get the individual pieces needed
 			var dsc = indiv[0];
 			//if(dsc.indexOf('amp;' != -1)) {dsc = dsc.substring(4, dsc.length);}
 			rStr += '| <span title="' + indiv[0] + '"><a href="/interest/' + indiv[1] + '">' + indiv[2] + '</a></span> ';
@@ -76,17 +80,20 @@
 		
 		var interact = document.getElementById("interact");
 		
+		//does the user visiting this page have this interest in the set of their own interests?
 		if("{{existent}}" == "no")
 		{
 			interact.innerHTML = '<button onclick="interact(\'add\')">Add to My Interests!</button>';
 		}
 		else 
 		{
+			//i don't know why onclick="remove()" doesn't work but this weird wrapper method does
 			interact.innerHTML = '<button onclick="interact(\'remove\')">Remove from My Interests!</button>';
 		}
 	
 	}
 	
+	//weird wrapper method to make this work; previously, when the button just called remove(), the button disappeared and no redirect occurred
 	function interact(str)
 	{
 		if(str=='add') add();
