@@ -7,5 +7,12 @@ User login:
 - redirecting to private profile page
 - Or: using a 3rd party service to authenticate
   usernames and passwords
-- Consider using passport module for node.js 
+- Consider using passport module for node.js
+
+Profile page:
+- add interest
+- turn on location services: database will be updated
+- logout
+- change profile picture
+- contact-info  
 
