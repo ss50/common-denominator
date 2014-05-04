@@ -355,8 +355,14 @@ app.get('/interest/:iid', function(request, response){
 			});
 		});
 
-// virtual tables can't be stored
-db.loadExtension('spellfix', function(error) {
+var isWin = /^win/.test(process.platform);
+if (isWin) {
+	db.loadExtension('spellfixWin', spellfixLoaded);
+} else {
+	db.loadExtension('spellfixMac', spellfixLoaded);
+}
+
+function spellfixLoaded(error) {
 	if (error) {
 		console.log("-error loading spellfix extension");
 		console.log(error);
@@ -375,7 +381,7 @@ db.loadExtension('spellfix', function(error) {
 			}
 	    });
 	}
-});
+}
 
 app.get('/LEDInterests/:interest', function(request, response){
 	var interest = request.params.interest;
