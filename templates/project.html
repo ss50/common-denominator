@@ -13,6 +13,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Alfa+Slab+One' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Averia+Libre:400,700' rel='stylesheet' type='text/css'>
 	<link href='../static/css/ui-lightness/jquery-ui-1.10.4.css' rel='stylesheet' type='text/css'>
+	<link href='../static/css/ui-lightness/jquery.ui.dialog.css' rel='stylesheet' type='text/css'>
 <!-- <script src="assets/js/jquery.knob.js"></script>
  <script src="../assets/js/jquery.ui.widget.js"></script>
  <script src="../assets/js/jquery.iframe-transport.js"></script>
@@ -52,16 +53,16 @@
 			<!--<rect width="100%" height="150"/> -->
 
 					<ul id="main_nav">
-						<li><a href="/"> Contact</a></li>
+						<li onclick="showDialog();"><a> Contact</a></li>
 						<li><a href="/"> Add Profile Pic</a></li>
 						<li><a href="/"> Add Location</a></li>
 						<li><a href="/"> Logout</a></li>
 					</ul>
 			<table id='main_nav'>
 				<tr>
-					<button onclick="showDialog();">
+					<!-- <button onclick="showDialog();">
 						Edit Contact Info
-					</button>
+					</button> -->
 					
 						<!-- <td><p>Contact</p></td>
 						<td><p>Add Profile Pic</p></td>
