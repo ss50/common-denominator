@@ -7,7 +7,7 @@
 	<!-- <script type="text/javascript" src="../static/scripts/allinterests.js"></script> --> <!-- not currently needed -->
 </head>
 <body>
-
+	<img src={{gfx}} />
 	<h1>Browse all the interests. Go ahead.</h1>
 	<ul id="ints">
 	</ul>
@@ -16,15 +16,17 @@
 		<script>
 			var ilcontents = "{{intList}}";
 			var ul = document.getElementById('ints');
-
-			var iArr = ilcontents.split("&");
+			var ilc = ilcontents.replace("&#x27;", "\'");
+			//console.log(ilc.substring(0, 100));
+			var iArr = ilc.split("&");
 			for(var i = 0; i < iArr.length; i++)
 			{
-				var indiv = iArr[i].split('+');
-				console.log(indiv);
+				var indiv = iArr[i].replace("amp;", "").split("+");
+				//console.log(indiv);
 				var iid = indiv[0];
-				if(iid.indexOf('amp;') != -1)
-				{iid = iid.substring(4, iid.length);}
+				if(iid.indexOf("amp;") != -1)
+				{iid = iid.replace("amp;", "");}
+				//{iid = iid.substring(4, iid.length);}
 				var li = document.createElement('li');
 				li.innerHTML = '<a href="/interest/' + iid + '">' + indiv[1] + '</a>: ' + indiv[2];
 				ul.appendChild(li);
