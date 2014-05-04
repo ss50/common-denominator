@@ -329,11 +329,12 @@ app.get('/interest/:iid', function(request, response){
 	var randInt = "";
 	
 	//get info for this interest
-	conn.query('SELECT name, desc FROM interest WHERE intid = $1', [request.params.iid]).on('row', 
+	conn.query('SELECT name, desc, url FROM interest WHERE intid = $1', [request.params.iid]).on('row', 
 		function(row) {
 			//console.log(row);
 			var iname = row.name;
 			var idesc = row.desc;
+			var iurl = row.url;
 			var likes = '';
 			
 			//get everyone who likes this interest
@@ -348,7 +349,7 @@ app.get('/interest/:iid', function(request, response){
 				randInt += row.desc + "+" + row.intid + "+" + row.name + "&";
 					
 				}).on('end', function(){
-							response.render('intpage.html', {intName: iname, intDesc: idesc, userList: uList.substring(0, uList.length-1), randoms: randInt.substring(0, randInt.length-1)});
+							response.render('intpage.html', {intName: iname, intDesc: idesc, userList: uList.substring(0, uList.length-1), randoms: randInt.substring(0, randInt.length-1), img: iurl});
 									});
 				
 				});

@@ -5,8 +5,11 @@
     <meta charset="UTF-8" />
 	<script type="text/javascript" src="../static/scripts/intpage.js"></script>
 	<link rel="stylesheet" type="text/css" href="../static/css/mystyle.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/intpage.css">
+	</style>
 </head>
 <body>
+	<div id="thumb"></div>
 	<title>Interest Details for {{intName}}</title>
 	<h1>{{intName}}: {{intDesc}}.</h1>
 	<h2>Who likes it?</h2>
@@ -20,6 +23,14 @@
 	window.onload = function() {
 		var userList = '{{userList}}';
 		var randoms = '{{randoms}}';
+		var imgurl = '{{img}}';
+		
+		var imgdiv = document.getElementById("thumb");
+		
+		if(imgurl=="")
+		{imgdiv.innerHTML='<img id="tnail" src="../static/images/CDlogo.png">';}
+		else
+		{imgdiv.innerHTML='<img id="tnail" src="' + imgurl + '">';}
 		
 		var ul = document.getElementById('users');
 		//alert(ul);

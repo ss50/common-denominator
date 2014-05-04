@@ -135,8 +135,9 @@ db.serialize(function() {
 /*
 _interest: (information on interests themselves)
 INT  int-id : numerical ID for the interest PRIMARY KEY
-CHAR name : display name for this interest
-?CHAR desc: a description for this interest
+CHAR name 	: display name for this interest
+?CHAR desc	: a description for this interest
+CHAR url	: a url indicating a thumbnail image representing the image
 
 intid	name			desc
 1		Indie Music		I haven't heard of it either
@@ -181,23 +182,23 @@ intid	name			desc
 
 db.serialize(function() {
 	if(!exists) {
-		db.run("CREATE TABLE IF NOT EXISTS interest (intid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, desc TEXT);");
+		db.run("CREATE TABLE IF NOT EXISTS interest (intid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, desc TEXT, url TEXT);");
 	
 		console.log('-Interests table created');
 
-		db.run('INSERT INTO interest (name, desc) VALUES ("Indie Music","I haven\'t heard of it either")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Computers","Beep boop binary")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Modern Art","Creativity goes wild")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Surfing","Hang ten fella")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Traveling","Explore the globe")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Concerts","Go deaf happily")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Hiking","Lace up your boots")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Chocolate","The best guilty pleasure")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Chess","A game for geniuses")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Boating","Just like T-Pain")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Tanning","Soaking up rays")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Board Games","Roll the dice, draw a card")');
-		db.run('INSERT INTO interest (name, desc) VALUES ("Cars","Vroom vroom fast")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Indie Music","I haven\'t heard of it either","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Computers","Beep boop binary","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Modern Art","Creativity goes wild","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Surfing","Hang ten fella","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Traveling","Explore the globe","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Concerts","Go deaf happily","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Hiking","Lace up your boots","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Chocolate","The best guilty pleasure","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Chess","A game for geniuses","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Boating","Just like T-Pain","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Tanning","Soaking up rays","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Board Games","Roll the dice, draw a card","")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Cars","Vroom vroom fast","")');
 
 		console.log('--All interests inserted');
 		// makeSpellFix();
