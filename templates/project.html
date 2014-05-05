@@ -54,7 +54,7 @@
 				<li onclick="showDialog('#dialog',update);"><a> Update Info</a></li>
 				<!-- <li onclick='showDialog()'><a> Contact</a></li> -->
 				<li><a href="/"> Add Profile Pic</a></li>
-				<li onclick="showDialog('#location',getLocation)"><a> Add Location</a></li>
+				<li onclick="showDialog('#update_location',getLocation)"><a> Add Location</a></li>
 				<li onclick='logout_form.submit()'><a> Logout</a></li>
 			</ul>
 		</div>
@@ -122,8 +122,8 @@
 		</div>
 
 		<div id='update_location' title='Update Location' style='visibility:hidden'>
+			<p>By clicking update you are turning your location settings on.</p>
 			<form id='location' method='POST' action='/location'>
-				<p id='location_message'>By clicking update you are turning your location settings on.</p>
 			</form>
 		</div>
 	</body>
@@ -261,12 +261,28 @@
 			var longitude = position.coords.longitude;
 			var fd = new FormData();
 			var request = new XMLHttpRequest();
-			var t = $('<p/>', {id:"updatePopup"});
+			var p = $('<ul/>', {id:"updateLocation"});
 			fd.append('latitude',latitude);
 			fd.append('longitude',longitude);
 			request.open('POST','/location',true);
 			request.send(fd);
 			
+			p.append($('<li/>', {text: "Location successfully updated" }));
+			$('#update_location').dialog("close");
+
+			p.dialog({
+					draggable:false,
+					resizable:false,
+					buttons:[
+						{
+							text: "Back",
+							click: function() {
+								p.dialog("close");
+								showDialog("#update_location", setLocation);
+							}
+						}
+					]
+				});
 		}
 
 	</script>
