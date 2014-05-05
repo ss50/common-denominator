@@ -51,7 +51,7 @@
 		<!--<div class="sectionHead" id="numeratorHead"> Numerator </div> -->
 		<div id="bar">
 			<ul id="main_nav">
-				<li onclick="showDialog();"><a> Contact</a></li>
+				<li onclick="showDialog('#dialog');"><a> Contact</a></li>
 				<!-- <li onclick='showDialog()'><a> Contact</a></li> -->
 				<li><a href="/"> Add Profile Pic</a></li>
 				<li><a href="/"> Add Location</a></li>
@@ -105,7 +105,7 @@
 			</div>
 		</div>
 		
-		<div id="dialog" title="Basic dialog" style="visibility: hidden;">
+		<div id="dialog" title="Update Contact Info" style="visibility: hidden;">
 			<form id='contact_form' method='POST' action='/contact'>
 				<fieldset>
 					<label for="email">Email</label>
@@ -120,11 +120,11 @@
 	</body>
 	<script>
 
-		function showDialog() {
-			$( "#dialog" ).css("visibility", "visible");
-			$( "#dialog" ).dialog({
+		function showDialog(id) {
+			$(id).css("visibility", "visible");
+			$(id).dialog({
 				close: function( event, ui ) {
-					$( "#dialog" ).css("visibility", "hidden");
+					$(id).css("visibility", "hidden");
 				},
 				draggable:false,
 				resizable:false,
