@@ -230,59 +230,6 @@ app.get('/select', function(request, response){
 
 });
 
-app.get('/user/:uid/near', function(request, response) {
-	
-	//response.writeHead(200, {'Content-Type': 'text/html'});
-	var userDist = "", udArr, lat, lon, uname, nearby = "";
-	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', 
-		function(row) {
-		
-				//obtain the source user's location, process latitude/longitude
-				uname = row.uname;
-				userDist = row.loc; 
-				udArr = userDist.split(",");
-				lat = parseFloat(udArr[0]) * 1000;
-				lon = parseFloat(udArr[1]) * 1000;
-				
-				});
-				
-				
-				var nUsers = "";
-				conn.query('SELECT uname, loc, uid FROM users WHERE uid != $1', [request.params.uid]).on('row',
-					function(row)
-					{	
-						//for all other users, process distance from source user
-						var oArr = row.loc.split(",");
-						var oLat = parseFloat(oArr[0]) * 1000;
-						var oLon = parseFloat(oArr[1]) * 1000;
-						var dist = getDist(lat, lon, oLat, oLon);
-						//console.log(dist);
-						
-						if(dist < 12) //tweakable
-							nearby += row.uname + "+" + row.uid + "&";
-							//response.write('<li><a href="/user/'+row.uid+'">'+row.uname+'</a></li>');
-						
-						//calculate distance!
-					
-					}).on('end', function() {
-							//render results
-							response.render('near.html', {usrnm: uname, uid: 
-															request.params.uid, 
-															prox: nearby.substring(0, nearby.length-1)});
-					});
-
-});
-
-//quick distance calculator; assuming euclidean distances
-function getDist(lat, lon, oLat, oLon) {
-
-	var xS = Math.pow((lat - oLat), 2);
-	var yS = Math.pow((lon - oLon), 2);
-	
-	var dist = Math.sqrt(xS + yS);
-	return dist;
-}
-
 //view a user's page
 app.get('/user/:uid', function(request, response){
 	
@@ -345,6 +292,63 @@ app.get('/interest/all', function(request, response){
 			{intList: allInt.substring(0, allInt.length-1)});
 	}); 
 });
+
+app.get('/interest/:iid/near', function(request, response) {
+	
+	//response.writeHead(200, {'Content-Type': 'text/html'});
+	var userDist = "", udArr, lat, lon, nearby = "";
+	var intNm = "";
+	
+	conn.query('SELECT name FROM interest WHERE intid = $1', [request.params.iid]).on('row', function(row) {intNm = row.name;});
+	
+	conn.query('SELECT loc FROM users WHERE uid = $1', ['TEST']).on('row', 
+		function(row) {
+		
+				//obtain the source user's location, process latitude/longitude
+				userDist = row.loc; 
+				udArr = userDist.split(",");
+				lat = parseFloat(udArr[0]) * 1000;
+				lon = parseFloat(udArr[1]) * 1000;
+				
+				});
+				
+				
+				var nUsers = "";
+				conn.query('SELECT uname, loc, users.uid AS uid, level '+
+							'FROM users, intmemb WHERE users.uid != $1 AND intid = $2 AND users.uid = intmemb. uid', 
+							['TEST', request.params.iid]).on('row',
+					function(row)
+					{	
+						//for all other users, process distance from source user
+						var oArr = row.loc.split(",");
+						var oLat = parseFloat(oArr[0]) * 1000;
+						var oLon = parseFloat(oArr[1]) * 1000;
+						var dist = getDist(lat, lon, oLat, oLon);
+						//console.log(dist);
+						
+						if(dist < 12) //tweakable
+							nearby += row.uname + "+" + row.uid + "+" + row.level + "&";
+						
+						//calculate distance!
+					
+					}).on('end', function() {
+							//render results
+							response.render('near.html', {name: intNm, 
+															iid: request.params.iid, 
+															prox: nearby.substring(0, nearby.length-1)});
+					});
+
+});
+
+//quick distance calculator; assuming euclidean distances
+function getDist(lat, lon, oLat, oLon) {
+
+	var xS = Math.pow((lat - oLat), 2);
+	var yS = Math.pow((lon - oLon), 2);
+	
+	var dist = Math.sqrt(xS + yS);
+	return dist;
+}
 
 
 //aww, this user isn't into this interest anymore

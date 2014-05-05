@@ -2,28 +2,39 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-	<link rel="stylesheet" type="text/css" href="../static/css/mystyle.css">
+	<link rel="stylesheet" type="text/css" href="../../static/css/mystyle.css">
 	<!-- <script type="text/javascript" src="../static/scripts/userpage.js"></script> just in case -->
 	
 	</head>
 <body>
-	<title>Proximity Details for {{usrnm}}</title>
-	<h2>These users are near {{usrnm}}:</h2>
+	<title>Proximity Details for {{name}}</title>
+	<h2>These users are nearby and like {{name}}:</h2>
 	<ul id='users'>
 	</ul>
-	<a href="/user/{{uid}}">Back to {{usrnm}}'s user page</a>
+	<a href="/interest/{{iid}}">Back to Overview for {{name}}</a>
 	<script>
-		var unr = '{{prox}}'.split('&');
+		var prox = '{{prox}}';
 		var ul = document.getElementById('users');
-		for(var i = 0; i < unr.length; i++)
+		if(prox.length > 0)
+		{
+			var unr = prox.split('&');
+			
+			for(var i = 0; i < unr.length; i++)
+			{
+				var li = document.createElement('li');
+				//console.log(unr[i]);
+				var indiv = unr[i].split('+'); 
+				var unm = indiv[0];
+				//console.log(unm);
+				if(unm.indexOf('amp;') != -1) {unm = unm.substring(4, unm.length);}
+				li.innerHTML = '<a href="/user/' + indiv[1] + '">' + unm + '</a> (Interest level: ' + indiv[2] + ')';
+				ul.appendChild(li);
+			}	
+		}
+		else
 		{
 			var li = document.createElement('li');
-			//console.log(unr[i]);
-			var indiv = unr[i].split('+'); 
-			var unm = indiv[0];
-			//console.log(unm);
-			if(unm.indexOf('amp;') != -1) {unm = unm.substring(4, unm.length);}
-			li.innerHTML = '<a href="/user/' + indiv[1] + '">' + unm + '</a>';
+			li.innerHTML = 'Nobody nearby! You could be the president of a {{name}} club!';
 			ul.appendChild(li);
 		}
 	</script>
