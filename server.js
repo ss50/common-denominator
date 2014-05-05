@@ -198,9 +198,22 @@ app.post('/login', function(request,response){
 
 app.post('/contact', function(request,response){
 	var email = request.body.email;
+	var emailRE = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	var emailMatch = emailRE.test(email);
+	
 	var phone_number = request.body.phoneNumber;
-	var sql = 'UPDATE users SET email = $1, phone = $2 WHERE uid = $3';
-	db.run(sql,[email,phone_number,request.session.user_id]);
+	var phoneRE = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+	var phoneMatch = phoneRE.test(phone_number);
+
+	if (emailMatch) {
+		var sql = 'UPDATE users SET email = $1 WHERE uid = $2';
+		db.run(sql,[email,request.session.user_id]);
+	}
+	if (phoneMatch) {
+		var formatted = phone_number.replace(phoneRE, "$1$2$3");
+		var sql = 'UPDATE users SET phone = $1 WHERE uid = $2';
+		db.run(sql,[formatted,request.session.user_id]);
+	}
 	response.redirect('/');
 	/*
 	var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
