@@ -125,7 +125,6 @@
 	<script>
 
 		function showDialog(id, callback) {
-			//console.log(callback);
 			$(id).css("visibility", "visible");
 			$(id).dialog({
 				close: function( event, ui ) {
@@ -229,7 +228,16 @@
 			if (show) {
 				t.dialog({
 					draggable:false,
-					resizable:false
+					resizable:false,
+					buttons:[
+						{
+							text: "Back",
+							click: function() {
+								t.dialog("close");
+								showDialog("#dialog", update);
+							}
+						}
+					]
 				});
 			}
 		}
