@@ -27,13 +27,7 @@ app.use(express.cookieParser());
 
 app.configure('development', function(){
 	app.use(express.errorHandler());
-	app.use(express.session({secret: "secret session", store: new RedisStore(
-	{host: '127.0.0.1', port: 6379, client: client}
-	)}));
-});
-
-app.configure('production', function(){
-
+	app.use(express.session({secret: 'secret session'}));
 });
 
 app.use(app.router);
@@ -251,10 +245,11 @@ app.get('/user/:uid', function(request, response){
 				function()
 				{
 					
-					response.render('userpage.html', {uid: request.params.uid, 
-														usrnm: unm, 
-														uloc: ul, 
-														uints: intin.substring(0, intin.length-1)});
+					response.render('userpage.html', 
+						{uid: request.params.uid, 
+						usrnm: unm, 
+						uloc: ul, 
+						uints: intin.substring(0, intin.length-1)});
 				});
 			
 				});
