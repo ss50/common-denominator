@@ -225,6 +225,7 @@ top:-15px;
   background-position: 0px -69px !important;
   font-weight:bold;
   color:white;
+  cursor: pointer;
 }
 
 #main_nav a{
