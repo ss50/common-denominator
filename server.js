@@ -434,7 +434,6 @@ function checkAuthorizationInterest(request,response,next){
 	
 		var uList = "";
 		var randInt = "";
-		var has = "";
 		var present = 0;
 		
 		//show a version without the add/remove buttons
@@ -458,13 +457,13 @@ function checkAuthorizationInterest(request,response,next){
 				randInt += row.desc + "+" + row.intid + "+" + row.name + "&";
 					
 				}).on('end', function(){
-							response.render('intpage-nolog.html', {intName: iname, 
-															intid: request.params.iid, 
-															intDesc: idesc, 
-															userList: uList.substring(0, uList.length-1), 
-															randoms: randInt.substring(0, randInt.length-1), 
-															img: iurl, 
-															existent: has});
+							response.render('intpage-nolog.html', 
+											{intName: iname, 
+											intid: request.params.iid, 
+											intDesc: idesc, 
+											userList: uList.substring(0, uList.length-1), 
+											randoms: randInt.substring(0, randInt.length-1), 
+											img: iurl});
 									});
 				
 				});

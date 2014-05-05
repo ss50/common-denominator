@@ -30,38 +30,3 @@
 	</script>
 </body>
 </html>
-
-<!-- //name, iid, level -->
-
-<!--
-
-var intin;
-	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', 
-		function(row) {
-			//console.log(row);
-			var usrnm = row.uname;
-			response.writeHead(200, {'Content-Type': 'text/html'});
-			response.write('<title>Details for ' + usrnm + '</title>'
-			+ '<h2>Where is ' + usrnm + '?</h2><p>' + usrnm + ' is at ' + row.loc 
-			+ '.</p>'+'<h2>What is ' + usrnm + ' interested in?</h2><p>'); 
-			//var intarr = row.intr.split(",");
-			intin = "";
-			
-			conn.query('SELECT name, intmemb.intid AS iid, level  FROM interest, intmemb WHERE interest.intid = intmemb.intid AND intmemb.uid = $1', [request.params.uid]).on('row',
-				
-				function(row){
-				//console.log(row);
-				response.write('<li><a href="/interest/'+ row.iid + '">' + row.name + '</a> (Interest level: '+row.level+')</li>');}
-			).on('end', 
-				function()
-				{
-					//view nearby users?
-					response.write('<br><a href="/user/' + request.params.uid + '/near">Who is near ' + usrnm + '?</a>');
-					response.end();
-				});
-			
-				});
-
-
-
--->

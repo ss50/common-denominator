@@ -40,35 +40,3 @@
 	</script>
 </body>
 </html>
-
-<!--
-app.get('/user/:uid/near', function(request, response) {
-	
-	response.writeHead(200, {'Content-Type': 'text/html'});
-	var userDist = "", udArr, lat, lon;
-	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', function(row) {userDist = row.loc; udArr = userDist.split(",");
-	lat = parseFloat(udArr[0]) * 1000;
-	lon = parseFloat(udArr[1]) * 1000;
-	//console.log(lat);
-	response.write('<h2>These users are near ' + row.uname + ':</h2><ul>');});
-	
-	
-	
-	conn.query('SELECT uname, loc, uid FROM users WHERE uid != $1', [request.params.uid]).on('row',
-		function(row)
-		{	
-			var oArr = row.loc.split(",");
-			var oLat = parseFloat(oArr[0]) * 1000;
-			var oLon = parseFloat(oArr[1]) * 1000;
-			var dist = getDist(lat, lon, oLat, oLon);
-			//console.log(dist);
-			
-			if(dist < 12) //tweakable
-				response.write('<li><a href="/user/'+row.uid+'">'+row.uname+'</a></li>');
-			
-			//calculate distance!
-		
-		}).on('end', function() {response.end('</ul>');});
-
-});
--->
