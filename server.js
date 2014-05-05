@@ -196,6 +196,19 @@ app.post('/login', function(request,response){
 	});	
 });
 
+app.post('/contact', function(request,response){
+	var email = request.body.email;
+	var phone_number = request.body.phoneNumber;
+	var sql = 'UPDATE users SET email = $1, phone = $2 WHERE uid = $3';
+	db.run(sql,[email,phone_number,request.session.user_id]);
+	response.redirect('/');
+	/*
+	var regex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+	request.assert('email',"Invalid email").isEmail();
+	request.assert('phoneNumber', 'Invalid phone number').matches(phone_number, regex.test());
+	*/
+});
+
 app.post('/location', function(request,response){
 	console.log(request.body.latitude);
 	console.log(request.body.longitude);
@@ -335,15 +348,15 @@ app.get('/interest/:iid/remove', function(request, response)
 	var inm = "";
 	conn.query('SELECT name FROM interest WHERE intid = $1', 
 			   [request.params.iid]).on('row', 
-										function(row) 
-										{
-											inm = row.name; //should only be one result for this given unique interest ids
-										}).on('end', 
-											  function()
-											  {
-												//render the removal page
-												  response.render('remove.html', {intname: inm});
-											  });
+			function(row) 
+			{
+				inm = row.name; //should only be one result for this given unique interest ids
+			}).on('end', 
+				  function()
+				  {
+					//render the removal page
+					  response.render('remove.html', {intname: inm});
+				  });
 	
 });
 
