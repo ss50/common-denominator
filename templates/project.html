@@ -2,7 +2,7 @@
 <html>
 <head>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" src="../static/scripts/jquery-ui-1.10.4.min.js"></script>
+	<script type="text/javascript" src="../static/scripts/jquery-ui-1.10.4.js"></script>
 	<script type="text/javascript" src="../static/scripts/client.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<link rel="stylesheet" type="text/css" href="../static/css/mystyle.css">
@@ -51,7 +51,7 @@
 		<!--<div class="sectionHead" id="numeratorHead"> Numerator </div> -->
 		<div id="bar">
 			<ul id="main_nav">
-				<li onclick="showDialog('#dialog','update');"><a href='/'> Update Info</a></li>
+				<li onclick="showDialog('#dialog',update);"><a> Update Info</a></li>
 				<!-- <li onclick='showDialog()'><a> Contact</a></li> -->
 				<li><a href="/"> Add Profile Pic</a></li>
 				<li><a href="/"> Add Location</a></li>
@@ -67,7 +67,8 @@
 					<img src="http://8tracks.imgix.net/i/000/963/601/44043.original-228.gif?q=65&sharp=15&vib=10&fm=jpg&fit=crop&w=521&h=521"></img>
 				</div>
 				<div class="interest1"> 
-					<img src="http://wwwdelivery.superstock.com/WI/223/1491/PreviewComp/SuperStock_1491R-1040175.jpg"></img>
+					<!-- this link is broke -->
+					<!-- <img src="http://wwwdelivery.superstock.com/WI/223/1491/PreviewComp/SuperStock_1491R-1040175.jpg"></img> -->
 				</div>
 				<div class="interest1"> 			
 					<img src="http://www.art-is-fun.com/image-files/abstract-painting-squares.jpg"></img>
@@ -123,7 +124,8 @@
 	</body>
 	<script>
 
-		function showDialog(id,callback) {
+		function showDialog(id, callback) {
+			//console.log(callback);
 			$(id).css("visibility", "visible");
 			$(id).dialog({
 				close: function( event, ui ) {
