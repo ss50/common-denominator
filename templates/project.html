@@ -120,9 +120,10 @@
 			<form id='logout_form' method='POST' action='/logout'>
 			</form>
 		</div>
+
 		<div id='update_location' title='Update Location' style='visibility:hidden'>
 			<form id='location' method='POST' action='/location'>
-				<p>By clicking update you are turning your location settings on.</p>
+				<p id='location_message'>By clicking update you are turning your location settings on.</p>
 			</form>
 		</div>
 	</body>
@@ -260,11 +261,12 @@
 			var longitude = position.coords.longitude;
 			var fd = new FormData();
 			var request = new XMLHttpRequest();
+			var t = $('<p/>', {id:"updatePopup"});
 			fd.append('latitude',latitude);
 			fd.append('longitude',longitude);
 			request.open('POST','/location',true);
-			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			request.send(fd);
+			
 		}
 
 	</script>

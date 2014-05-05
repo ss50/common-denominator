@@ -225,8 +225,17 @@ app.post('/contact', function(request,response){
 });
 
 app.post('/location', function(request,response){
-	console.log(request.body.latitude);
-	console.log(request.body.longitude);
+	var latitude = request.body.latitude;
+	var longitude = request.body.longitude;
+	console.log(latitude);
+	console.log(longitude);
+	var coords = latitude + ',' + longitude;
+	console.log(coords);
+	var id = request.session.user_id;
+	var sql = 'UPDATE users SET loc = $1 WHERE uid = $2';
+	db.run(sql,[coords,id]);
+	console.log('inserted location into database');
+	response.redirect('/');
 });
 
 app.get('/messages', function(request, response){
