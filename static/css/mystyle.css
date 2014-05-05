@@ -15,12 +15,15 @@ a{
   width:100px;
   height:100px;
   padding:0px;
+      opacity:.8;
+
 }
 
+
+
 .user_image:hover{
-    box-shadow:  5px 5px 5px rgba(0, 0, 0, .5);  
-    width:130px;
-    height:130px;
+  opacity:1;
+    box-shadow:  3px 3px 3px rgba(0, 0, 0, .5); 
 
 }
 
@@ -31,8 +34,7 @@ a{
 }
 
 .user_image:hover{
-   filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
--webkit-filter: grayscale(0%);
+ 
   cursor: pointer;
 }
 
@@ -53,6 +55,7 @@ a{
 #login_header h1{
    text-align:center;
    margin-top: 100px;
+
 }
 
 #h1_behind{
@@ -63,7 +66,9 @@ a{
   width:100%;
   z-index: 1000;
   text-align: center;
-}
+  background-image:url('../images/gradient5.jpg');
+  background-repeat: repeat-x;
+  }
 
 #logo_int{
 position:relative;
@@ -89,18 +94,26 @@ left:30px;
   display:inline-block;
   position:relative;
   top:10px;
+  height:30px;
+  cursor:pointer;
 }
 
+#interest_main h1:hover{
+      text-shadow:  10px 10px 10px rgba(0, 0, 0, .5);  
+}
 
 #interest_main h2{
   position:relative;
   text-align:center;
-  letter-spacing: -4px;
-  font-size:30px;
+  letter-spacing: -3px;
+  font-size:35px;
+  top:10px;
+  color:white;
 }
 #interest_main span{
   letter-spacing: -2px;
   font-size:25px;
+  color:white;
 }
 #name{
     width: 320px;
@@ -108,12 +121,14 @@ left:30px;
     margin-right:auto;
 }
 #location{
-        width: 340px;
+        width: 350px;
 position:relative;
 top:-15px;
     margin-left:auto;
     margin-right:auto;
 }
+
+
 
 #form_wrapper{
   text-align: center;
@@ -164,16 +179,47 @@ top:-15px;
 }
 
 
-#users_table{
-
-
-}
 
 #users_table td:hover{
   position:absolute;
+
 }
 
+#search{
+  position:fixed;
+  width:100%;
+  height:100%;
+}
 
+#search1{
+  position:relative;
+  margin: auto;
+  top:100px;
+  width:400px;
+  z-index: 10000;
+      text-shadow:  10px 10px 3px #88382D; 
+      font-weight: bold;
+    }
+
+    #search2{
+      background-color:#A84A5C ;
+      opacity: .9;
+       width:400px;
+       height:150px;
+       position:fixed;
+      top:200px;
+       z-index: 500;
+       border-style: solid;
+       border-width: 5px;
+       border-color: black;
+       box-shadow: 10px 10px 3px #88382D; 
+    }
+
+#search3{
+  position:fixed;
+  margin-left:30px;
+  z-index:20000;
+}
 
 #profile-picture{
   width:300px;
@@ -214,21 +260,22 @@ top:-15px;
   float:left;
   clear:right;
   text-align: center;
+
 }
 
 #main_nav li{
-  letter-spacing: -1px;
-  display:inline;
+
 }
 
-#main_nav a:hover{
+#main_nav li:hover{
   background-position: 0px -69px !important;
   font-weight:bold;
   color:white;
-  cursor: pointer;
+      text-shadow:  10px 10px 10px rgba(0, 0, 0, .5);  
+
 }
 
-#main_nav a{
+#main_nav li{
   font-size:15px;
   height:45px;
   width:100px;
@@ -240,7 +287,8 @@ padding-top:25px;
   text-decoration: none;
   z-index:1000;
     color:#F9E3CB;
-
+    cursor:pointer;
+      letter-spacing: -1px;
 }
 
 #logo1{
@@ -248,7 +296,7 @@ padding-top:25px;
   z-index:1000;
   width:60px;
   height:70px;
-  left:190px;
+  left:210px;
   top:130px;
 }
 
@@ -277,12 +325,20 @@ padding-top:25px;
   width:100%;
 }
 
+
 @media screen and (max-width: 1000px) {
    #nav_text{
     font-size: 40px;
    }
 }
 
+#nav_text:hover{
+    text-shadow:  10px 10px 10px rgba(0, 0, 0, .5);
+    background-image: url('../images/gradient5.jpg');
+    background-repeat: repeat-x;
+    cursor:pointer;
+
+   }
 
 
 
@@ -297,27 +353,31 @@ padding-top:25px;
   text-align:center;
   color:#F5D5BC;
   z-index:1000;
+  height:50px;
+  width:auto;
 }
-
 
 
 .sectionHead{
   font-family: 'Raleway', sans-serif;
   font-style: bold;
   position:relative;
-  top:121px;
-  left:20px;
+  top:132px;
+  left:10px;
   font-size:50px;
   color: #F9E3CB;
 }
 
 #denominatorHead{
   position:relative;
-  top:119px;
+  top:147px;
   color: #88382D;
+  letter-spacing: -5px;
 }
 
-
+#denominator{
+  text-align: center;
+}
 #profile-picture:hover{
   box-shadow:  10px 10px 10px rgba(0, 0, 0, .5);  
 
@@ -328,15 +388,30 @@ padding-top:25px;
   top:20px;
 }
 
+#interests{
+  width: 900px;
+  position:relative;
+  margin:0 auto;
+  white-space: nowrap;
+  overflow: scroll;
+  top:200px;
+}
+
+#interests_title{
+  font-size:40px;
+  font-weight: bold;
+}
+
 .container{
  position:relative;
-  top:120px;
+  top:170px;
   width:800px;
   left:50px;
   position:relative;
     display:block;
    margin: 0 auto;
    z-index:20;
+
  }
 
 #container{
@@ -344,13 +419,25 @@ padding-top:25px;
 }
 
 
-.interest1 img{
+.interest img{
 max-width:100%; 
 max-height:100%;
 display:block;
-
+white-space:nowrap;
 }
 
+.scroll-pane
+{
+  width: 100%;
+  height: 200px;
+  overflow: auto;
+}
+.horizontal-only
+{
+  height: auto;
+  max-height: 200px;
+}
+  
 #upload {
     font-family: 'PT Sans Narrow',sans-serif;
     background-color: rgb(55, 58, 61);
@@ -362,18 +449,23 @@ display:block;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
-.interest1{
+.interest{
   width:150px;
   height:150px;
   margin: 10px;
-  display:inline-block;
   text-indent:-9999px;
   position:relative;
-  top:60px;
   box-shadow:  4px 4px 10px rgba(0, 0, 0, .5);  
-
+  display:inline-block;
+  float:left;
 }
 
+#interests_list{
+  list-style: none;
+  position:relative;
+  white-space: nowrap;
+
+}
 #empty{
   border:1px dotted black;
 }
@@ -391,7 +483,6 @@ display:block;
   position:relative;
   text-indent:-9999px;
   position:relative;
-  top:60px;
   box-shadow:  4px 4px 10px rgba(0, 0, 0, .5);  
 
 }
@@ -454,9 +545,9 @@ filter:alpha(opacity=40);
 
 #footer-wrapper{
   position:relative;
-  top:400px;
+  top:600px;
   height:200px;
-  background-color:#AD7460;
+background: linear-gradient(to bottom,  #AD7460, #88382D);
   font: normal 15px 'Raleway', sans-serif;
 }
 
@@ -465,13 +556,25 @@ filter:alpha(opacity=40);
   position:absolute;
   bottom:0;
 }
+
 #footer-p{
-    width:600px;
-  margin-left:250px;
+    width:500px;
+  margin-left:280px;
   color:white;
   font-size: 20px;
   padding-top: 45px;
-  line-height: 25px;
+  line-height: 21px;
+  margin-top: 25px;
+font-family: 'Fanwood Text', serif;
+}
+
+#rights{
+  text-align: center;
+  position:relative;
+  font-weight: bold;
+  font-size: 13px;
+  color:white;
+  top:180px;
 }
 #contact-li:hover{
   text-decoration: underline;
