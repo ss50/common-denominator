@@ -196,6 +196,12 @@ app.post('/login', function(request,response){
 	});	
 });
 
+app.post('/logout', function(request,response){
+	request.session.destroy(function(){
+		response.redirect('/login');
+	});
+});
+
 app.post('/contact', function(request,response){
 	var email = request.body.email;
 	var phone_number = request.body.phoneNumber;

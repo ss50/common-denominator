@@ -51,11 +51,11 @@
 		<!--<div class="sectionHead" id="numeratorHead"> Numerator </div> -->
 		<div id="bar">
 			<ul id="main_nav">
-				<li onclick="showDialog('#dialog');"><a> Contact</a></li>
+				<li onclick="showDialog('#dialog','update');"><a href='/'> Update Info</a></li>
 				<!-- <li onclick='showDialog()'><a> Contact</a></li> -->
 				<li><a href="/"> Add Profile Pic</a></li>
 				<li><a href="/"> Add Location</a></li>
-				<li><a href="/"> Logout</a></li>
+				<li onclick='logout_form.submit()'><a> Logout</a></li>
 			</ul>
 		</div>
 
@@ -116,11 +116,14 @@
 				</fieldset>
 			</form>
 		</div>
-
+		<div id='logout' style='visibility:hidden'>
+			<form id='logout_form' method='POST' action='/logout'>
+			</form>
+		</div>
 	</body>
 	<script>
 
-		function showDialog(id) {
+		function showDialog(id,callback) {
 			$(id).css("visibility", "visible");
 			$(id).dialog({
 				close: function( event, ui ) {
@@ -131,7 +134,7 @@
 				buttons:[
 					{ 
 						text: "Update", 
-						click: update
+						click: callback
 					}
 				]
 			});
