@@ -163,7 +163,7 @@ intid	name			desc
 // 			console.log('-Interests table created');
 			
 // 			db.run('INSERT INTO interest (name, desc) VALUES ("Indie Music","I haven\'t heard of it either")');
-// 			db.run('INSERT INTO interest (name, desc) VALUES ("Computers","Beep boop binary")');
+// 			db.run('INSERT INTO interest (name, desc) VALUES ("Computers","Son come here I need you to help me find the googles")');
 // 			db.run('INSERT INTO interest (name, desc) VALUES ("Modern Art","Creativity goes wild")');
 // 			db.run('INSERT INTO interest (name, desc) VALUES ("Surfing","Hang ten fella")');
 // 			db.run('INSERT INTO interest (name, desc) VALUES ("Traveling","Explore the globe")');
