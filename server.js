@@ -1,9 +1,6 @@
 //See README.md
 
 var express = require('express');
-var RedisStore = require('connect-redis')(express);
-var redis = require("redis");
-var client = redis.createClient();
 var anyDB = require('any-db');
 var shortId = require('shortid');
 var conn = anyDB.createConnection('sqlite3://commondenominator.db');
@@ -38,14 +35,19 @@ var db = new sqlite3.Database("commondenominator.db");
 ///////////////////////////
 ///////////////////////////
 
-function checkAuthorization(request,response,next){
-	if (!request.session.user_id){
-		response.redirect('/*');
-	}
+function checkAuthorization(request,response,next)
+	{
+		/*
+			For certain pages, it makes sense to redirect a user to the login page if the user is not logged in already.
+			Examples: the nearby users page for the interests, add/remove an interest pages, adding a new interest, etc.
+		*/
+		if (!request.session.user_id){
+		response.redirect('/login');
+		}
 	else{
 		next();
+		}
 	}
-}
 
 function getHash(pwd){
 	return crypto.createHash('md5').update(pwd).digest('hex');
@@ -237,11 +239,21 @@ app.get('/select', function(request, response){
 
 });
 
+
+app.get('/user/me', checkAuthorization, function(request, response){	
+	renderUser(request.session.user_id, request, response);
+});
+
 //view a user's page
 app.get('/user/:uid', function(request, response){
+	renderUser(request.params.uid, request, response);
+});
+
+
+function renderUser(uid, request, response){
 	
 	var intin;
-	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [request.params.uid]).on('row', 
+	conn.query('SELECT uname, loc FROM users WHERE uid = $1', [uid]).on('row', 
 		function(row) {
 			//get information for this user
 			var unm = row.uname;
@@ -249,7 +261,7 @@ app.get('/user/:uid', function(request, response){
 			
 			intin = "";
 			
-			conn.query('SELECT name, intmemb.intid AS iid, level  FROM interest, intmemb WHERE interest.intid = intmemb.intid AND intmemb.uid = $1', [request.params.uid]).on('row',
+			conn.query('SELECT name, intmemb.intid AS iid, level  FROM interest, intmemb WHERE interest.intid = intmemb.intid AND intmemb.uid = $1', [uid]).on('row',
 				//get this user's interests
 				function(row){
 				intin += row.name +'+'+ row.iid +'+'+ row.level + '&';
@@ -259,7 +271,7 @@ app.get('/user/:uid', function(request, response){
 				{
 					
 					response.render('userpage.html', 
-						{uid: request.params.uid, 
+						{uid: uid, 
 						usrnm: unm, 
 						uloc: ul, 
 						uints: intin.substring(0, intin.length-1)});
@@ -271,9 +283,9 @@ app.get('/user/:uid', function(request, response){
 	
 	
 	
-});
+}
 
-app.get('/interest/addinterest', function(request, response){
+app.get('/interest/addinterest', checkAuthorization, function(request, response){
 	response.render('addinterest.html', {});
 	
 });
@@ -301,7 +313,9 @@ app.get('/interest/all', function(request, response){
 	}); 
 });
 
-app.get('/interest/:iid/near', function(request, response) {
+
+
+app.get('/interest/:iid/near', checkAuthorization, function(request, response) {
 	
 	//response.writeHead(200, {'Content-Type': 'text/html'});
 	var userDist = "", udArr, lat, lon, nearby = "";
@@ -360,7 +374,7 @@ function getDist(lat, lon, oLat, oLon) {
 
 
 //aww, this user isn't into this interest anymore
-app.get('/interest/:iid/remove', function(request, response)
+app.get('/interest/:iid/remove', checkAuthorization, function(request, response)
 {
 	console.log('interest removal');
 	var inm = "";
@@ -392,7 +406,7 @@ app.post('/interest/:iid/remove', function(request, response)
 });
 
 //page allowing user to confirm adding an interest to their list of interests, indicating interest level
-app.get('/interest/:iid/add', function(request, response)
+app.get('/interest/:iid/add', checkAuthorization, function(request, response)
 {
 	conn.query('SELECT name FROM interest WHERE intid = $1', [request.params.iid]).on('row', function(row) {
 	response.render('addinterest-individual.html', {intname: row.name});});
@@ -415,9 +429,58 @@ app.post('/interest/:iid/add', function(request, response)
 		});
 });
 
+function checkAuthorizationInterest(request,response,next){
+	if (!request.session.user_id){
+	
+		var uList = "";
+		var randInt = "";
+		var has = "";
+		var present = 0;
+		
+		//show a version without the add/remove buttons
+		conn.query('SELECT name, desc, url FROM interest WHERE intid = $1', [request.params.iid]).on('row', 
+		function(row) {
+			//console.log(row);
+			var iname = row.name;
+			var idesc = row.desc;
+			var iurl = row.url;
+			var likes = '';
+			
+			//get everyone who likes this interest
+			conn.query('SELECT uname, level, users.uid FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1 ORDER BY level DESC', [request.params.iid]).on('row', function(row) {
+				uList += row.uid + "+" + row.uname + "+" + row.level + "&";
+			
+			}).on('end', function() {
+				
+				//show six other randomized interests
+				conn.query('SELECT * FROM interest WHERE intid != $1 ORDER BY RANDOM() LIMIT 6', [request.params.iid]).on('row', function(row) {
+				
+				randInt += row.desc + "+" + row.intid + "+" + row.name + "&";
+					
+				}).on('end', function(){
+							response.render('intpage-nolog.html', {intName: iname, 
+															intid: request.params.iid, 
+															intDesc: idesc, 
+															userList: uList.substring(0, uList.length-1), 
+															randoms: randInt.substring(0, randInt.length-1), 
+															img: iurl, 
+															existent: has});
+									});
+				
+				});
+			
+			
+			});
+	}
+	else{
+		next();
+	}
+}
+
+
 
 //detail page for a single interest
-app.get('/interest/:iid', function(request, response){
+app.get('/interest/:iid', checkAuthorizationInterest, function(request, response){
 
 	var uList = "";
 	var randInt = "";
@@ -478,48 +541,6 @@ app.get('/interest/:iid', function(request, response){
 			
 			
 			});
-		});
-
-var plat = process.platform;
-if (plat == "win32") { 		// works for 64 too
-	db.loadExtension('spellfixWin', spellfixLoaded);
-} else if (plat == "linux") {
-	console.log("In linux spellfix");
-	db.loadExtension('spellfixLin', spellfixLoaded);
-} else {
-	db.loadExtension('spellfixMac', spellfixLoaded);
-}
-
-function spellfixLoaded(error) {
-	if (error) {
-		console.log("-error loading spellfix extension");
-		console.log(error);
-	} else {
-		console.log("-loaded spellfix extension");
-		
-		db.all("SELECT word FROM spellfix WHERE top=1;", function(err, rows) {
-			if (!rows) {
-				db.serialize(function() {
-					db.run('CREATE VIRTUAL TABLE IF NOT EXISTS spellfix USING spellfix1;');
-					console.log('-spellfix table created');
-
-					db.run('INSERT INTO spellfix(word) SELECT name FROM interest;');
-					console.log('--All interests inserted into spellfix');
-				});
-			}
-	    });
-	}
-}
-
-app.get('/LEDInterests/:interest', function(request, response){
-	var interest = request.params.interest;
-	db.all("SELECT word FROM spellfix WHERE word MATCH '"+interest+"' AND top=5;", function(err, rows) {
-		var words = [];
-        rows.forEach(function (row) {
-            words.push(row.word);
-        });
-		response.json(words);
-    });
 });
 
 app.get('/geo', function(request, response){

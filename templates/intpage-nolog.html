@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="UTF-8" />
+	<script type="text/javascript" src="../static/scripts/intpage.js"></script>
+	<link rel="stylesheet" type="text/css" href="../static/css/mystyle.css">
+	<link rel="stylesheet" type="text/css" href="../static/css/intpage.css">
+	<link href='http://fonts.googleapis.com/css?family=Raleway:400,700,900' rel='stylesheet' type='text/css'>
+	</style>
+</head>
+<body>
+	<div id="thumb"></div>
+	<title>Interest Details for {{intName}}</title>
+	<h1>{{intName}}: {{intDesc}}.</h1>
+	<h2>Who likes it?</h2>
+	<ul id="users">
+	</ul>
+	<p>See other interests: <span id="otherInt"></span></p><br />
+	<a href="/interest/all">View all interests</a><br />
+	
+	<script>
+	window.onload = function() {
+		var userList = '{{userList}}';
+		var randoms = '{{randoms}}';
+		var imgurl = '{{img}}';
+		
+		//insert the thumbnail image provided to represent this interest
+		var imgdiv = document.getElementById("thumb");
+		
+		if(imgurl=="")
+		{imgdiv.innerHTML='<img id="tnail" src="../static/images/CDlogosq.png">';} //no image url given? use generic common denominator logo as placeholder
+		else
+		{imgdiv.innerHTML='<img id="tnail" src="' + imgurl + '">';}
+		
+		//populate the list of users who have this interest in their set of interests
+		var ul = document.getElementById('users');
+		//alert(ul);
+		if(userList == "") //nobody likes it? placeholder text!
+		{
+			var li = document.createElement('li');
+			li.innerHTML = 'Nobody... at least, not yet!';
+			ul.appendChild(li);
+		}
+		else
+		{
+			var uArr = userList.split('&'); //array-ify each individual user
+		
+			for(var i = 0; i < uArr.length; i++)
+			{
+				var li = document.createElement('li');
+				//if(uArr[i] == "") break;
+				var indiv = uArr[i].split('+'); //split each user's info into id, username, level
+				//console.log(uArr[i]);
+				var uid = indiv[0];
+				if(uid.indexOf('amp;') != -1) //ugh encoding
+				{uid = uid.substring(4, uid.length);}
+				li.innerHTML = '<a href="/user/' + uid + '">' + indiv[1] + '</a> (Interest level: '+indiv[2]+')';
+				ul.appendChild(li); //appendChild because user list was returned in descending order of interest level
+			}
+		}
+		
+		
+		//populate the randomized set of other interests
+		var oth = document.getElementById("otherInt");
+		randoms = randoms.replace('&#x27;', "'"); //ew encoding
+		var iArr = randoms.split("&amp;"); //split the string apart to separate each interest
+		console.log(iArr);
+		var rStr = "";
+		
+		for(var i = 0; i < iArr.length; i++)
+		{
+			var indiv = iArr[i].split("+"); //get the individual pieces needed
+			var dsc = indiv[0];
+			//if(dsc.indexOf('amp;' != -1)) {dsc = dsc.substring(4, dsc.length);}
+			rStr += '| <span title="' + indiv[0] + '"><a href="/interest/' + indiv[1] + '">' + indiv[2] + '</a></span> ';
+		}
+		oth.innerHTML = rStr + "|";	
+	}
+	
+	</script>
+</body>
+</html>
+
+
+<!--
+conn.query('SELECT name, desc FROM interest WHERE intid = $1', [request.params.iid]).on('row', 
+		function(row) {
+			console.log(row);
+			
+			response.writeHead(200, {'Content-Type': 'text/html'});
+			response.write('<title>' + row.name + '</title><h1>' + row.name + ": " + row.desc //+ '.</h1>');
+			+ '.</h1><h2>Who likes it?</h2><ul>');
+			var likes = '';
+			conn.query('SELECT uname, level, users.uid FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1 ORDER BY level DESC', [request.params.iid]).on('row', function(row) {
+				console.log(row);
+				likes = likes + '<li><a href="/user/' + row.uid + '">' + row.uname + '</a> (Interest level: '+row.level+')</li>';
+			
+			}).on('end', function() {
+			
+			
+				console.log('These folks do: ' + likes)
+				response.write(likes);
+				response.write('<p>see other interests: ');
+				
+				conn.query('SELECT * FROM interest ORDER BY RANDOM() LIMIT 6').on('row', function(row) {
+				
+				response.write('| <span title="' + row.desc + '"><a href="/interest/' + row.intid + '">' + row.name + '</a></span> ');
+					
+				}).on('end', function(){response.end(' |</p><br><a href="/interest/all">View all interests</a><br><a href="/interest/addinterest">Add an interest</a>');});
+				
+				});
+			
+			
+			});
+
+
+
+-->
