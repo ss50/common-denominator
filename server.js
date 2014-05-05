@@ -323,7 +323,7 @@ app.get('/interest/:iid/near', checkAuthorization, function(request, response) {
 	
 	conn.query('SELECT name FROM interest WHERE intid = $1', [request.params.iid]).on('row', function(row) {intNm = row.name;});
 	
-	conn.query('SELECT loc FROM users WHERE uid = $1', ['TEST']).on('row', 
+	conn.query('SELECT loc FROM users WHERE uid = $1', [request.session.user_id]).on('row', 
 		function(row) {
 		
 				//obtain the source user's location, process latitude/longitude
@@ -396,7 +396,7 @@ app.get('/interest/:iid/remove', checkAuthorization, function(request, response)
 app.post('/interest/:iid/remove', function(request, response)
 {
 	console.log('going through with the removal');
-	conn.query('DELETE FROM intmemb WHERE intid = $1 AND uid = "TEST"', [request.params.iid]).on('end',
+	conn.query('DELETE FROM intmemb WHERE intid = $1 AND uid = $2', [request.params.iid, request.session.user_id]).on('end',
 					function()
 					{
 						//upon removing the membership entry, redirect the user to the interest page
@@ -420,7 +420,7 @@ app.post('/interest/:iid/add', function(request, response)
 	var level = info.level;
 	
 	//insert into membership table
-	conn.query('INSERT INTO intmemb (intid, uid, level) VALUES ($1, "TEST", $2)', [id, level]).on('end', 
+	conn.query('INSERT INTO intmemb (intid, uid, level) VALUES ($1, $2, $3)', [id, request.session.user_id, level]).on('end', 
 		function() 
 		{
 			console.log('adding new entry to intmemb table with level ' + level);
@@ -487,7 +487,7 @@ app.get('/interest/:iid', checkAuthorizationInterest, function(request, response
 	var present = 0;
 	
 	//uid TEST is obviously for testing purposes to simulate the presence of a logged-in user
-	conn.query('SELECT * FROM intmemb WHERE uid = "TEST" and intid = $1', [request.params.iid]).on('row',
+	conn.query('SELECT * FROM intmemb WHERE intid = $1 AND uid = $2', [request.params.iid, request.session.user_id]).on('row',
 					function(row){console.log('hey');present += 1;}).on('end', 
 						function()
 						{
