@@ -51,8 +51,8 @@
 		<div id="bar">
 			<ul id="main_nav">
 				<li onclick="showDialog('#dialog',update);"><a> Update Info</a></li>
-				<!--<li onclick="showDialog('#update_profile_pic',getFile)"><a> Add Profile Pic</a></li> -->
-				<li onclick=""><a> Add Profile Pic</a></li>
+				<li onclick="showDialog('#update_profile_pic',getFile)"><a> Add Profile Pic</a></li> 
+				<!-- <li onclick=""><a> Add Profile Pic</a></li> -->
 				<li onclick="showDialog('#update_location',getLocation)"><a> Add Location</a></li>
 				<li onclick='logout_form.submit()'><a> Logout</a></li>
 			</ul>
@@ -124,13 +124,13 @@
 			<form id='location' method='POST' action='/location'>
 			</form>
 		</div>
-		<!-- Doesn't work - for file upload
+		 <!-- Doesn't work - for file upload -->
 		<div id='update_profile_pic' title='Update Profile Picture' style='visibility:hidden'>
 			<form id='profile_pic' method='POST' action='/profile_pic' enctype='multipart/form-data'>
 				<input type='file' name='picture' id='picture'></input>
 			</form>
 		</div>
-		-->
+		
 	</body>
 	<script>
 
@@ -252,17 +252,44 @@
 			}
 		}
 
-		// stuff for file upload doesn't work
-		/*
+		//stuff for file upload doesn't work
 		function getFile(){
 			// this does some stuff with the picture
 			var file = document.getElementById('picture');
-			console.log(file.value);
-			var request = new XMLHttpRequest();
-			request.open('POST','/profile_pic',true);
-			request.send(file);
+			// console.log(file.value);
+			var profile_pic = document.getElementById('profile_pic');
+			profile_pic.submit();
+			// var request = new XMLHttpRequest();
+			// request.open('POST','/profile_pic',true);
+			// request.send(file);
 		}
-	*/
+
+		// document.getElementById('picture').addEventListener('change', function(e) {
+		// 	var files = e.target.files;
+		// 	for (var i = 0, f; f = files[i]; i++) {
+		// 		if (!f.type.match('image.*')) {
+		// 	    	continue;
+		// 	    }
+		// 	    var reader = new FileReader();
+
+		// 		reader.onload = (function(theFile) {
+		// 			return function(e) {
+		// 				// Render thumbnail.
+		// 				// var span = document.createElement('span');
+		// 				// span.innerHTML = ['<img class="thumb" src="', e.target.result,
+		// 				//                 '" title="', escape(theFile.name), '"/>'].join('');
+		// 				// document.getElementById('list').insertBefore(span, null);
+		// 				// console.log(e.target.result);
+		// 				var request = new XMLHttpRequest();
+		// 				request.open('POST','/profile_pic',true);
+		// 				request.send(file);
+		// 			};
+		// 		})(f);
+
+		// 		reader.readAsDataURL(f);
+		// 	}
+		// }, false);
+	
 		function getLocation(){
 			if(navigator.geolocation){
 				navigator.geolocation.getCurrentPosition(setLocation);
