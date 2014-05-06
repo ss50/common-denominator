@@ -40,7 +40,7 @@
 <script>
 window.onload = function() {
 		var userList = '{{userList}}';
-		var randoms = '{{randoms}}';
+		//var randoms = '{{randoms}}';
 		var imgurl = '{{img}}';
 		console.log("inside script tag of interest.html");
 		//insert the thumbnail image provided to represent this interest
@@ -90,6 +90,7 @@ window.onload = function() {
 						uid = uid.substring(4, uid.length);
 					}
 				img.src = indiv[3];
+				img.title = name + ' (Interest level: ' + interest_level + ')';
 				//td.innerHTML = '<img src="http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg">' +  '</img>';
 				//td.innerHTML = '<a href="/user/' + uid + '">' + name + '</a> (Interest level: '+interest_level+')';
 			 	img.className="user_image";

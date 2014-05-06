@@ -625,7 +625,6 @@ app.get('/interest/:iid', checkAuthorizationInterest, function(request, response
 	var has = "";
 	var present = 0;
 	
-	//uid TEST is obviously for testing purposes to simulate the presence of a logged-in user
 	conn.query('SELECT * FROM intmemb WHERE intid = $1 AND uid = $2', [request.params.iid, request.session.user_id]).on('row',
 					function(row){console.log('hey');present += 1;}).on('end', 
 						function()
@@ -663,23 +662,13 @@ app.get('/interest/:iid', checkAuthorizationInterest, function(request, response
 			
 			}).on('end', function() {
 				
-				//show six other randomized interests
-				conn.query('SELECT * FROM interest WHERE intid != $1 ORDER BY RANDOM() LIMIT 6', [request.params.iid]).on('row', function(row) {
-				
-				randInt += row.desc + "+" + row.intid + "+" + row.name + "&";
-					
-				}).on('end', function(){
-					//console.log("List of users with this interest" + uList.substring(0, uList.length-1));
-					//console.log("Random shit: " + randInt.substring(0, randInt.length-1));
-					response.render('interest.html', 
+				response.render('interest.html', 
 					{intName: iname, 
 					intid: request.params.iid, 
 					intDesc: idesc, 
-					userList: uList.substring(0, uList.length-1), 
-					randoms: randInt.substring(0, randInt.length-1), 
+					userList: uList.substring(0, uList.length-1),  
 					img: iurl, 
 					existent: has});
-					});
 				
 				});
 			
