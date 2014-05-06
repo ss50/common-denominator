@@ -1,33 +1,34 @@
 Common Denominator 1.0
 
+A social network for connecting people meaningfully in an interest-centric manner.
 
-Initial thoughts for SQL database layout:
+===DATABASE LAYOUT===
 
-_usr-logs (used for login purposes)
-CHAR username PRIMARY KEY
-CHAR pw-enc ( hash[hash(pw) + username] )?
----
-_users (information on users themselves)
-CHAR u-id : generate in some manner, six digit randomized and noncontiguous?
-CHAR username
-TEXT password 
-???? some sort of location information
-CHAR intr : parsable list of interests indicated by this user
----
-_interest: (information on interests themselves)
-INT  int-id : numerical ID for the interest PRIMARY KEY
-CHAR name : display name for this interest
-?CHAR desc: a description for this interest
----
-_int-memb: table of (interest-id, user-id) pairs
-INT int-id : numerical ID, foreign key with interest 
-CHAR u-id : user marking this interest 
+users===table==========================
+
+uid			: unique alphanumeric string identifying this user; TEXT, PRIMARY KEY
+firstname	: user's first name; TEXT
+lastname	: user's last name; TEXT
+uname		: chosen username; TEXT
+password	: encrypted password; TEXT
+email		: user's e-mail address; TEXT
+phone		: user's given phone number; TEXT
+loc			: latitude and longitude for this user, textually represented; TEXT
+iurl		: URL for this user's profile picture, if given; TEXT
 
 
-Notes for future database design:
-messages table:
-CHAR m-id: message id
-CHAR sender: u-id of sender
-CHAR receiver: u-id of receiver
-CHAR body: character limit on this
-?CHAR relevant: list of interests
+
+interest===table=======================
+
+intid		: integer id for this interest; INTEGER, PRIMARY KEY, AUTOINCREMENT
+name		: officially-given name for this interest; TEXT
+desc		: a short blurb describing this interest; TEXT
+url			: URL for this interest's representative thumbnail image, if given; TEXT
+
+
+intmemb (intid INTEGER, uid TEXT, level INTEGER);');
+intmemb===table========================
+
+intid		: integer id for an interest indicated by the user; INTEGER
+uid			: user id for whoever likes this interest; TEXT
+level		: an integer representing how much a user likes this interest; INTEGER
