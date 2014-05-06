@@ -536,7 +536,7 @@ app.get('/interest/:iid', checkAuthorizationInterest, function(request, response
 				randInt += row.desc + "+" + row.intid + "+" + row.name + "&";
 					
 				}).on('end', function(){
-							response.render('intpage.html', {intName: iname, 
+							response.render('interest.html', {intName: iname, 
 															intid: request.params.iid, 
 															intDesc: idesc, 
 															userList: uList.substring(0, uList.length-1), 
