@@ -110,8 +110,11 @@
 			<form id='contact_form' method='POST' action='/contact'>
 				<fieldset>
 					<label for="email">Email</label>
+					<br>
 					<input type="text" name="email" id="email" value="" class="text ui-widget-content ui-corner-all" oninput="emailChanged();">
+					<br>
 					<label for="phoneNumber">Phone Number</label>
+					<br>
 					<input type="text" name="phoneNumber" id="phoneNumber" value="" class="text ui-widget-content ui-corner-all" oninput="phoneChanged();">
 					<!-- <input type='submit' value='Edit'></input> -->
 				</fieldset>
@@ -168,7 +171,8 @@
 						text: "Update", 
 						click: callback
 					}
-				]
+				],
+				minWidth: 450
 			});
 		}
 
