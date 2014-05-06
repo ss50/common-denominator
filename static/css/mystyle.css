@@ -109,6 +109,7 @@ left:30px;
   letter-spacing: -3px;
   font-size:35px;
   top:10px;
+  left:-30px;
   color:white;
 }
 #interest_main span{
@@ -173,18 +174,21 @@ top:-15px;
   
 }
 
-
 #sign_up_form input{
   margin-top: 10px;
   padding:5 5 5 5;
 }
 
 
-
+#users_table{
+  position: relative;
+  top:90px;
+}
 #users_table td:hover{
   position:absolute;
 
 }
+
 
 #search{
   position:fixed;
@@ -193,19 +197,16 @@ top:-15px;
 }
 
 #search1{
-  position:relative;
-  margin: auto;
-  top:100px;
+  margin:0 auto;
   width:400px;
-  z-index: 10000;
-      text-shadow:  10px 10px 3px #88382D; 
-      font-weight: bold;
-    }
 
-    #search2{
+}
+
+#search2{
+    position:relative;
+
       background-color:#A84A5C ;
       opacity: .9;
-       width:400px;
        height:150px;
        position:fixed;
       top:200px;
@@ -214,13 +215,20 @@ top:-15px;
        border-width: 5px;
        border-color: black;
        box-shadow: 10px 10px 3px #88382D; 
-    }
+         z-index: 10000;
+}
 
 #search3{
-  position:fixed;
-  margin-left:30px;
-  z-index:20000;
+  position: relative;
+      text-shadow:  10px 10px 3px #88382D; 
+      font-weight: bold;
+left:25px;
+bottom:15px;
+
+         z-index: 10000;
+
 }
+
 
 #profile-picture{
   width:300px;
