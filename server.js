@@ -80,6 +80,7 @@ function getRows(sql, id){
 app.get('/favicon.ico', function(request, response) { console.log('favicon thrown out'); });
 
 app.get('/',  checkAuthorization, function(request, response){
+	
 	response.render('project.html', {});
 });
 
@@ -196,6 +197,10 @@ app.post('/logout', function(request,response){
 	request.session.destroy(function(){
 		response.redirect('/login');
 	});
+});
+
+app.post('/profile_pic', function(request,response){
+	console.log(request.files);
 });
 
 app.post('/contact', function(request,response){
@@ -536,14 +541,17 @@ app.get('/interest/:iid', checkAuthorizationInterest, function(request, response
 				randInt += row.desc + "+" + row.intid + "+" + row.name + "&";
 					
 				}).on('end', function(){
-							response.render('interest.html', {intName: iname, 
-															intid: request.params.iid, 
-															intDesc: idesc, 
-															userList: uList.substring(0, uList.length-1), 
-															randoms: randInt.substring(0, randInt.length-1), 
-															img: iurl, 
-															existent: has});
-									});
+					console.log("List of users with this interest" + uList.substring(0, uList.length-1));
+					console.log("Random shit: " + randInt.substring(0, randInt.length-1));
+					response.render('interest.html', 
+					{intName: iname, 
+					intid: request.params.iid, 
+					intDesc: idesc, 
+					userList: uList.substring(0, uList.length-1), 
+					randoms: randInt.substring(0, randInt.length-1), 
+					img: iurl, 
+					existent: has});
+					});
 				
 				});
 			

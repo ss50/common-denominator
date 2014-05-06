@@ -43,15 +43,16 @@ window.onload = function() {
 		var userList = '{{userList}}';
 		var randoms = '{{randoms}}';
 		var imgurl = '{{img}}';
-
+		console.log("inside script tag of interest.html");
 		//insert the thumbnail image provided to represent this interest
 		var imgdiv = document.getElementById("thumb");
 		
+		/*
 		if(imgurl=="")
 		{imgdiv.innerHTML='<img id="tnail" src="../static/images/CDlogosq.png">';} //no image url given? use generic common denominator logo as placeholder
 		else
 		{imgdiv.innerHTML='<img id="tnail" src="' + imgurl + '">';}
-		
+		*/
 		//po table ate the list of users who have this interest in their set of interests
 		var table = document.getElementById('users_table');
 		//alert table );
@@ -64,23 +65,47 @@ window.onload = function() {
 		else
 		{
 			var uArr = userList.split('&'); //array-ify each individual user
-		
+			var row;
+			var col;
+
+			console.log("List of users with this interest: " + uArr);
+			console.log(userList);
+			var width = document.body.clientWidth;
+			console.log(width);
+			var users_per_row = Math.floor(width/100);
 			for(var i = 0; i < uArr.length; i++)
 			{
-				var li = document.createElement('li');
+				col = document.createElement("td");
+				div = document.createElement("div"); // text as placeholder for now
+				col.appendChild(div);
+
+    			var img = document.createElement('img');
 				//if(uArr[i] == "") break;
 				var indiv = uArr[i].split('+'); //split each user's info into id, username, level
 				//console.log(uArr[i]);
 				var uid = indiv[0];
+				var name = indiv[1];
+				var interest_level = indiv[2];
 				if(uid.indexOf('amp;') != -1) //ugh encoding
-				{uid = uid.substring(4, uid.length);}
-				li.innerHTML = '<a href="/user/' + uid + '">' + indiv[1] + '</a> (Interest level: '+indiv[2]+')';
-			 table .appendChild(li); //appendChild because user list was returned in descending order of interest level
+					{
+						uid = uid.substring(4, uid.length);
+					}
+				img.src = "http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg";
+				//td.innerHTML = '<img src="http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg">' +  '</img>';
+				//td.innerHTML = '<a href="/user/' + uid + '">' + name + '</a> (Interest level: '+interest_level+')';
+			 	img.className="user_image";
+			 	div.appendChild(img);
+			 	if (i%users_per_row == 0){
+					row = document.createElement("tr");
+					table.appendChild(row);
+				}
+			 	row.appendChild(col);
 			}
 		}
 		
-		/*
+		
 		//poulate the randomized set of other interests
+		/*
 		var oth = document.getElementById("otherInt");
 		randoms = randoms.replace('&#x27;', "'"); //ew encoding
 		var iArr = randoms.split("&amp;"); //split the string apart to separate each interest
@@ -108,9 +133,9 @@ window.onload = function() {
 			//i don't know why onclick="remove()" doesn't work but this weird wrapper method does
 			interact.innerHTML = '<button onclick="interact(\'remove\')">Remove from My Interests!</button>';
 		}
-	
-	}
 	*/
+	
+	
 	//weird wrapper method to make this work; previously, when the button just called remove(), the button disappeared and no redirect occurred
 	function interact(str)
 	{
@@ -123,11 +148,12 @@ window.onload = function() {
 		window.location = '/interest/{{intid}}/add';
 	}
 	
+	
 	function remove()
 	{
 		window.location = '/interest/{{intid}}/remove';
 	}
-	
+}	
 	</script>
 	</body>
 </html>
