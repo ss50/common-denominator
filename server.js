@@ -80,8 +80,36 @@ function getRows(sql, id){
 app.get('/favicon.ico', function(request, response) { console.log('favicon thrown out'); });
 
 app.get('/',  checkAuthorization, function(request, response){
+	var upic = "";
 	
-	response.render('project.html', {});
+	conn.query('SELECT iurl FROM users WHERE uid = $1', 
+				[request.session.user_id]).on('row', 
+												function(row)
+												{
+													upic = row.iurl;
+												}).on('end',
+														function()
+														{
+															if(upic=="") 
+															{
+																upic='http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg'
+															}
+															var iList = "";
+															conn.query('SELECT interest.intid AS iid, name, url FROM interest, intmemb WHERE interest.intid = intmemb.intid AND uid = $1',
+																		[request.session.user_id]).on('row',
+																									function(row)
+																									{
+																										iList += row.iid + "+" + 
+																												row.name + "+" +
+																												row.url + "&";
+																									}).on('end',
+																										function()
+																										{
+																											response.render('project.html', 
+																											{upic: upic, 
+																											myints: iList.substring(0, iList.length-1)});
+																										});
+														});
 });
 
 app.post('/signup_redirect', function(request,response){
@@ -89,7 +117,16 @@ app.post('/signup_redirect', function(request,response){
 });
 
 app.get('/signup', function(request,response){
-	response.render('signup.html', {});
+	
+	var allInt = "";
+	conn.query('SELECT * FROM INTEREST').on('row', function(row) {
+		allInt += row.intid + "+" + row.name + "+" + row.desc + "&";
+		}).on('end', function() {
+		response.render('signup.html', 
+			{
+				intList: allInt.substring(0, allInt.length-1)
+			});
+	}); 
 });
 
 app.post('/signup', function(request,response){
@@ -530,8 +567,11 @@ app.get('/interest/:iid', checkAuthorizationInterest, function(request, response
 			var likes = '';
 			
 			//get everyone who likes this interest
-			conn.query('SELECT uname, level, users.uid FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1 ORDER BY level DESC', [request.params.iid]).on('row', function(row) {
-				uList += row.uid + "+" + row.uname + "+" + row.level + "&";
+			conn.query('SELECT uname, level, users.uid, iurl FROM users, intmemb WHERE users.uid = intmemb.uid AND intmemb.intid = $1 ORDER BY level DESC', [request.params.iid]).on('row', function(row) {
+				var uimg = row.iurl + "";
+				if(uimg=="")
+					uimg = "http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg";
+				uList += row.uid + "+" + row.uname + "+" + row.level + "+" + uimg + "&";
 			
 			}).on('end', function() {
 				
@@ -541,8 +581,8 @@ app.get('/interest/:iid', checkAuthorizationInterest, function(request, response
 				randInt += row.desc + "+" + row.intid + "+" + row.name + "&";
 					
 				}).on('end', function(){
-					console.log("List of users with this interest" + uList.substring(0, uList.length-1));
-					console.log("Random shit: " + randInt.substring(0, randInt.length-1));
+					//console.log("List of users with this interest" + uList.substring(0, uList.length-1));
+					//console.log("Random shit: " + randInt.substring(0, randInt.length-1));
 					response.render('interest.html', 
 					{intName: iname, 
 					intid: request.params.iid, 

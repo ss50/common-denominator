@@ -110,21 +110,21 @@ function getHash(pwd){
 
 db.serialize(function() {
 	if(!exists) {
-		db.run("CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, firstname TEXT, lastname TEXT, uname TEXT, password TEXT, email TEXT, phone TEXT, loc TEXT);");
+		db.run("CREATE TABLE IF NOT EXISTS users (uid TEXT PRIMARY KEY, firstname TEXT, lastname TEXT, uname TEXT, password TEXT, email TEXT, phone TEXT, loc TEXT, iurl TEXT);");
 		console.log('-users table created');
 
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("A8K1","Chad","Miller", "Chad", $pwd, "chad@brown.edu","555-555-5555","41.8193,-71.3922")', [getHash("Chad")]);
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("G44H","Diane", "Chang", "Diane", $pwd, "diane@brown.edu","555-555-5555","41.8193,-71.3947")', [getHash("Diane")]);
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("Q2QV","Mark", "McConnell", "Mark", $pwd,"mark@brown.edu","555-555-5555","41.8218,-71.3997")', [getHash("Mark")]);
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("MM7M","Sandra", "Day OConnor", "Sandra", $pwd,"sandra@brown.edu","555-555-5555","41.8293,-71.4097")', [getHash("Sandra")]);
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("CRLF","Dexter", "Barnes", "Dexter",$pwd,"dexter@brown.edu","555-555-5555","41.8318,-71.3997")', [getHash("Dexter")]);
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("83C5","Leo", "DiCaprio", "Leo", $pwd,"leo@brown.edu","555-555-5555","41.8218,-71.4022")', [getHash("Leo")]);
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("BHQT","James", "Brolin", "James", $pwd,"james@brown.edu","555-555-5555","41.8193,-71.4072")', [getHash("James")]);
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("LC9H","Nestor", "Smith", "Nestor", $pwd,"nestor@brown.edu","555-555-5555","41.8218,-71.4097")', [getHash("Nestor")]);
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("K5DD","Harris", "Fisher", "Harris", $pwd,"harris@brown.edu","555-555-5555","41.8268,-71.3947")', [getHash("Harris")]);
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("6EVJ","Bertha", "Seinfeld", "Bertha", $pwd,"bertha@brown.edu","555-555-5555","41.8293,-71.3972")', [getHash("Bertha")]);
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("NML0","Francine", "Frensky", "Francine", $pwd,"francine@brown.edu","555-555-5555","41.8268,-71.4047")', [getHash("Francine")]);
-		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc) VALUES ("VI4S","Tim","Turner","Tim",$pwd,"tim@brown.edu","555-555-5555","41.8168,-71.4022")', [getHash("Tim")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("A8K1","Chad","Miller", "Chad", $pwd, "chad@brown.edu","555-555-5555","41.8193,-71.3922","http://ukseds.org/wp-content/uploads/2010/02/360-square-profile-left.png")', [getHash("Chad")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("G44H","Diane", "Chang", "Diane", $pwd, "diane@brown.edu","555-555-5555","41.8193,-71.3947","http://widopublishing.com/wp-content/uploads/2013/01/Square-Profile-pic-2011edit.jpg")', [getHash("Diane")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("Q2QV","Mark", "McConnell", "Mark", $pwd,"mark@brown.edu","555-555-5555","41.8218,-71.3997","http://ethenrichardson.com/wp-content/uploads/2013/08/Ethen-square-profile.jpg")', [getHash("Mark")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("MM7M","Sandra", "Day OConnor", "Sandra", $pwd,"sandra@brown.edu","555-555-5555","41.8293,-71.4097","http://aukabusiness.com/wp-content/uploads/2013/09/Square-Profile-Pic.jpg")', [getHash("Sandra")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("CRLF","Dexter", "Barnes", "Dexter",$pwd,"dexter@brown.edu","555-555-5555","41.8318,-71.3997","http://burrilldigitalhealth.com/wp-content/uploads/bw_square_profile_picture_1800x1800_medium_res.jpeg")', [getHash("Dexter")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("83C5","Leo", "DiCaprio", "Leo", $pwd,"leo@brown.edu","555-555-5555","41.8218,-71.4022","http://image3.redbull.com/rbcom/010/2012-07-08/1331574883509_1/0010/1/1500/1500/1/nasser-al-attiyah-profile-square.jpg")', [getHash("Leo")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("BHQT","James", "Brolin", "James", $pwd,"james@brown.edu","555-555-5555","41.8193,-71.4072","")', [getHash("James")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("LC9H","Nestor", "Smith", "Nestor", $pwd,"nestor@brown.edu","555-555-5555","41.8218,-71.4097","")', [getHash("Nestor")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("K5DD","Harris", "Fisher", "Harris", $pwd,"harris@brown.edu","555-555-5555","41.8268,-71.3947","")', [getHash("Harris")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("6EVJ","Bertha", "Seinfeld", "Bertha", $pwd,"bertha@brown.edu","555-555-5555","41.8293,-71.3972","http://images.coplusk.net/users/130710/avatar/large_square_profile.jpg")', [getHash("Bertha")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("NML0","Francine", "Frensky", "Francine", $pwd,"francine@brown.edu","555-555-5555","41.8268,-71.4047","http://greatist.com/sites/default/files/styles/square_profile/public/Profile%20Pic%20Square.jpg?itok=3q_N78z9")', [getHash("Francine")]);
+		db.run('INSERT INTO users (uid, firstname, lastname, uname, password, email, phone, loc, iurl) VALUES ("VI4S","Tim","Turner","Tim",$pwd,"tim@brown.edu","555-555-5555","41.8168,-71.4022","")', [getHash("Tim")]);
 	
 		console.log('--All users inserted');
 	}
@@ -186,7 +186,7 @@ db.serialize(function() {
 	
 		console.log('-Interests table created');
 
-		db.run('INSERT INTO interest (name, desc, url) VALUES ("Indie Music","I haven\'t heard of it either","http://8tracks.imgix.net/i/000/963/601/44043.original-228.gif?q=65&sharp=15&vib=10&fm=jpg&fit=crop&w=521&h=521")');
+		db.run('INSERT INTO interest (name, desc, url) VALUES ("Indie Music","I haven\'t heard of it either","http://8tracks.imgix.net/i/000/963/601/44043.original-228.gif")');
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Computers","Beep boop binary","http://wwwdelivery.superstock.com/WI/223/1491/PreviewComp/SuperStock_1491R-1040175.jpg")');
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Modern Art","Creativity goes wild","http://www.art-is-fun.com/image-files/abstract-painting-squares.jpg")');
 		db.run('INSERT INTO interest (name, desc, url) VALUES ("Surfing","Hang ten fella","http://www.glamour.com/images/health-fitness/2013/06/ashley-greene-surfing-square-w352.jpg")');

@@ -27,15 +27,38 @@
 					<span id='signup_passwd' class='error'></span>
 					<input type='password' name='reenter_passwd' placeholder='Re-enter Password'></input>
 					<span id='reenter_passwd' class='error'></span>
+					<p>Choose your interests!</p>
+						<ul id="ints"></ul>
 					<input type='submit' value='Get Started'></input>
 				</form>
 			</div>
 			
 		</div>
 		<script>
+			var ilcontents = "{{intList}}";
+			var ul = document.getElementById('ints');
+			var ilc = ilcontents.replace("&#x27;", "\'");
+
+			var iArr = ilc.split("&");
+			for(var i = 0; i < iArr.length; i++)
+			{
+				var indiv = iArr[i].replace("amp;", "").split("+");
+				//console.log(indiv);
+				var iid = indiv[0];
+				if(iid.indexOf("amp;") != -1)
+				{iid = iid.replace("amp;", "");}
+				//{iid = iid.substring(4, iid.length);}
+				var li = document.createElement('li');
+				li.innerHTML =  indiv[1] + '<input type="checkbox" name="interest" class="interest_check" id="'+iid+'check">';
+				ul.appendChild(li);
+			}
+
+
 		document.getElementById('fname_field').value = "{{firstname}}";
 		document.getElementById('lname_field').value = "{{lastname}}";
 		document.getElementById('usr_field').value = "{{username}}";
+		document.getElementsByClassName('interest_check').value="{{interest}}";
+
 		{{#errors}}
 			var msg = "{{msg}}";
 			var param = "{{param}}";
