@@ -94,7 +94,21 @@ app.get('/',  checkAuthorization, function(request, response){
 															{
 																upic='http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg'
 															}
-															response.render('project.html', {upic: upic});
+															var iList = "";
+															conn.query('SELECT interest.intid AS iid, name, url FROM interest, intmemb WHERE interest.intid = intmemb.intid AND uid = $1',
+																		[request.session.user_id]).on('row',
+																									function(row)
+																									{
+																										iList += row.iid + "+" + 
+																												row.name + "+" +
+																												row.url + "&";
+																									}).on('end',
+																										function()
+																										{
+																											response.render('project.html', 
+																											{upic: upic, 
+																											myints: iList.substring(0, iList.length-1)});
+																										});
 														});
 });
 
