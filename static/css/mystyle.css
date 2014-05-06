@@ -153,15 +153,21 @@ left:30px;
   background-color:#D6A354;
 }
 
-
+#sign_up_form ul{
+  list-style-type: none;
+  font-size: 15px;
+  line-height: 18px;
+  overflow: scroll;
+  height:200px;
+}
 
 #form_wrapper{
   text-align: center;
   border:solid #8B4513 3px;
   border-radius:25px;
-  font-size: 20px;
+  font-size: 15px;
   width: 350px;
-  height: 440px;
+  height:570px;
   margin:auto;
   display:block;
   background-color: #FFA07A;
@@ -194,6 +200,7 @@ left:30px;
   width:70%;
   margin:auto;
   margin-bottom:10px;
+  top:600px;
   
 }
 
