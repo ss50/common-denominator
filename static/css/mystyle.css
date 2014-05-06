@@ -222,9 +222,8 @@ top:-15px;
   position: relative;
       text-shadow:  10px 10px 3px #88382D; 
       font-weight: bold;
-left:25px;
-bottom:15px;
-
+left:30px;
+bottom:20px;
          z-index: 10000;
 
 }
@@ -550,6 +549,10 @@ opacity:0.4;
 filter:alpha(opacity=40);
 }
 
+#users_table{
+  position: relative;
+  top:90px;
+}
 
 #footer-wrapper{
   position:relative;
@@ -573,7 +576,7 @@ background: linear-gradient(to bottom,  #AD7460, #88382D);
   padding-top: 45px;
   line-height: 21px;
   margin-top: 25px;
-font-family: 'Fanwood Text', serif;
+font-family: 'Raleway', sans-serif;
 }
 
 #rights{
