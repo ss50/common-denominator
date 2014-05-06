@@ -6,6 +6,7 @@ var shortId = require('shortid');
 var conn = anyDB.createConnection('sqlite3://commondenominator.db');
 var expressValidator = require('express-validator');
 var connect = require('connect');
+var fs = require('fs');
 var app = express();
 app.use(expressValidator());
 
@@ -84,32 +85,33 @@ app.get('/',  checkAuthorization, function(request, response){
 	
 	conn.query('SELECT iurl FROM users WHERE uid = $1', 
 				[request.session.user_id]).on('row', 
-												function(row)
-												{
-													upic = row.iurl;
-												}).on('end',
-														function()
-														{
-															if(upic=="") 
-															{
-																upic='http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg';
-															}
-															var iList = "";
-															conn.query('SELECT interest.intid AS iid, name, url FROM interest, intmemb WHERE interest.intid = intmemb.intid AND uid = $1',
-																		[request.session.user_id]).on('row',
-																									function(row)
-																									{
-																										iList += row.iid + "+" + 
-																												row.name + "+" +
-																												row.url + "&";
-																									}).on('end',
-																										function()
-																										{
-																											response.render('project.html', 
-																											{upic: upic, 
-																											myints: iList.substring(0, iList.length-1)});
-																										});
-														});
+				function(row)
+				{
+					upic = row.iurl;
+					console.log(upic);
+				}).on('end',
+						function()
+						{
+							if(upic=="") 
+							{
+								upic='http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg';
+							}
+							var iList = "";
+							conn.query('SELECT interest.intid AS iid, name, url FROM interest, intmemb WHERE interest.intid = intmemb.intid AND uid = $1',
+								[request.session.user_id]).on('row',
+									function(row)
+									{
+										iList += row.iid + "+" + 
+												row.name + "+" +
+												row.url + "&";
+									}).on('end',
+										function()
+										{
+											response.render('project.html', 
+											{upic: upic, 
+											myints: iList.substring(0, iList.length-1)});
+										});
+						});
 });
 
 app.post('/signup_redirect', function(request,response){
@@ -250,6 +252,18 @@ app.post('/logout', function(request,response){
 
 app.post('/profile_pic', function(request,response){
 	console.log(request.files);
+	var uid = request.session.user_id;
+	var photo_name = request.files.picture.name;
+	var ext = photo_name.split('.')[1];
+	var sql = 'UPDATE users SET iurl = $1 WHERE uid = $2';
+	fs.readFile(request.files.picture.path,function(error,data){
+		var file_name = uid + "." + ext;
+		var server_path = "/static/images/users/" + file_name;
+		fs.writeFile(server_path,data,function(error){
+			db.run(sql,[server_path,uid]);
+			response.redirect('/');
+		});
+	});
 });
 
 app.post('/contact', function(request,response){
