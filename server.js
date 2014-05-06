@@ -539,7 +539,66 @@ function checkAuthorizationInterest(request,response,next){
 	}
 }
 
-
+app.post('/interest_search/:iid',checkAuthorizationInterest,function(request,response){
+	var name = request.body.user_by_name.split(' ');
+	var first_name = name[0];
+	var last_name = name[1];
+	var id = request.params.iid;
+	var sql;
+	var names = [];
+	var user_ids = [];
+	var results = [];
+	console.log(first_name);
+	console.log(last_name);
+	if (first_name !== undefined && last_name !== undefined){
+		sql = 'SELECT * FROM users WHERE firstname = $1 AND lastname = $2';
+		console.log("Both first and last name");
+		names = [first_name,last_name];
+		console.log(names);
+		db.all(sql,names,function(error,rows){
+			console.log(rows);
+			if(rows !== undefined){
+				rows.forEach(function(row){
+					user_ids.push(row);
+				});
+			}
+		});
+	}
+	else if (first_name !== undefined && last_name === undefined){
+		sql = 'SELECT * FROM users WHERE firstname = $1 OR lastname=$1';
+		console.log("Only one name given");
+		names = [first_name];
+		console.log(names);
+		db.all(sql,names,function(error,rows){
+			console.log(rows);
+			if(rows !== undefined){
+				rows.forEach(function(row){
+					user_ids.push(row);
+				});
+			}
+			
+		});
+	}
+	else{
+		//error handling
+		console.log("Field left blank");
+	}
+	console.log("List of user ids:" + user_ids);
+	
+	
+	for (var i = 0; i < user_ids.length; i++){
+		var user_id = user_ids[i].uid;
+		var sql = 'SELECT * FROM intmemb WHERE intid = $1 AND uid = $2';
+		fields = [id,user_id];
+		db.get(sql,fields,function(err,rows){
+			if(rows !== undefined){
+				results.push(user_ids[i]);
+			}
+		})
+	}
+	console.log("Results: " + results);
+	
+});
 
 //detail page for a single interest
 app.get('/interest/:iid', checkAuthorizationInterest, function(request, response){
