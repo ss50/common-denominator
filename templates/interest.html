@@ -6,8 +6,9 @@
 		<link rel="stylesheet" type="text/css" href="../static/css/mystyle.css">
 		<link href='http://fonts.googleapis.com/css?family=Raleway:900italic,400' rel='stylesheet' type='text/css'>
 		<script type="text/javascript" src="../static/scripts/client.js"></script>
-    	<title>Interest:{{Name of Interest}}</title>
+    	<title>Interest:{{intName}}</title>
 	</head>
+	
 	<body onload='getUsers(100)'>
 	<table id='users_table'>
 	</table>
@@ -15,7 +16,7 @@
 		<div id='interest_main'>
 			<div id="h1_behind">
 			<img id="logo_int" src="../static/images/CDlogo.png">
-			<h1>People who like: {{insert interest here}}</h1>
+			<h1>People who like: {{intName}}</h1>
 			</div>
 			<div id="search">
 				<div id="search1">
@@ -36,8 +37,97 @@
 			</div>
 		</div>
 
+		<div id="thumb"></div>
+<script>
+window.onload = function() {
+		var userList = '{{userList}}';
+		var randoms = '{{randoms}}';
+		var imgurl = '{{img}}';
 
-
-
+		//insert the thumbnail image provided to represent this interest
+		var imgdiv = document.getElementById("thumb");
+		
+		if(imgurl=="")
+		{imgdiv.innerHTML='<img id="tnail" src="../static/images/CDlogosq.png">';} //no image url given? use generic common denominator logo as placeholder
+		else
+		{imgdiv.innerHTML='<img id="tnail" src="' + imgurl + '">';}
+		
+		//po table ate the list of users who have this interest in their set of interests
+		var table = document.getElementById('users_table');
+		//alert table );
+		if(userList == "") //nobody likes it? placeholder text!
+		{
+			var td = document.createElement('td');
+			td.innerHTML = 'Nobody... at least, not yet!';
+			table.appendChild(td);
+		}
+		else
+		{
+			var uArr = userList.split('&'); //array-ify each individual user
+		
+			for(var i = 0; i < uArr.length; i++)
+			{
+				var li = document.createElement('li');
+				//if(uArr[i] == "") break;
+				var indiv = uArr[i].split('+'); //split each user's info into id, username, level
+				//console.log(uArr[i]);
+				var uid = indiv[0];
+				if(uid.indexOf('amp;') != -1) //ugh encoding
+				{uid = uid.substring(4, uid.length);}
+				li.innerHTML = '<a href="/user/' + uid + '">' + indiv[1] + '</a> (Interest level: '+indiv[2]+')';
+			 table .appendChild(li); //appendChild because user list was returned in descending order of interest level
+			}
+		}
+		
+		/*
+		//poulate the randomized set of other interests
+		var oth = document.getElementById("otherInt");
+		randoms = randoms.replace('&#x27;', "'"); //ew encoding
+		var iArr = randoms.split("&amp;"); //split the string apart to separate each interest
+		console.log(iArr);
+		var rStr = "";
+		
+		for(var i = 0; i < iArr.length; i++)
+		{
+			var indiv = iArr[i].split("+"); //get the individual pieces needed
+			var dsc = indiv[0];
+			//if(dsc.indexOf('amp;' != -1)) {dsc = dsc.substring(4, dsc.length);}
+			rStr += '| <span title="' + indiv[0] + '"><a href="/interest/' + indiv[1] + '">' + indiv[2] + '</a></span> ';
+		}
+		oth.innerHTML = rStr + "|";
+		
+		var interact = document.getElementById("interact");
+		
+		//does the user visiting this page have this interest in the set of their own interests?
+		if("{{existent}}" == "no")
+		{
+			interact.innerHTML = '<button onclick="interact(\'add\')">Add to My Interests!</button>';
+		}
+		else 
+		{
+			//i don't know why onclick="remove()" doesn't work but this weird wrapper method does
+			interact.innerHTML = '<button onclick="interact(\'remove\')">Remove from My Interests!</button>';
+		}
+	
+	}
+	*/
+	//weird wrapper method to make this work; previously, when the button just called remove(), the button disappeared and no redirect occurred
+	function interact(str)
+	{
+		if(str=='add') add();
+		else if(str=='remove') remove();
+	}
+	
+	function add()
+	{
+		window.location = '/interest/{{intid}}/add';
+	}
+	
+	function remove()
+	{
+		window.location = '/interest/{{intid}}/remove';
+	}
+	
+	</script>
 	</body>
 </html>
