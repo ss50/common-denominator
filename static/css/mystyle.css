@@ -4,6 +4,7 @@ body {
 min-width: 900px;
 min-height: 1000px;
 background: #F9E3CB;
+z-index: -1;
 }
 
 a{
@@ -300,7 +301,7 @@ padding-top:25px;
   top:130px;
 }
 
-#nav_bar{
+#top{
   width:100%;
   height:500px;
   position: absolute;
@@ -312,6 +313,7 @@ padding-top:25px;
   text-align: center;
   position:fixed;
   width:100%;
+  z-index:10000;
 }
 
 #nav_text_cover{
@@ -352,9 +354,7 @@ padding-top:25px;
   height:100px;
   text-align:center;
   color:#F5D5BC;
-  z-index:1000;
   height:50px;
-  width:auto;
 }
 
 
