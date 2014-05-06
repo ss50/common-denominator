@@ -92,7 +92,7 @@ app.get('/',  checkAuthorization, function(request, response){
 														{
 															if(upic=="") 
 															{
-																upic='http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg'
+																upic='http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg';
 															}
 															var iList = "";
 															conn.query('SELECT interest.intid AS iid, name, url FROM interest, intmemb WHERE interest.intid = intmemb.intid AND uid = $1',
@@ -161,9 +161,21 @@ app.post('/signup', function(request,response){
 				//otherwise insert into database and redirect to profile
 				var user_id = generateId();
 				request.session.user_id = user_id;
-				db.run('INSERT INTO users (uid, firstname, lastname, uname, password, loc) VALUES ($1,$2,$3,$4,$5, "0.0000, 0.0000")', 
+				db.run('INSERT INTO users (uid, firstname, lastname, uname, password, loc, iurl) VALUES ($1,$2,$3,$4,$5, "0.0000, 0.0000", "http://www.faithlineprotestants.org/wp-content/uploads/2010/12/facebook-default-no-profile-pic.jpg")', 
 					[user_id, firstname, lastname, username, getHash(password)] );
 				console.log("Added new account to database");
+				
+				//dear dom, please handle adding selected interests in here SOMEHOW
+				//input type checkbox?
+				console.log(request.body.ints); //['4', '6', '7'] is the format here
+				
+				var indicated = request.body.ints;
+				for(var i = 0; i < indicated.length; i++)
+				{
+					db.run('INSERT INTO intmemb (intid, uid, level) VALUES ($1, $2, 3)', [parseInt(indicated[i]), user_id]);
+					console.log('Added new entry to membership table: ' + indicated[i] + ' for ' + user_id);
+				}
+				
 				response.redirect('/');
 				
 			}

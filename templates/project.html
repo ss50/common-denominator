@@ -148,8 +148,10 @@
 						{
 							console.log(miArr[i]);
 							var indInt = miArr[i].split("+");
+							var imSrc = indInt[2];
+							if(imSrc.length==0) {imSrc="../static/images/CDlogosq.png";}
 							fp.innerHTML += '<div class="interest"><a href="/interest/' + indInt[0] + '"><img title="'+indInt[1]+'" src="' +
-											indInt[2] + '"></img></a></div>';
+											imSrc + '"></img></a></div>';
 						}
 					}
 	

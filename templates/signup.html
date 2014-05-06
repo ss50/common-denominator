@@ -15,7 +15,7 @@
 		<div id='form_wrapper'>
 			<div>
 				<form id='sign_up_form' method='POST' action='/signup'>
-					<p>Sign up! Fill out the fields below</p>
+					<p>Sign up! Fill out the fields below!</p>
 					<span id='account_exists', class='error'></span>
 					<input name='first_name' placeholder='First Name' id='fname_field'></input>
 					<span id='first_name' class='error'></span>
@@ -27,8 +27,8 @@
 					<span id='signup_passwd' class='error'></span>
 					<input type='password' name='reenter_passwd' placeholder='Re-enter Password'></input>
 					<span id='reenter_passwd' class='error'></span>
-					<p>Choose your interests!</p>
-						<ul id="ints"></ul>
+					<p>Choose your interests! Hold Ctrl and click to select multiple interests!</p>
+						<select multiple name='ints' id='ints'></select>
 					<input type='submit' value='Get Started'></input>
 				</form>
 			</div>
@@ -36,7 +36,8 @@
 		</div>
 		<script>
 			var ilcontents = "{{intList}}";
-			var ul = document.getElementById('ints');
+			///var ul = document.getElementById('ints');
+			var allIntList = document.getElementById('ints');
 			var ilc = ilcontents.replace("&#x27;", "\'");
 
 			var iArr = ilc.split("&");
@@ -48,9 +49,10 @@
 				if(iid.indexOf("amp;") != -1)
 				{iid = iid.replace("amp;", "");}
 				//{iid = iid.substring(4, iid.length);}
-				var li = document.createElement('li');
-				li.innerHTML =  indiv[1] + '<input type="checkbox" name="interest" class="interest_check" id="'+iid+'check">';
-				ul.appendChild(li);
+				//var li = document.createElement('li');
+				//li.innerHTML =  indiv[1] + '<input type="checkbox" name="interest" class="interest_check" id="'+iid+'check">';
+				//ul.appendChild(li);
+				allIntList.innerHTML += '<option value="'+iid+'">'+indiv[1]+'</option>';
 			}
 
 
