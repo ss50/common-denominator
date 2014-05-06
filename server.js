@@ -256,14 +256,17 @@ app.post('/profile_pic', function(request,response){
 	var photo_name = request.files.picture.name;
 	var ext = photo_name.split('.')[1];
 	var sql = 'UPDATE users SET iurl = $1 WHERE uid = $2';
+	
 	fs.readFile(request.files.picture.path,function(error,data){
 		var file_name = uid + "." + ext;
 		var server_path = "/static/images/users/" + file_name;
-		fs.writeFile(server_path,data,function(error){
+		fs.writeFile(__dirname + server_path,data,function(error){
+			console.log(error);
 			db.run(sql,[server_path,uid]);
 			response.redirect('/');
 		});
 	});
+	
 });
 
 app.post('/contact', function(request,response){
