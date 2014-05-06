@@ -117,7 +117,16 @@ app.post('/signup_redirect', function(request,response){
 });
 
 app.get('/signup', function(request,response){
-	response.render('signup.html', {});
+	
+	var allInt = "";
+	conn.query('SELECT * FROM INTEREST').on('row', function(row) {
+		allInt += row.intid + "+" + row.name + "+" + row.desc + "&";
+		}).on('end', function() {
+		response.render('signup.html', 
+			{
+				intList: allInt.substring(0, allInt.length-1)
+			});
+	}); 
 });
 
 app.post('/signup', function(request,response){
