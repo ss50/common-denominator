@@ -2,6 +2,44 @@ Common Denominator 1.0
 
 A social network for connecting people meaningfully in an interest-centric manner.
 
+===ISSUES===
+
+For running the project, there seem to be some quick issues with sqlite3 - just needs a reinstall of the module.
+
+===OUTLINE OF USER EXPERIENCE===
+
+Current state:
+
+Users accessing the main page of the website will see a login form and two buttons: log in and sign up.
+Logging in with appropriate credentials takes the user to a private main page (detailed below).
+Choosing the "sign up" option takes users to a page where they are prompted to enter the following information:
+First and last name; username; password. Users also select their initial interests from a scrolling box where multiple options may be selected. Upon submitting accepted signup information, new users are taken to a private main page.
+
+The private main page displays: 
+the user's profile picture; 
+below that, a navigation bar with four options: update info (allowing users to update their e-mail address and phone number);
+add profile pic (to change their profile picture);
+add location (to give location info via navigator.geolocation);
+and logout.
+Below that, a grid of the user's indicated interests is displayed.
+
+Users may click on these cells to access the interest pages. 
+Interest pages then display thumbnails of people who have also indicated their liking that interest.
+Hovering over these thumbnails displays the title tag, containing the user's name and the level to which they like that interest.
+Additionally, users may search by name for other users who like that interest.
+
+
+
+NOT LINKED DUE TO LACK OF TIME TO REINCORPORATE:
+
+Users may also access pages at /interest/{intid}/add and /interest/{intid}/remove to add and remove interests directly.
+Behavior here is buggy due to prior handling of these pages being linked to an older version of interest pages.
+Accessing /interest/all displays a list of all current interests in the database along with a short description of each.
+From this immediate page, there is also a link to add an interest.
+On the add an interest page (/interest/addinterest), users may enter the name of an interest as well as a short description of that new interest.
+Clicking "submit" updates the database with this new interest.
+
+
 ===DATABASE LAYOUT===
 
 users===table==========================
@@ -26,7 +64,6 @@ desc		: a short blurb describing this interest; TEXT
 url			: URL for this interest's representative thumbnail image, if given; TEXT
 
 
-intmemb (intid INTEGER, uid TEXT, level INTEGER);');
 intmemb===table========================
 
 intid		: integer id for an interest indicated by the user; INTEGER
